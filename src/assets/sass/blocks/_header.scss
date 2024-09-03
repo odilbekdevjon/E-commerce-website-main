@@ -1,0 +1,17 @@
+.header__list {
+    background-color: red;
+}
+
+
+@media only screen and (max-width:768px) {
+    .header__list {
+        display: none;
+    }   
+}
+
+
+@media only screen and (max-width:375px) {
+    .header__list {
+        display: none;
+    }   
+}
