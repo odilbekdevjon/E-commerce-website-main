@@ -21,7 +21,7 @@ export default function Products() {
                 <section className="mt-20">
                     <div className="container">
                         <div className="">
-                            <h1 id="products" className="font-bold text-[35px] text-center">{t("productTitle1")}</h1>
+                            <h1 id="products" className="font-bold text-[35px] text-center pt-10">{t("productTitle1")}</h1>
                             <ul className="main__list flex justify-between flex-wrap mb-10">
                             {
                                 ConstructionProducts?.map(item => {

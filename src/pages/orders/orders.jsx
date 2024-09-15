@@ -1,3 +1,5 @@
+import "./orders.scss";
+
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -5,10 +7,10 @@ import Modal from 'react-modal';
 
 
 // components
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
-import ConstructionProducts from "../database/data";
+import ConstructionProducts from "../../database/data";
 
 export default function Orders() {
 
@@ -40,8 +42,8 @@ export default function Orders() {
                             <li id="cars" key={item.id} className="order__item flex p-2 border-solid border-2 rounded mt-5 hover:shadow-lg w-[800px] h-[400px]">
                                 <img className="order__img mb-4 rounded-lg border-2" src={item.image} width={350} height={300} alt="image"/>
                                 <div className="ml-5">
-                                    <h2 className="mb-2 font-bold text-[30px]">{item.name}</h2>
-                                    <p className="w-72">{item.description}</p>
+                                    <h2 className="order__name mb-2 font-bold text-[30px]">{item.name}</h2>
+                                    <p className="order__text w-72">{item.description}</p>
                                     <div className="my-2"><b>{item.massa} </b> (qoldiq: {item.balance}) </div>
                                    <div className="order__wrapper flex">
                                     <div className="order__wrapp">
@@ -56,7 +58,7 @@ export default function Orders() {
                                             </div>
                                         </div>
                                         <div className="order__bottom mt-5">
-                                            <Link to={`/order/${item.id}/adress`}><button className="w-40 p-2 rounded-lg block mt-14 bg-cyan-700 text-white font-bold">Sotib olish</button> </Link>
+                                            <Link to={`/order/${item.id}/adress`}><button className="w-40 p-2 rounded-lg block mt-14 bg-cyan-700 text-white font-bold z-[100]">Sotib olish</button> </Link>
                                             <div className="mt-4"><input type="checkbox" /> Yetkazib berish xizmati bilan</div> 
                                         </div>                         
                                    </div>

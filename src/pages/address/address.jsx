@@ -1,3 +1,5 @@
+import "./address.scss";
+
 import { useState, useRef } from "react";
 import Modal from 'react-modal';
 
@@ -46,9 +48,9 @@ export default function Adress() {
             <Header/>
             <section className="mt-28 mb-20">
                 <div className="container">
-                    <div className="adres flex justify-between">
+                    <div className="address flex justify-between">
                         <div className="left">
-                            <h1 className="text-[25px] font-bold w-96">Buyurtma yetkaziladigan manzil </h1>
+                            <h1 className="address__title text-[25px] font-bold w-96">Buyurtma yetkaziladigan manzil </h1>
                             <p>(Iltimos manzilni batafsil va to'g'ri kiriting)</p>
                         </div>
                         <div className="select mt-10 mr-40 ">

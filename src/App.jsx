@@ -6,7 +6,7 @@ import Home from './pages/home';
 import About from './pages/about/about';
 import Contact from './pages/contact/contact';
 import Products from './pages/products';
-import Orders from './pages/orders';
+import Orders from './pages/orders/orders';
 import Adress from './pages/address/address';
 
 
