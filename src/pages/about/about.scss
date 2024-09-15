@@ -1,0 +1,93 @@
+/* about responsive */
+
+@media (max-width:768px) {
+    .about__wrapp {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about__map {
+        // width: 700px;
+        width: 70%;
+    }
+}
+
+@media (max-width:720px) {
+    .about__wrapp {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about__map {
+        width: 500px;
+    }
+}
+
+@media (max-width:530px) {
+    .about {
+
+        &__map {
+            width: 400px;
+        }
+
+
+        &__heading {
+            width: 400px;
+            display: flex;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        &__text {
+            width: 350px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    }
+
+}
+
+// 450
+@media (max-width:450px) {
+    .about {
+
+        &__heading {
+            width: 300px;
+            display: flex;
+            font-size: 30px;
+        }
+
+        &__text {
+            width: 350px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        &__map {
+            width: 350px;
+        }
+
+    }
+}
+
+// 450
+@media (max-width:375px) {
+    .about {
+
+        &__heading {
+            width: 300px;
+            display: flex;
+            font-size: 30px;
+        }
+
+        &__text {
+            width: 250px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        &__map {
+            width: 250px;
+        }
+    }
+}

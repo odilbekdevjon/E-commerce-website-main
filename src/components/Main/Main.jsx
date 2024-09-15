@@ -1,4 +1,6 @@
 import "./Main.scss";
+
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -7,8 +9,23 @@ import ConstructionProducts from "../../database/data";
 
 
 export default function Main() {
+
+    const [ data, setData ] = useState([]);
     
-    const { t } = useTranslation()
+    const { t } = useTranslation();
+
+    // useEffect(() => {
+    //     fetch(`https://5jiek.uz/api/v1/product/get-products`, {
+    //         method:"GET",
+    //         // credentials:true,
+    //         headers: {
+    //             "Content-Type":"application/json"
+    //         }
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => console.log(data))
+    // },[])
+
 
 
     return(
@@ -25,9 +42,9 @@ export default function Main() {
                                 <h2 className="mb-2 font-bold text-[25px]">{item.name}</h2>
                                 <div className="">(<b>qoldiq:</b> {item.balance})</div>
                                 <div className="mb-2">{item.massa}</div>
-                                <span className="text-blue-600">{item.discount}</span>
+                                <span className="text-blue-800">{item.discount}</span>
                                 <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item.price}</span>
-                                <a className="main__link" href=""><Link className=" w-40 p-2 rounded-lg block mt-4 bg-cyan-700 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link></a>
+                                <a className="main__link" href=""><Link className=" w-40 p-2 rounded-lg block mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link></a>
                             </li>
                                 )
                         })

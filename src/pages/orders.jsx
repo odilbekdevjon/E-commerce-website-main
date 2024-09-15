@@ -33,18 +33,18 @@ export default function Orders() {
         <>
         <Header/>
         <div className="container">
-            <ul className="mt-24 mb-10">
+            <ul className="order mt-28 mb-10">
                 {
                     (ConstructionProducts ? ConstructionProducts.filter(i => i.id === Number(id)): ConstructionProducts).map(item => {
                         return(
-                            <li id="cars" key={item.id} className="item flex p-2 border-solid border-2 rounded mt-5 hover:shadow-lg w-[800px] h-[400px]">
-                                <img className="mb-4 rounded-lg" src={item.image} width={350} height={300} alt="image"/>
+                            <li id="cars" key={item.id} className="order__item flex p-2 border-solid border-2 rounded mt-5 hover:shadow-lg w-[800px] h-[400px]">
+                                <img className="order__img mb-4 rounded-lg border-2" src={item.image} width={350} height={300} alt="image"/>
                                 <div className="ml-5">
                                     <h2 className="mb-2 font-bold text-[30px]">{item.name}</h2>
                                     <p className="w-72">{item.description}</p>
                                     <div className="my-2"><b>{item.massa} </b> (qoldiq: {item.balance}) </div>
-                                   <div className="flex">
-                                    <div className="">
+                                   <div className="order__wrapper flex">
+                                    <div className="order__wrapp">
                                            <div className=""> 
                                                 <span className="text-blue-600  text-[25px]">{item.discount}</span> 
                                                 <span className=" bg-cyan-700 text-white px-2 rounded-lg ml-4">{item.percent}</span>
@@ -55,7 +55,7 @@ export default function Orders() {
                                                 <button onClick={() => setCount(count - 1)} className="text-[20px] text-orange-500 font-bold">-</button><b>{count}</b> <button onClick={() => setCount(count + 1)} className="text-[20px] text-orange-500 font-bold">+</button>
                                             </div>
                                         </div>
-                                        <div className="mt-5">
+                                        <div className="order__bottom mt-5">
                                             <Link to={`/order/${item.id}/adress`}><button className="w-40 p-2 rounded-lg block mt-14 bg-cyan-700 text-white font-bold">Sotib olish</button> </Link>
                                             <div className="mt-4"><input type="checkbox" /> Yetkazib berish xizmati bilan</div> 
                                         </div>                         

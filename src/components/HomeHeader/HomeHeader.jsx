@@ -8,8 +8,9 @@ import Modal from 'react-modal';
 import i18n from "../../i18n";
 
 // images
-import logo from "../../assets/logo.jpg";
+import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
+import mobileLogo from "../../assets/mobile-logo.png";
 
 
 export default function HomeHeader() {
@@ -47,8 +48,9 @@ export default function HomeHeader() {
             <header className="header py-4 w-[100%] absolute z-1 top-0">
                 <div className="container">
                     <div className=" flex justify-between items-center">
-                        <Link to={'/'}><img className="header__image rounded-lg block bg-transparent" src={logo} width={200} alt="logo" /></Link>
-                        <Link to={'/'}><h1 className="header__logo--heading lg:hidden md:hidden w-20 font-bold rounded-md text-white tracking-[1px] mr-3">commerce 5pc.uz</h1></Link>
+                        <Link to={'/'}><img className="header__image rounded-lg bg-transparent" src={logo} width={200} alt="logo" /></Link>
+                        <Link to={'/'}><img className="header__logo--heading lg:hidden md:hidden" src={mobileLogo} width={35} alt="logo" /></Link>
+                        {/* <Link to={'/'}><h1 className="w-20 font-bold rounded-md mr-3">commerce 5pc.uz</h1></Link> */}
                         <ul  className="header__list flex">
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className=" text-white font-bold  group-hover:bg-white "><a href="#products">{t("headerTitle1")}</a></Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold"  to={"/about"}>{t("headerTitle2")}</Link></li>
@@ -57,10 +59,10 @@ export default function HomeHeader() {
                         </ul>
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
-                            <li className=" mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold mb-4"><a href="#products">{t("headerTitle1")}</a></Link></li>
-                            <li className=" mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
-                            <li className=" mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
-                            <li className=" text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold mb-4"><a href="#products">{t("headerTitle1")}</a></Link></li>
+                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
+                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
+                            <li className="header__menu--list text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
                             </div>
                             <button onClick={() => closeMenu()} className="p-2 border-2 border-solid border-white flex h-12 font-bold mr-2 mt-2">X</button>
                         </menu>

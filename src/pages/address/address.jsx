@@ -2,11 +2,11 @@ import { useState, useRef } from "react";
 import Modal from 'react-modal';
 
 
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 // data
-import regions from "../utility/regions";
+import regions from "../../utility/regions";
 
 
 export default function Adress() {
@@ -44,7 +44,7 @@ export default function Adress() {
     return(
         <>
             <Header/>
-            <section className="mt-20 mb-20">
+            <section className="mt-28 mb-20">
                 <div className="container">
                     <div className="adres flex justify-between">
                         <div className="left">

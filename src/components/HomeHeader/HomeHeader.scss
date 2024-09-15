@@ -18,7 +18,8 @@
             justify-content: space-between;
             width: 500px;
             height: 100vh;
-            background-color: white;
+            background-color: rgb(0, 0, 104);
+            color: white;
             position: absolute;
             top:0;
             right:0;
@@ -49,7 +50,7 @@
             right:0;
             font-size: 20px;
             transition: all 2s ease-in-out;
-            background-color: rgb(52, 95, 105) !important;
+            background-color:rgb(2, 2, 133);
         }
 
         &__menu:hover {
@@ -64,43 +65,81 @@
             display: block;
         }
 
-        &__image {
+        &__logo--heading {
             display: none;
         }
     }   
 }
 
-// mobile
+
+// mobile 480
+@media only screen and (max-width:480px) {
+    .header {
+
+        &__image {
+            width: 150px;
+        }
+
+
+        &__logo--heading {
+            display: none;
+        }
+    }
+    
+}
+
+// mobile 435
+@media only screen and (max-width:435px) {
+
+    .header {
+        &__image {
+            width: 100px;
+        }
+    }
+    
+}
+
+// mobile 375 
 @media only screen and (max-width:375px) {
 
     .header {
-        width: 100%;
+
+        &__image {
+            display: none;
+        }
 
         &__menu--item {
             position: relative;
             left: 120px;
             // transform: translate(120px);
+        }
 
+        &__logo--heading  {
+            display: block;
+        }
+
+    }
+    
+}
+ 
+// mobile 350
+@media only screen and (max-width:350px) {
+
+    .header {
+
+        &__menu--list {
+            position: relative;
+            left: 100px;
+        }
+
+        &__logo--heading {
+            position: relative;
+            right: 10px;
         }
 
         &__image {
             display: none;
-            width: 100px;
         }
-
-        &__list {
-            display: none;
-        }
-
-        &__burger {
-            display: block;
-        }
-
-        // &__select {
-        //     padding: 0;
-        //     margin-left: 20px;
-        // }
-
 
     }
     

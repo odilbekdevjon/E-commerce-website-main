@@ -33,7 +33,9 @@ export default function Products() {
                                             <div className="mb-2">{item.massa}</div>
                                             <span className="text-blue-600">{item.discount}</span>
                                             <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item.price}</span>
-                                            <Link className="w-40 p-2 rounded-lg block mt-4 bg-cyan-700 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
+                                            <a href="main__link">
+                                                <Link className="w-40 p-2 rounded-lg block mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
+                                            </a>
                                         </li>
                                             )
                                     })

@@ -8,8 +8,9 @@ import Modal from 'react-modal';
 import i18n from "../../i18n";
 
 // images
-import logo from "../../assets/logo.jpg";
+import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
+import mobileLogo from "../../assets/mobile-logo.png";
 
 
 export default function Header() {
@@ -47,10 +48,11 @@ export default function Header() {
 
     return (
         <>
-            <header className="header py-4 bg-slate-500 w-[100%] fixed z-1 top-0">
+            <header className="header py-4 bg-blue-950 w-[100%] fixed z-1 top-0">
                 <div className="container">
                     <div className=" flex justify-between items-center">
                         <Link to={'/'}><img className="header__image rounded-lg block bg-transparent" src={logo} width={200} alt="logo" /></Link>
+                        <Link to={'/'}><img className="header__logo--heading lg:hidden md:hidden" src={mobileLogo} width={35} alt="logo" /></Link>
                         <ul  className="header__list flex">
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className=" text-white font-bold  group-hover:bg-white "><a href="#products">{t("headerTitle1")}</a></Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold"  to={"/about"}>{t("headerTitle2")}</Link></li>
@@ -59,10 +61,10 @@ export default function Header() {
                         </ul>
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[100%] h-auto z-[10]">
                             <div className="mt-10 ml-10 ">
-                            <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold group-hover:bg-white mb-4"><a href="#products">{t("headerTitle1")}</a></Link></li>
-                            <li className="mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
-                            <li className="mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
-                            <li className="text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold group-hover:bg-white mb-4"><a href="#products">{t("headerTitle1")}</a></Link></li>
+                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
+                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
+                            <li className="header__menu--list text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
                             </div>
                             <button onClick={() => closeMenu()} className="p-2 border-2 border-solid border-white flex h-12 font-bold mr-2 mt-2">X</button>
                         </menu>
@@ -79,7 +81,7 @@ export default function Header() {
                                 <option className="text-black" value="en">en</option>
                             </select>
                             <button onClick={openModal}>
-                                <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
+                                <div className="header__enter flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
                                     <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
                                 </div>
                             </button>
