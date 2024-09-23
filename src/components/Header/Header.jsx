@@ -15,13 +15,11 @@ import mobileLogo from "../../assets/mobile-logo.png";
 
 export default function Header() {
 
-    const localStorage = document.localStorage
 
     const { t } = useTranslation()
 
     const changeLang = (evt) => {
         i18n.changeLanguage(evt)
-        // localStorage.setItem("lang", i18n.changeLanguage(evt))
     }
 
     

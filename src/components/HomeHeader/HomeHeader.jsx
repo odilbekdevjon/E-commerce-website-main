@@ -2,7 +2,7 @@ import "./HomeHeader.scss";
 
 import { Link } from "react-router-dom";
 import { IoEnterOutline } from "react-icons/io5";
-import { useState , useRef } from "react";
+import { useState , useRef, } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
 import i18n from "../../i18n";
@@ -15,6 +15,8 @@ import mobileLogo from "../../assets/mobile-logo.png";
 
 export default function HomeHeader() {
 
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [ oneId, setOneId ] = useState([]);
 
     const { t } = useTranslation()
 
@@ -22,10 +24,27 @@ export default function HomeHeader() {
         i18n.changeLanguage(evt)
     }
 
-    
+    // ref
     const menuRef = useRef();
+    const code = useRef()
 
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const sendCode = async () => {
+
+        fetch(`https://5jiek.uz/api/v1/user/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({
+                code: code.current.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data.user))
+
+        code.current.value = null;
+        console.log('send code');
+    }
 
     // menu
     const showMenu = () => {
@@ -50,13 +69,17 @@ export default function HomeHeader() {
                     <div className=" flex justify-between items-center">
                         <Link to={'/'}><img className="header__image rounded-lg bg-transparent" src={logo} width={200} alt="logo" /></Link>
                         <Link to={'/'}><img className="header__logo--heading lg:hidden md:hidden" src={mobileLogo} width={35} alt="logo" /></Link>
-                        {/* <Link to={'/'}><h1 className="w-20 font-bold rounded-md mr-3">commerce 5pc.uz</h1></Link> */}
                         <ul  className="header__list flex">
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className=" text-white font-bold  group-hover:bg-white "><a href="#products">{t("headerTitle1")}</a></Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold"  to={"/about"}>{t("headerTitle2")}</Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/products"}>{t("headerTitle3")}</Link></li>
                             <li className="text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
                         </ul>
+
+                        <a className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz/&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                            One Id                 
+                        </a>
+
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
                             <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold mb-4"><a href="#products">{t("headerTitle1")}</a></Link></li>
@@ -96,10 +119,10 @@ export default function HomeHeader() {
                                     </div>
                                     <hr />
                                     <label className="text-black line-through" htmlFor="">{"IHHN5456WSDW"}</label>
-                                    <input className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" />
+                                    <input ref={code} className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" placeholder="code" />
                                     <a className="text-blue-400 underline mt-3 mb-3 block" href=""><input className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</a>
                                     <hr />
-                                    <button className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
+                                    <button onClick={sendCode} className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
                                     <button className="text-black mt-4 ml-32 border-solid border-2 border-gray-500 p-1">Kodni yangilash</button>
                                 </div>
                             </Modal>

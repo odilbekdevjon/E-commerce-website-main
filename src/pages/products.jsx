@@ -1,4 +1,6 @@
+// import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+// import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 // components
@@ -9,11 +11,26 @@ import Footer from "../components/Footer/Footer";
 import ConstructionProducts from "../database/data";
 
 
-
-
 export default function Products() {
-
     const { t } = useTranslation()
+
+    // const [ products, setProducts ] = useState()
+    // const [error, setError] = useState(null);
+
+
+    // get products
+    // useEffect(() => {
+    //     axios.get('https://5jiek.uz/api/v1/product/get-products' , {
+    //         withCredentials: true
+    //     })
+    //     .then(response => {
+    //         console.log(response.data); 
+    //         })
+    //     .catch(error => {
+    //         setError(error);
+    //     });
+    // },[""]);
+
 
     return(
         <>
@@ -56,7 +73,7 @@ export default function Products() {
                                 <Link className="w-40 p-2 rounded-lg block mt-4 bg-cyan-700 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
                             </li>
                                 )
-                                    })
+                        })
                     }
                     </ul>
                 </div>

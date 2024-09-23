@@ -26,18 +26,16 @@ export default function Adress() {
     const RegionSelect = (element) => {
         const select = document.getElementById('selected');
         
-        
         regions.forEach(item => {
 
             if(element == item.name) {
                 select.innerHTML = null;
-
+                
                 item.district.forEach(i => {
                     const option = document.createElement('option');
                     option.innerHTML = i.name
                     select.appendChild(option);
                 })
-
             } 
         })
         
