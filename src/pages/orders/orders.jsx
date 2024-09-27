@@ -3,7 +3,6 @@
 import "./orders.scss";
 
 import { useState , useEffect} from "react";
-import { CCarousel, CCarouselItem } from "@coreui/react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
@@ -15,6 +14,7 @@ export default function Orders() {
 
     const [ singleData ,setSingleData ] = useState();
     const [ , setError ] = useState(null);
+    // const [  ]
     
     const { id } = useParams()
 
@@ -31,7 +31,8 @@ export default function Orders() {
         });
     },[""]);
 
-    const [count , setCount ] = useState(0)
+
+    const [count , setCount ] = useState(1)
 
     
     return(
@@ -49,7 +50,7 @@ export default function Orders() {
                                    <div className="order__wrapper flex">
                                     <div className="order__wrapp">
                                            <div className=""> 
-                                                <span className="text-blue-600  text-[25px]">{singleData?.discount}</span> 
+                                                <span className="text-blue-600  text-[25px]">{singleData?.discount * count}</span> 
                                                 {/* <span className=" bg-cyan-700 text-white px-2 rounded-lg ml-4">{singleData.unit_uz}</span> */}
                                             </div>
                                             <span className="opacity-[0.5] text-[15px] block mb-1 line-through">{singleData?.price}</span>
@@ -58,8 +59,9 @@ export default function Orders() {
                                                 <button onClick={() => setCount(count - 1)} className="text-[20px] text-orange-500 font-bold">-</button><b>{count}</b> <button onClick={() => setCount(count + 1)} className="text-[20px] text-orange-500 font-bold">+</button>
                                             </div>
                                         </div>
-                                        <div className="order__bottom ml-10 mt-20">
-                                            <Link to={`/order/${singleData?.id}/adress`}><button className="w-40 p-2 rounded-lg block mt-14 bg-cyan-700 text-white font-bold z-[100]">Sotib olish</button> </Link>
+                                        <div className="order__bottom ml-10 mt-10">
+                                            {/* <Link to={`/order/${singleData?.id}/adress`}> </Link> */}
+                                            <button className="w-40 p-2 rounded-lg block mt-14 bg-cyan-700 text-white font-bold z-[100]">Sotib olish</button>
                                             <div className="mt-4"><input type="checkbox" /> Yetkazib berish xizmati bilan</div> 
                                         </div>                         
                                    </div>

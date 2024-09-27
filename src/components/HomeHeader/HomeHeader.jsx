@@ -1,8 +1,8 @@
 import "./HomeHeader.scss";
 
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import { IoEnterOutline } from "react-icons/io5";
-import { useState , useRef, } from "react";
+import { useState , useRef, useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
 import i18n from "../../i18n";
@@ -11,19 +11,31 @@ import i18n from "../../i18n";
 import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
 import mobileLogo from "../../assets/mobile-logo.png";
-
+import cart from "../../assets/cart-shopping.svg";
+import { useCartAuth } from "../../hooks/cartHook";
 
 export default function HomeHeader() {
 
+    // const { stateCart, setStateCart, setCart  } = useCartAuth()
+
+    // console.log(stateCart);
+    
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [ oneId, setOneId ] = useState([]);
+    // const [ oneId, setOneId ] = useState([]);
+    const [ cardLength, setCardLength ] = useState(0)
+
 
     const { t } = useTranslation()
-
     const changeLang = (evt) => {
         i18n.changeLanguage(evt)
     }
 
+    useEffect(() => {
+        const cartData = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
+        setCardLength(cartData)
+    },[JSON.parse(localStorage.getItem("cart")).length])
+    
+    
     // ref
     const menuRef = useRef();
     const code = useRef()
@@ -76,9 +88,15 @@ export default function HomeHeader() {
                             <li className="text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
                         </ul>
 
-                        <a className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz/&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                        <Link to={'/carts'} className="flex">
+                            <img src={cart} width={25} alt="" />
+                             <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2">{cardLength.length}</span>
+                            <span className="text-white ml-2">Korzina</span>
+                        </Link>
+
+                        {/* <a className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz/&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                             One Id                 
-                        </a>
+                        </a> */}
 
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
@@ -120,7 +138,7 @@ export default function HomeHeader() {
                                     <hr />
                                     <label className="text-black line-through" htmlFor="">{"IHHN5456WSDW"}</label>
                                     <input ref={code} className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" placeholder="code" />
-                                    <a className="text-blue-400 underline mt-3 mb-3 block" href=""><input className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</a>
+                                    <div className="text-blue-400 underline mt-3 mb-3 block" href=""><input className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</div>
                                     <hr />
                                     <button onClick={sendCode} className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
                                     <button className="text-black mt-4 ml-32 border-solid border-2 border-gray-500 p-1">Kodni yangilash</button>
