@@ -33,7 +33,7 @@ export default function HomeHeader() {
     useEffect(() => {
         const cartData = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
         setCardLength(cartData)
-    },[JSON.parse(localStorage.getItem("cart")).length])
+    },[])
     
     
     // ref

@@ -12,17 +12,18 @@ export default function Carts() {
 
     const [ cartLength, setCardLength ] = useState([]);
 
-    useEffect(() => {
-        const cartData = localStorage.getItem("cart") ? JSON.parse(window.localStorage.getItem("cart")) : []
-        setCardLength(cartData)
-    },[cartLength])
+    // useEffect(() => {
+    //     const cartData = localStorage.getItem("cart") ? JSON.parse(window.localStorage.getItem("cart")) : []
+    //     setCardLength(cartData)
+    // },[cartLength])
+
 
     const cartDelete = (id) => {
         console.log(id);
 
-        const findCartData = cartLength.find(i => i.id === id)
-        console.log(findCartData);
-        localStorage.removeItem("cart", JSON.parse(findCartData));
+        // const findCartData = cartLength.find(i => i.id === id)
+        // console.log(findCartData);
+        // JSON.parse(localStorage.removeItem("cart",findCartData));
         
     }
 
