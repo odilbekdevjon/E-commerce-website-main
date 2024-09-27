@@ -14,7 +14,7 @@ import mobileLogo from "../../assets/mobile-logo.png";
 import cart from "../../assets/cart-shopping.svg";
 import { useCartAuth } from "../../hooks/cartHook";
 
-export default function HomeHeader() {
+export default function HomeHeader({order}) {
 
     // const { stateCart, setStateCart, setCart  } = useCartAuth()
 
@@ -30,10 +30,13 @@ export default function HomeHeader() {
         i18n.changeLanguage(evt)
     }
 
+<<<<<<< HEAD
     useEffect(() => {
         const cartData = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
         setCardLength(cartData)
     },[])
+=======
+>>>>>>> 69e519df4abb7085e5b78ab784d73d731d2cd1e7
     
     
     // ref
@@ -74,6 +77,8 @@ export default function HomeHeader() {
         setIsOpen(false);
     };
 
+   
+
     return (
         <>
             <header className="header py-4 w-[100%] absolute z-1 top-0">
@@ -90,7 +95,7 @@ export default function HomeHeader() {
 
                         <Link to={'/carts'} className="flex">
                             <img src={cart} width={25} alt="" />
-                             <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2">{cardLength.length}</span>
+                             <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2">{order.length}</span>
                             <span className="text-white ml-2">Korzina</span>
                         </Link>
 

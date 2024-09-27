@@ -12,7 +12,7 @@ import { use } from "i18next";
 import cart from "../../assets/add-to-cart.png";
 
 
-export default function Main() {
+export default function Main({setOrder}) {
     const { t, i18n } = useTranslation();
 
     const [data, setData] = useState([]);
@@ -65,6 +65,7 @@ export default function Main() {
         } else {
             const filteredData = data.find(i => i.id == id);
             const newCard = [...oldCard, { ...filteredData, qty: 1 }]
+            setOrder(newCard)
             localStorage.setItem('cart', JSON.stringify(newCard))
         }
     }
