@@ -12,32 +12,26 @@ import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
 import mobileLogo from "../../assets/mobile-logo.png";
 import cart from "../../assets/cart-shopping.svg";
-import { useCartAuth } from "../../hooks/cartHook";
+import profile from "../../assets/icons8.png";
+
 
 export default function HomeHeader({order}) {
-
-    // const { stateCart, setStateCart, setCart  } = useCartAuth()
-
-    // console.log(stateCart);
     
     const [modalIsOpen, setIsOpen] = useState(false);
-    // const [ oneId, setOneId ] = useState([]);
     const [ cardLength, setCardLength ] = useState(0)
 
-
+    // lang
     const { t } = useTranslation()
     const changeLang = (evt) => {
         i18n.changeLanguage(evt)
     }
 
-<<<<<<< HEAD
+
+    // carts
     useEffect(() => {
         const cartData = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
         setCardLength(cartData)
     },[])
-=======
->>>>>>> 69e519df4abb7085e5b78ab784d73d731d2cd1e7
-    
     
     // ref
     const menuRef = useRef();
@@ -95,8 +89,8 @@ export default function HomeHeader({order}) {
 
                         <Link to={'/carts'} className="flex">
                             <img src={cart} width={25} alt="" />
-                             <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2">{order.length}</span>
                             <span className="text-white ml-2">Korzina</span>
+                             <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
                         </Link>
 
                         {/* <a className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz/&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
@@ -116,20 +110,21 @@ export default function HomeHeader({order}) {
                             <button onClick={() => showMenu()}  className="header__burger mr-6">
                                 <img className="bg-white rounded-lg" src={menu} width={35} height={35} alt="" />
                             </button>
-                            {/* <button >
-                                <img className="mr-4" src={darkmode} width={35} height={35}  alt="darkmode" />
-                            </button> */}
+                            
                             <select defaultValue={i18n.language} onChange={(evt) => changeLang(evt.target.value)} className="header__select border-solid border-2 border-white-600 mr-8 rounded-lg bg-transparent font-bold text-white p-2 cursor-pointer">
                                 <option className="text-black" value="uz">uz</option>
                                 <option className="text-black" value="ru">ru</option>
                                 <option className="text-black" value="en">en</option>
                             </select>
-                            <button onClick={openModal}>
+                            {/* <button onClick={openModal}>
                                 <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
                                     <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
                                 </div>
-                            </button>
-                            {/* <dialog open={modal}>Modal</dialog> */}
+                            </button> */}
+                                <Link to={'/profile'} className="mt-1">
+                                    <img className="ml-2" src={profile} width={25} height={25} alt="" />
+                                    <span className="text-white">Profile</span>
+                                </Link>
                             <Modal
                                 isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal"
                                 style={{

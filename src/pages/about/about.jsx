@@ -1,19 +1,19 @@
 import "./about.scss";
-
+import { useState } from "react";
 // components
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-
 import { useTranslation } from "react-i18next";
 
-
 export default function About() {
+
+    const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
 
     const { t } = useTranslation()
     
     return(
         <>
-            <Header />
+            <Header order={order} />
                 <section className="mt-20 mb-10">
                     <div className="container">
                         <div className="about mt-52 ">

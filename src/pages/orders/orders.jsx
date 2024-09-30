@@ -12,6 +12,8 @@ import Footer from "../../components/Footer/Footer";
 
 export default function Orders() {
 
+  const [order ] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+
     const [ singleData ,setSingleData ] = useState();
     const [ , setError ] = useState(null);
     // const [  ]
@@ -37,7 +39,7 @@ export default function Orders() {
     
     return(
         <>
-        <Header/>
+        <Header order={order}/>
         <div className="container">
             <ul className="order mt-28 mb-10">
                 {

@@ -12,6 +12,8 @@ import regions from "../../utility/regions";
 
 
 export default function Adress() {
+  const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+    
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -43,7 +45,7 @@ export default function Adress() {
 
     return(
         <>
-            <Header/>
+            <Header order={order}/>
             <section className="mt-28 mb-20">
                 <div className="container">
                     <div className="address flex justify-between">

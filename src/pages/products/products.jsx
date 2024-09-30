@@ -1,17 +1,19 @@
-// import { useState, useEffect } from "react";
+import { useState , useEffect } from "react";
 import { Link } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 // components
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 // 
-import ConstructionProducts from "../database/data";
+import ConstructionProducts from "../../database/data";
 
 
 export default function Products() {
+  const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+
     const { t } = useTranslation()
 
     // const [ products, setProducts ] = useState()
@@ -34,7 +36,7 @@ export default function Products() {
 
     return(
         <>
-           <Header/>
+           <Header order={order}/>
                 <section className="mt-20">
                     <div className="container">
                         <div className="">

@@ -13,7 +13,7 @@ export default function Home() {
     return(
         <>
             <header>
-                <HomeHeader order={order} />
+                <HomeHeader order={order} /> 
             </header>
             <div>
                 <Hero/>

@@ -17,6 +17,9 @@ import contract from "../../assets/contract.svg";
 
 export default function Contact() {
 
+    const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+
+
     const { t } = useTranslation()
 
     const name = useRef();
@@ -55,7 +58,7 @@ export default function Contact() {
 
     return(
         <>
-            <Header />
+            <Header order={order} />
                 <section className="mt-20 mb-52">
                     <div className="container">
                         <div className="contact mt-40 flex">

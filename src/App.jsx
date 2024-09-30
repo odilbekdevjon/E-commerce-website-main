@@ -5,15 +5,15 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import About from './pages/about/about';
 import Contact from './pages/contact/contact';
-import Products from './pages/products';
+import Products from './pages/products/products';
 import Orders from './pages/orders/orders';
 import Adress from './pages/address/address';
-import Carts from './pages/carts';
-import { useState } from 'react';
+import Carts from './pages/carts/carts';
+import Profile from './pages/profile/profile';
+import ProfileOrders from './pages/profile/profileOrders/profileOrders';
 
 
 function App() {
-
 
   return (
     <>
@@ -23,6 +23,8 @@ function App() {
           <Route path='/contact' element={<Contact/>} />
           <Route path='/products' element={<Products/>} />
           <Route path='/carts' element={<Carts/>} />
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/profile/orders' element={<ProfileOrders/>}/>
           <Route path='/order/:id' element={<Orders/>} />
           <Route path='/order/:id/adress' element={<Adress/>} />
         </Routes>  
