@@ -5,6 +5,8 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
+import { Provider } from './context/authContext';
+import { LangProvider } from './context/langContext';
 
 // In your component file (e.g., App.js)
 import "slick-carousel/slick/slick.css"; 
@@ -16,7 +18,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <I18nextProvider i18n={i18n}>
-          <App/>
+        <Provider>
+          <LangProvider>
+            <App/>
+          </LangProvider>
+        </Provider>
       </I18nextProvider>
     </BrowserRouter>
   </React.StrictMode>

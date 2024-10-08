@@ -9,7 +9,14 @@
     }
 }
 
-// 
+@media only screen and (max-width:1200px) {
+    .header {
+        &__list {
+            display: none;
+        }
+    }
+}
+
 @media only screen and (max-width:930px) {
     .header {
 
@@ -51,6 +58,10 @@
             right:0;
             font-size: 20px;
             transition: all 2s ease-in-out;
+        }
+
+        &__karzinka {
+            margin-top: 10px;
         }
 
         &__menu:hover {
@@ -131,6 +142,11 @@
             display: block;
         }
 
+        &__karzinka {
+           position: relative;
+           left: 125px;
+        }
+
     }
     
 }
@@ -153,6 +169,18 @@
             padding: 5px;
         }
 
+        &__karzinka {
+            position: relative;
+            left: 125px;
+        }
+ 
+
     }
     
+}
+
+@media (max-width:350px) {
+    .header__karzinka {
+        transform: translate(65px);
+    }
 }

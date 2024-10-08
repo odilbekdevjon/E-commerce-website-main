@@ -1,0 +1,42 @@
+@media (max-width:800px) {
+    .products {
+        flex-direction: column;
+
+        &__left {
+            margin-bottom: 50px;
+        }
+    }
+}
+
+@media (max-width:475px) {
+    .products {
+        flex-direction: column;
+
+        &__left {
+            width: 400px;
+            margin-bottom: 50px;
+        }
+    }
+
+    .main__item {
+        width: 350px;
+    }
+}
+
+@media (max-width:375px) {
+    .products {
+        
+        &__left {
+            width: 250px;
+            margin-bottom: 50px;
+        }
+
+        &__heading {
+            font-size: 20px;
+        }
+    }
+
+    .main__item {
+        width: 350px;
+    }
+}

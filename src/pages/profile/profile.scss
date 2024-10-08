@@ -1,0 +1,80 @@
+@media only screen and (max-width:1220px) {
+    .profile {
+     
+        &__left__data {
+            flex-direction: column;
+        }
+
+        &__left--right {
+            margin-bottom: 30px;
+        }
+    }
+
+}
+@media only screen and (max-width:768px) {
+    .profile {
+        flex-direction: column;
+
+
+        &__right {
+            
+        }
+
+        &__right__user {
+        }
+
+        &__right__link {
+            width: 100%;
+            display: block;
+        }
+
+        &__left {
+           margin-top: 50px;
+        }
+
+        &__left--right {
+            margin-bottom: 30px;
+        }
+
+        &__left__data {
+            width: 500px;
+            flex-direction: column;
+        }
+    }
+}
+
+@media only screen and (max-width:540px) {
+    .profile {
+
+        &__left__data {
+            max-width: 400px;
+        }
+    }
+}
+
+@media only screen and (max-width:440px) {
+    .profile {
+
+        &__left__data {
+            max-width: 300px;
+        }
+
+        &__right--hr {
+            max-width: 300px;
+        }
+    }
+}
+
+@media only screen and (max-width:340px) {
+    .profile {
+
+        &__left__data {
+            max-width: 250px;
+        }
+
+        &__right--hr {
+            max-width: 200px;
+        }
+
+    }
+}

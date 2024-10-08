@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 export default function About() {
 
-    const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
 
     const { t } = useTranslation()
     

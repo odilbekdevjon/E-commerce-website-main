@@ -1,4 +1,5 @@
 import './App.scss';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 // components
@@ -14,6 +15,8 @@ import ProfileOrders from './pages/profile/profileOrders/profileOrders';
 
 
 function App() {
+  const [setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+
 
   return (
     <>
@@ -21,12 +24,12 @@ function App() {
           <Route path='/' element={<Home/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/contact' element={<Contact/>} />
-          <Route path='/products' element={<Products/>} />
+          <Route setOrder={setOrder} path='/products' element={<Products/>} />
           <Route path='/carts' element={<Carts/>} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/profile/orders' element={<ProfileOrders/>}/>
           <Route path='/order/:id' element={<Orders/>} />
-          <Route path='/order/:id/adress' element={<Adress/>} />
+          <Route path='/adress' element={<Adress/>} />
         </Routes>  
     </>
   );

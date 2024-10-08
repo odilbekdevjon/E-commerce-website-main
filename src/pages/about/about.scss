@@ -90,3 +90,24 @@
         }
     }
 }
+
+@media (max-width:315px) {
+    .about {
+
+        &__heading {
+            width: 250px;
+            display: flex;
+            font-size: 30px;
+        }
+
+        &__text {
+            width: 240px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        &__map {
+            width: 250px;
+        }
+    }
+}

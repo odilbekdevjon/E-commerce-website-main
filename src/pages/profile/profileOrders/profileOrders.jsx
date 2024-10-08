@@ -2,6 +2,7 @@ import "./profileOrders.scss";
 import { useState } from "react";
 import { Link , NavLink} from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import useAuth from "../../../hooks/useAuth";
 // components
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -10,7 +11,7 @@ import profileAvatar from "../../../assets/profileavatar.png";
 
 export default function ProfileOrders() {
     const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-
+    const [ user  ] = useAuth();
     const { t } = useTranslation()
 
     return(
@@ -23,16 +24,16 @@ export default function ProfileOrders() {
                         <span className="font-bold mr-2 ml-2"> > </span>
                         <Link className="" to={'/profile'}>{t("profileTitle1")}</Link>
                     </div>
-                    <div className="flex mt-10">
-                        <div className="user_right">
-                            <div className="flex">
+                    <div className="profile flex mt-10">
+                        <div className="profile__right">
+                            <div className="profile__right__user flex">
                                 <img className="" src={profileAvatar} width={60} height={60}  alt="" />
-                                <span className="mt-3 ml-5 font-bold text-[20px]">Odilbek Safarov</span>
+                                <span className="mt-3 ml-5 font-bold text-[20px]">{user?.full_name ? user?.full_name : "Odilbek Safarov"}</span>
                             </div>
                             <hr className="w-[300px] mt-2" />
                             <div className="mt-5">
                                 <Link to={'/profile'} className="w-[300px] block font-bold text-[15px] mb-4 p-4">{t("profileTitle2")}</Link>
-                                <NavLink to={'/profile/orders'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileTitle3")}</NavLink>
+                                <NavLink to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">{t("profileTitle3")}</NavLink>
                             </div>
                         </div>
                         <div className="user_left">

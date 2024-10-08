@@ -1,0 +1,155 @@
+@media (max-width:1200px) {
+    .carts {
+        flex-direction: column;
+    }
+}
+
+@media (max-width:980px) {
+    .carts {
+        flex-direction: column;
+
+        &__item {
+            flex-direction: column;
+        }
+
+        &__item--delete {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            left: 0;
+        }
+
+        &__item--price {
+            position: relative;
+            top: 0;
+        }
+    }
+}
+
+
+@media (max-width:768px) {
+    .carts {
+        flex-direction: column;
+
+        &__item {
+            margin-top: 50px;
+        }
+
+        &__item--image {
+           width: 600px;
+           height: 300px;
+        }
+
+        &__item--delete {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            left: 0;
+        }
+
+        &__item--price {
+            position: relative;
+            top: 0;
+        }
+
+        &__item--heading {
+            text-align: center;
+        }
+
+        &__item--span  {
+            text-align: center;
+        }
+
+        &__item--div {
+            text-align: center;
+        }
+
+        &__item--text {
+            width: 500px;
+        }
+
+        &__item {
+            flex-direction: column;
+        }
+
+
+        &__right {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+}
+
+@media (max-width:560px) {
+    .carts {
+
+        &__item--image {
+            width: 450px;
+            height: 250px;
+        }
+
+        &__item--text {
+            width: 450px;
+            text-align: center;
+        }
+    }
+}
+
+@media (max-width:530px) {
+    .carts {
+
+        &__item--image {
+            width: 450px;
+            height: 250px;
+        }
+
+        &__item--text {
+            width: 350px;
+        }
+
+        &__counts  {
+            width: 100px;
+            position: relative;
+            top: 20px;
+            left: 0;
+        }
+
+        &__item--wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__item--delete {
+            margin-top: 30px;
+        }
+    }
+}
+
+@media (max-width:420px) {
+    .carts {
+        &__item--text {
+            width: 300px;
+        }        
+    }
+}
+
+@media (max-width:360px) {
+    .carts {
+        &__item--text {
+            width: 250px;
+        }  
+        
+    }
+}
+
+@media (max-width:330px) {
+    .carts {
+        &__item--text {
+            width: 200px;
+            text-align: center;
+        }  
+        
+    }
+}

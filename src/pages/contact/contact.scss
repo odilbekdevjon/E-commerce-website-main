@@ -25,6 +25,10 @@
             margin: 0;
             margin-right: 100px;
         }
+
+        &__form-button {
+           
+        }
     }
 
 }
@@ -45,6 +49,14 @@
 // mobile 400
 @media (max-width:400px) {
     .contact {
+        margin-left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        &__left {
+            margin: 0;
+        }
        
         &__form-input {
             max-width: 300px;
@@ -53,6 +65,8 @@
         &__right {
             margin-top: 100px;
         }
+
+
     }
 
 }
@@ -60,13 +74,18 @@
 // mobile 375
 @media (max-width:375px) {
     .contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         &__title {
             font-size: 30px;
+            text-align: center;
         }
 
         &__span {
             width: 250px;
+            text-align: center;
         }
 
         &__wrapp {
@@ -76,6 +95,17 @@
        
         &__form-input {
             max-width: 250px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        &__form-button {
+            display: block;
+            width: 150px;
+            height: 50px;
+            margin: 0 auto;
+            margin-top: 20px;
         }
 
         &__text {
@@ -85,9 +115,18 @@
 
         &__right {
             margin-top: 100px;
-            display: flex;
-            justify-content: center;
         }
     }
 
+}
+
+@media (max-width:320px) {
+    .contact {
+
+        &__form-input {
+           margin-left: 0;
+           margin-right: 0;
+           margin-right: 30px;
+        }
+    }
 }

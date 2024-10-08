@@ -1,33 +1,26 @@
 import "./contact.scss";
-
 import { useState , useRef} from "react";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
-
 // components
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-
 // images
 import product from "../../assets/product.svg";
 import deleveriy from "../../assets/delivery.png";
 import contract from "../../assets/contract.svg";
 
 
-
 export default function Contact() {
+    const { t } = useTranslation()
 
     const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
 
 
-    const { t } = useTranslation()
-
     const name = useRef();
     const email = useRef();
     const phone = useRef();
-    const message = useRef();
-
-    
+    const message = useRef();    
     // send message
     const sendMessage = async () => {
 
@@ -52,8 +45,6 @@ export default function Contact() {
         email.current.value = null;
         phone.current.value = null;
         message.current.value = null;
-
-        console.log('send message');
     }
 
     return(
@@ -92,7 +83,7 @@ export default function Contact() {
                                     <div className="">
                                         <textarea ref={message} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black w-80" type="text" placeholder="Message"></textarea>
                                     </div>
-                                    <button onClick={() => sendMessage()} className="border-2 border-solid border-sky-950 py-3 px-10 font-bold rounded-lg mt-5 hover:bg-teal-900 hover:text-white">Submit</button>
+                                    <button onClick={() => sendMessage()} className="contact__form-button border-2 border-solid border-sky-950 py-3 px-10 font-bold rounded-lg mt-5 hover:bg-teal-900 hover:text-white">Submit</button>
                             </div>
                         </div>
                     </div>

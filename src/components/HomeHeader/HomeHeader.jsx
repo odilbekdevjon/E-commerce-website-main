@@ -1,12 +1,11 @@
 import "./HomeHeader.scss";
-
-import { json, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoEnterOutline } from "react-icons/io5";
 import { useState , useRef, useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
-import i18n from "../../i18n";
-
+import useAuth from "../../hooks/useAuth";
+import useLang from "../../hooks/useLang";
 // images
 import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
@@ -17,14 +16,12 @@ import profile from "../../assets/icons8.png";
 
 export default function HomeHeader({order}) {
     
+    const [ user, setUser ] = useAuth();
+    const [ lang, changeLang  ] = useLang();
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [ cardLength, setCardLength ] = useState(0)
-
+    const [ cardLength, setCardLength ] = useState(0);
     // lang
     const { t } = useTranslation()
-    const changeLang = (evt) => {
-        i18n.changeLanguage(evt)
-    }
 
 
     // carts
@@ -35,8 +32,8 @@ export default function HomeHeader({order}) {
     
     // ref
     const menuRef = useRef();
-    const code = useRef()
-
+    const code = useRef();
+    
     const sendCode = async () => {
 
         fetch(`https://5jiek.uz/api/v1/user/login`, {
@@ -49,7 +46,7 @@ export default function HomeHeader({order}) {
             })
         })
         .then(res => res.json())
-        .then(data => console.log(data.user))
+        .then(data => setUser(data.user))
 
         code.current.value = null;
         console.log('send code');
@@ -70,7 +67,6 @@ export default function HomeHeader({order}) {
     const closeModal = () => {
         setIsOpen(false);
     };
-
    
 
     return (
@@ -80,29 +76,29 @@ export default function HomeHeader({order}) {
                     <div className=" flex justify-between items-center">
                         <Link to={'/'}><img className="header__image rounded-lg bg-transparent" src={logo} width={200} alt="logo" /></Link>
                         <Link to={'/'}><img className="header__logo--heading lg:hidden md:hidden" src={mobileLogo} width={35} alt="logo" /></Link>
-                        <ul  className="header__list flex">
-                            <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className=" text-white font-bold  group-hover:bg-white "><a href="#products">{t("headerTitle1")}</a></Link></li>
+                        <ul  className="header__list flex mr-20">
+                            <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className=" text-white font-bold  group-hover:bg-white ">{t("headerTitle1")}</Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold"  to={"/about"}>{t("headerTitle2")}</Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/products"}>{t("headerTitle3")}</Link></li>
-                            <li className="text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                            <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                            <Link to={'/carts'} className="header__karzinka flex">
+                                <img src={cart} width={25} alt="" />
+                                <span className="text-white ml-2">Korzina</span>
+                                <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
+                            </Link>
                         </ul>
-
-                        <Link to={'/carts'} className="flex">
-                            <img src={cart} width={25} alt="" />
-                            <span className="text-white ml-2">Korzina</span>
-                             <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
-                        </Link>
-
-                        {/* <a className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz/&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
-                            One Id                 
-                        </a> */}
 
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
-                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold mb-4"><a href="#products">{t("headerTitle1")}</a></Link></li>
-                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
-                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
-                            <li className="header__menu--list text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold mb-4">{t("headerTitle1")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                                <Link to={'/carts'} className="header__karzinka flex">
+                                    <img src={cart} width={25} alt="" />
+                                    <span className="text-white ml-2">Korzina</span>
+                                    <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
+                                </Link>
                             </div>
                             <button onClick={() => closeMenu()} className="p-2 border-2 border-solid border-white flex h-12 font-bold mr-2 mt-2">X</button>
                         </menu>
@@ -111,20 +107,26 @@ export default function HomeHeader({order}) {
                                 <img className="bg-white rounded-lg" src={menu} width={35} height={35} alt="" />
                             </button>
                             
-                            <select defaultValue={i18n.language} onChange={(evt) => changeLang(evt.target.value)} className="header__select border-solid border-2 border-white-600 mr-8 rounded-lg bg-transparent font-bold text-white p-2 cursor-pointer">
+                            <select defaultValue={lang} onChange={(evt) => changeLang(evt.target.value)} className="header__select border-solid border-2 border-white-600 mr-8 rounded-lg bg-transparent font-bold text-white p-2 cursor-pointer">
                                 <option className="text-black" value="uz">uz</option>
                                 <option className="text-black" value="ru">ru</option>
                                 <option className="text-black" value="en">en</option>
                             </select>
-                            {/* <button onClick={openModal}>
-                                <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
-                                    <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
-                                </div>
-                            </button> */}
+                            {
+                                user ? (
                                 <Link to={'/profile'} className="mt-1">
                                     <img className="ml-2" src={profile} width={25} height={25} alt="" />
                                     <span className="text-white">Profile</span>
                                 </Link>
+                                ) :(
+                                // <button onClick={openModal}>
+                                    <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                                        <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
+                                            <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
+                                        </div>           
+                                    </a> 
+                                // </button>
+                            )}
                             <Modal
                                 isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal"
                                 style={{

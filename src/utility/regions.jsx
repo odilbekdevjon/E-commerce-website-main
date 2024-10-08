@@ -1,6 +1,6 @@
 const regions = [
     {
-      name: "Andijon",
+      name: "Andijon viloyati",
       district: [
         {
           name: "Oltinko'l tumani",
@@ -26,7 +26,7 @@ const regions = [
       ],
     },
     {
-      name: "Buxoro",
+      name: "Buxoro viloyati",
       district: [
         {
             name:"Vobkent tumani"
@@ -61,7 +61,7 @@ const regions = [
       ]
     },
     {
-        name:"Fargona",
+        name:"Fargona viloyati",
         district: [
             {
                 name:"Oltiariq tumani"
@@ -105,7 +105,7 @@ const regions = [
         ]
     },
     {
-        name:"Jizzax",
+        name:"Jizzax viloyati",
         district: [
             {
                 name:"Arnasoy tumani"
@@ -149,7 +149,7 @@ const regions = [
         ]
     },
     {
-        name:"Xorazim",
+        name:"Xorazim viloyati",
         district: [
             {
                 name:"Bog'ot tumani"
@@ -184,7 +184,7 @@ const regions = [
         ]
     },
     {
-        name:"Namangan",
+        name:"Namangan viloyati",
         district: [
             {
                 name:"Kosonsoy tumani"
@@ -222,7 +222,7 @@ const regions = [
         ]
     },
     {
-        name:"Samarqand",
+        name:"Samarqand viloyati",
         district: [
             {
                 name:"Oqdaryo tumani"
@@ -272,7 +272,7 @@ const regions = [
         ]
     },
     {
-        name:"Navoiy",
+        name:"Navoiy viloyati",
         district: [
             {
                 name:"Karmana tumani"
@@ -305,7 +305,7 @@ const regions = [
         ]
     },
     {
-        name:"Qashqadaryo",
+        name:"Qashqadaryo viloyati",
         district: [
             {
                 name:"Chiroqchi tumani"
@@ -349,7 +349,7 @@ const regions = [
         ]
     },
     {
-        name:"Surxondaryo",
+        name:"Surxondaryo viloyati",
         district: [
             {
                 name:"Angor tumani"
@@ -396,7 +396,7 @@ const regions = [
         ]
     },
     {
-        name:"Sirdaryo",
+        name:"Sirdaryo viloyati",
         district: [
             {
                 name:"Boyovut tumani"

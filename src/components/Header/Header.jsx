@@ -1,31 +1,30 @@
 import "./Header.scss";
-
 import { Link } from "react-router-dom";
 import { useState , useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
 import i18n from "../../i18n";
-
+import useAuth from "../../hooks/useAuth";
 // images
 import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
 import mobileLogo from "../../assets/mobile-logo.png";
 import profile from "../../assets/icons8.png";
 import cart from "../../assets/cart-shopping.svg";
+import { IoEnterOutline } from "react-icons/io5";
 
 
 
 export default function Header({order}) {
 
+    const [ user, setUser ] = useAuth();
 
     const { t } = useTranslation()
+    const menuRef = useRef();
 
     const changeLang = (evt) => {
         i18n.changeLanguage(evt)
     }
-
-    
-    const menuRef = useRef();
 
     // const [modal, setModal] = useState(false)
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -54,26 +53,31 @@ export default function Header({order}) {
                         <Link to={'/'}><img className="header__image rounded-lg block bg-transparent" src={logo} width={200} alt="logo" /></Link>
                         <Link to={'/'}><img className="header__logo--heading lg:hidden md:hidden" src={mobileLogo} width={35} alt="logo" /></Link>
                         <ul  className="header__list flex">
-                            <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className=" text-white font-bold  group-hover:bg-white "><a href="#products">{t("headerTitle1")}</a></Link></li>
+                            <li className="mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className=" text-white font-bold  group-hover:bg-white ">{t("headerTitle1")}</Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold"  to={"/about"}>{t("headerTitle2")}</Link></li>
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/products"}>{t("headerTitle3")}</Link></li>
-                            <li className="text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                            <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                            <Link to={'/carts'} className="header__karzinka flex">
+                                <img src={cart} width={25} alt="" />
+                                <span className="text-white ml-2">Korzina</span>
+                                <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
+                            </Link>
                         </ul>
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[100%] h-auto z-[10]">
                             <div className="mt-10 ml-10 ">
-                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold group-hover:bg-white mb-4"><a href="#products">{t("headerTitle1")}</a></Link></li>
-                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
-                            <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
-                            <li className="header__menu--list text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold group-hover:bg-white mb-4">{t("headerTitle1")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4"  to={"/about"}>{t("headerTitle2")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/products"}>{t("headerTitle3")}</Link></li>
+                                <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/contact"}>{t("headerTitle4")}</Link></li>
+
+                                <Link to={'/carts'} className="header__karzinka flex">
+                                    <img src={cart} width={25} alt="" />
+                                    <span className="text-white ml-2">Korzina</span>
+                                    <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
+                                </Link>
                             </div>
                             <button onClick={() => closeMenu()} className="p-2 border-2 border-solid border-white flex h-12 font-bold mr-2 mt-2">X</button>
                         </menu>
-
-                        <Link to={'/carts'} className="flex">
-                            <img src={cart} width={25} alt="" />
-                            <span className="text-white ml-2">Korzina</span>
-                            <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
-                        </Link>
 
                         <div className=" flex items-center">
                             <button onClick={() => showMenu()}  className="header__burger mr-6">
@@ -85,15 +89,21 @@ export default function Header({order}) {
                                 <option className="text-black" value="ru">ru</option>
                                 <option className="text-black" value="en">en</option>
                             </select>
-                            {/* <button onClick={openModal}>
-                                <div className="header__enter flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
-                                    <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
-                                </div>
-                            </button> */}
-                            <Link to={'/profile'} className="mt-1">
+                            {
+                                user ? (
+                                <Link to={'/profile'} className="mt-1">
                                     <img className="ml-2" src={profile} width={25} height={25} alt="" />
                                     <span className="text-white">Profile</span>
-                            </Link>
+                                </Link>
+                                ) :(
+                                // <button onClick={openModal}>
+                                    <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                                        <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
+                                            <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
+                                        </div>           
+                                    </a> 
+                                // </button>
+                            )}
                             <Modal
                                 isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal"
                                 style={{

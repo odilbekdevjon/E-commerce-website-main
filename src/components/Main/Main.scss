@@ -1,12 +1,37 @@
+.main {
 
+
+    &__item {
+        max-width: 320px;
+        // min-height: 400px;
+    }
+
+    &__img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+
+    .text-ellipsis {
+        width: 200px; /* kenglikni belgilang */
+        white-space: nowrap; /* Matnni bitta qatorda saqlash */
+        overflow: hidden; /* Kenglikdan oshgan qismini yashirish */
+        text-overflow: ellipsis; /* O'sha joyda "..." chiqarish */
+    }
+
+    .slick-next::before {
+        color: #000;
+    }
+
+    .slick-prev::before {
+        color: #000;
+    }
+
+}
 
 @media only screen and (max-width:768px) {
     .main {
-
-        &__wrapper {
-            
-        }
-
         &__img {
             width: 100%;
             display: block;
@@ -30,7 +55,7 @@
 
         &__item {
             width: 400px;
-            height: 600px;
+            height: 650px;
             border: none;
             border: 1px solid black;
             margin-top: 100px;
@@ -38,14 +63,59 @@
             justify-content: center;
             align-items: center;
         }
+
+        &__text {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        &__cart-img {
+            // margin-top: 10px;
+            position: relative;
+            top: 15px;
+        }
+
+        .slick-arrow::before{
+            background: #000!important;
+            border: 2px solid black;
+            color: black;
+        }
+
+        .slick-next {
+            background: #000;
+            border: 2px solid black;
+
+        }
     }
 }
 
 
 @media only screen and (max-width:375px) {
-    .main {
-        &_item {
+        .main {
 
+            &__wrapp {
+                flex-direction: column;
+                justify-content: center;
+                margin: 0 auto;
+            }
+
+            &__cart-img {
+                margin: 0 auto;
+            }
         }
+}
+
+
+@media only screen and (max-width:310px) {
+    .main {
+
+        &__item {
+            max-width: 230px;
+        }
+
+        &__text {
+            max-width: 200px;
+        }
+
     }
 }

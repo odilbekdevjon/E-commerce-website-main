@@ -1,11 +1,5 @@
 import "./Hero.scss";
-
-
 import { useTranslation } from "react-i18next";
-
-
-// images
-
 
 export default function Hero() {
 
