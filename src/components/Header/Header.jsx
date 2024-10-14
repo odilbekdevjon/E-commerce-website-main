@@ -1,33 +1,70 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
-import { useState , useRef } from "react";
+import { useState , useRef, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
 import i18n from "../../i18n";
 import useAuth from "../../hooks/useAuth";
+import { API } from "../../utility/api";
+import { DarkModeContext } from "../../context/themContext";
 // images
 import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
 import mobileLogo from "../../assets/mobile-logo.png";
 import profile from "../../assets/icons8.png";
 import cart from "../../assets/cart-shopping.svg";
+import userImage from "../../assets/user.png";
 import { IoEnterOutline } from "react-icons/io5";
 
-
-
 export default function Header({order}) {
-
-    const [ user, setUser ] = useAuth();
-
+    
     const { t } = useTranslation()
-    const menuRef = useRef();
+    const [ user, setUser ] = useAuth();
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const { isDarkMode ,toggleDarkMode } = useContext(DarkModeContext);
 
     const changeLang = (evt) => {
         i18n.changeLanguage(evt)
     }
 
-    // const [modal, setModal] = useState(false)
-    const [modalIsOpen, setIsOpen] = useState(false);
+    // ref
+    const menuRef = useRef();
+    const code = useRef();
+    const sendCode = async () => {
+ 
+        try {
+            const response = await API.post(`/user/login`, {
+                code: code.current.value
+            })
+            setUser(response.data.user);
+        } catch (error) {
+            console.error(error);
+        }
+        code.current.value = null;
+        console.log('send code');
+        closeModal()
+    }
+
+    // LOG OUT
+    const [isLogoutVisible, setLogoutVisible] = useState(false);
+    const handleMouseEnter = () => {
+        setLogoutVisible(true);
+    };
+    const handleMouseLeave = () => {
+        setLogoutVisible(false);
+    };
+    // get logOUT
+    const handleLogout = async () => {
+        try {
+            const response = await API.get(`/user/logout`)
+            console.log(response);
+            localStorage.removeItem("user");
+            window.location.reload();
+            window.location.href = 'http://localhost:3000/';
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     // menu
     const showMenu = () => {
@@ -79,6 +116,12 @@ export default function Header({order}) {
                             <button onClick={() => closeMenu()} className="p-2 border-2 border-solid border-white flex h-12 font-bold mr-2 mt-2">X</button>
                         </menu>
 
+                        <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                        One Id
+                        </a> 
+
+                        <button className="text-white" onClick={toggleDarkMode}>{isDarkMode ? 'Light' : 'Dark'}</button>
+
                         <div className=" flex items-center">
                             <button onClick={() => showMenu()}  className="header__burger mr-6">
                                 <img className="bg-white rounded-lg" src={menu} width={35} height={35} alt="" />
@@ -91,19 +134,36 @@ export default function Header({order}) {
                             </select>
                             {
                                 user ? (
-                                <Link to={'/profile'} className="mt-1">
+                                <Link to={'/profile'} 
+                                onMouseEnter={handleMouseEnter} 
+                                onMouseLeave={handleMouseLeave} 
+                                className="mt-1">
                                     <img className="ml-2" src={profile} width={25} height={25} alt="" />
                                     <span className="text-white">Profile</span>
                                 </Link>
                                 ) :(
-                                // <button onClick={openModal}>
-                                    <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                                <button onClick={openModal}>
+                                    {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g"> */}
                                         <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
                                             <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
                                         </div>           
-                                    </a> 
-                                // </button>
+                                    {/* </a>  */}
+                                 </button>
                             )}
+
+                                    { isLogoutVisible && (
+                                       <div className="logout cursor-pointer bg-sky-900" 
+                                            onMouseEnter={handleMouseEnter} 
+                                            onMouseLeave={handleMouseLeave}>
+                                        <h2 className="text-[13px] capitalize flex">
+                                            <img src={userImage} width={18} height={15} alt="profile" /> 
+                                            {`${user.first_name } ${user.sur_name}`}
+                                        </h2>
+                                        <hr className="h-[2px] bg-slate-400"/>
+                                            <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 " onClick={handleLogout}>{t("headerTitle5")}</div> 
+                                       </div>
+                                    ) }
+
                             <Modal
                                 isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal"
                                 style={{
@@ -119,7 +179,7 @@ export default function Header({order}) {
                                     <input className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" />
                                     <a className="text-blue-400 underline mt-3 mb-3 block" href=""><input className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</a>
                                     <hr />
-                                    <button className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
+                                    <button onClick={sendCode} className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
                                     <button className="text-black mt-4 ml-32 border-solid border-2 border-gray-500 p-1">Kodni yangilash</button>
                                 </div>
                             </Modal>

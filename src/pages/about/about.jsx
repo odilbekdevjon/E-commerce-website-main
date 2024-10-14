@@ -6,9 +6,7 @@ import Footer from "../../components/Footer/Footer";
 import { useTranslation } from "react-i18next";
 
 export default function About() {
-
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-
     const { t } = useTranslation()
     
     return(

@@ -1,6 +1,7 @@
 import "./contact.scss";
 import { useState , useRef} from "react";
 import { useTranslation } from "react-i18next";
+import { API } from "../../utility/api";
 import axios from "axios";
 // components
 import Header from "../../components/Header/Header";
@@ -13,17 +14,15 @@ import contract from "../../assets/contract.svg";
 
 export default function Contact() {
     const { t } = useTranslation()
+    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
 
-    const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-
-
+    // values by ref
     const name = useRef();
     const email = useRef();
     const phone = useRef();
     const message = useRef();    
     // send message
     const sendMessage = async () => {
-
         const data = new FormData();
         data.append('name',  name.current.value);
         data.append('email', email.current.value);
@@ -31,20 +30,17 @@ export default function Contact() {
         data.append('phone', phone.current.value);
 
         try {
-            await axios.post(`https://5jiek.uz/api/v1/contacts/create-contact-us`, data, {
-                headers : {
-                    "Content-Type": "application/json",
-                },
-                withCredentials: true 
-            })
+            const response = await API.post(`/contacts/create-contact-us`, data)
+            console.log(response.data);
         } catch (error) {
-         console.log(error)
+            console.error(error);
         }
 
         name.current.value = null;
         email.current.value = null;
         phone.current.value = null;
         message.current.value = null;
+        console.log('sen messages');
     }
 
     return(

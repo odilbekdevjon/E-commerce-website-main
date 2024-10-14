@@ -1,8 +1,8 @@
-import "./profileOrders.scss";
+import "./payments.scss";
+// import axios from "axios";
 import { useState , useEffect} from "react";
 import { Link , NavLink} from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { API } from "../../../utility/api";
 import useAuth from "../../../hooks/useAuth";
 // components
 import Header from "../../../components/Header/Header";
@@ -10,23 +10,11 @@ import Footer from "../../../components/Footer/Footer";
 // images
 import profileAvatar from "../../../assets/profileavatar.png";
 
-export default function ProfileOrders() {
+export default function Payments() {
     const { t } = useTranslation()
     const [ user  ] = useAuth();
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-    const [ contracts, setContracts ] = useState([]);
 
-    //  get CONTRACTS
-    useEffect(() => {
-        API.get('/contract/get-contracts-list-by-user')
-            .then(response => {
-                console.log(response.data.contract);
-            })
-            .catch(error => {
-                console.log(error);
-            }); 
-    }, []);
-    
     return(
         <>
             <Header order={order}/>
@@ -46,14 +34,14 @@ export default function ProfileOrders() {
                             <hr className="w-[300px] mt-2" />
                             <div className="mt-5">
                                 <Link to={'/profile'} className="w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</Link>
-                                <NavLink to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
-                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
-                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
+                                <Link to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</Link>
+                                <NavLink to={'/profile/messages'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
+                                <NavLink to={'/profile/payments'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
                             </div>
                         </div>
                         <div className="user_left">
                             <div className="ml-10">
-                                <h1 className="font-bold text-[35px]">{t("profileTitle4")}</h1>
+                                <h1 className="font-bold text-[35px]">Payments page</h1>
                             </div>
                         </div>
                     </div>

@@ -11,8 +11,8 @@ import profileAvatar from "../../assets/profileavatar.png";
 
 export default function Profile() {
     const { t } = useTranslation();
-    const [ user ] = useAuth();
-    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+    const [ user ] = useAuth();    
+    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
     
 
     return(
@@ -29,20 +29,22 @@ export default function Profile() {
                         <div className="profile__right">
                             <div className="profile__right__user flex">
                                 <img className="" src={profileAvatar} width={60} height={60}  alt="" />
-                                <span className="mt-3 ml-5 font-bold text-[20px]">{user?.full_name ? user?.full_name : "Odilbek Safarov"}</span>
+                                <span className="mt-3 ml-5 font-bold text-[20px]">{`${user?.sur_name} ${user.first_name }` ? `${user?.sur_name} ${user.first_name }`  : "Odilbek Safarov"}</span>
                             </div>
                             <hr className="profile__right--hr w-[300px] mt-2" />
                             <div className="profile__right__links mt-5">
-                                <NavLink to={'/profile'} className="profile__right__link w-[300px] block font-bold text-[15px] mb-4 p-4">{t("profileTitle2")}</NavLink>
-                                <NavLink to={'/profile/orders'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileTitle3")}</NavLink>
+                                <NavLink to={'/profile'} className="profile__right__link w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</NavLink>
+                                <NavLink to={'/profile/orders'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
+                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
+                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
                             </div>
                         </div>
                         <div className="profile__left">
-                            <div className="ml-5">
+                            <div className="ml-8">
                                 <h1 className="text-[35px] font-bold">{t("profileTitle2")}</h1>
                                 <img className="mt-10" src={profileAvatar} width={70} height={70}  alt="" />
 
-                                <div className="profile__left__data w-[700px] mt-5 flex justify-between ">
+                                <div className="profile__left__data w-[750px] mt-5 flex justify-between ">
 
                                     <div className="profile__left--right">
                                         <span className="opacity-[0.6]">{t("profileTitle5")}</span>
@@ -59,7 +61,22 @@ export default function Profile() {
                                         <span className=" opacity-[0.6]">{t("profileTitle8")}</span>
                                         <h2 className="font-bold mt-2">{user?.phone_number}</h2>
                                     </div>
+                                    
                                 </div>
+                                {/* <div className="">
+                                    <h3 className="font-bold text-[23px] underline mt-10">Devices</h3>
+
+                                    {
+                                        user.Device.map((item, i) => {
+                                            return(
+                                                <div key={i} className="">
+                                                    <span className=" opacity-[0.6]">Komputer device</span>
+                                                    <h2 className="font-bold mt-2 mb-10">{} </h2>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div> */}
                             </div>
                         </div>
                     </div>

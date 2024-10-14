@@ -1,3 +1,22 @@
+
+// logout
+.user__link {
+    position: relative;
+    display: inline-block; /* Horizontda joylashishi uchun */
+    cursor: pointer; /* Ko'rsatgichni tugmada ko'rsatish */
+}
+
+.logout {
+    position: absolute;
+    top: 78%; /* Profil tugmasi ostida ko'rinadi */
+    right: 40px;
+    background-color: #f8f8f8; /* Tugma fon rangi */
+    border: 1px solid #ccc; /* Tugma chegarasi */
+    padding: 5px; /* Tugma ichidagi joy */
+    z-index: 1; /* Boshqa elementlardan yuqorida ko'rinishi uchun */
+    border-radius: 7px;
+}
+
 .header {
 
     &__menu {
@@ -8,7 +27,6 @@
         display: none;
     }
 }
-
 
 @media only screen and (max-width:1200px) {
     .header {

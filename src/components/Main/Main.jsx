@@ -2,7 +2,7 @@ import "./Main.scss";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import axios from 'axios';
+import { API } from "../../utility/api";
 // images
 import cart from "../../assets/add-to-cart.png";
 // slider
@@ -10,12 +10,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 export default function Main({setOrder}) {
     const { i18n } = useTranslation();
     const [data, setData] = useState([]);
     const [category, setCategory] = useState([])
-    const [error, setError] = useState(null);
+    const [, setError] = useState(null);
     
         var settings = {
           dots: true,              
@@ -45,22 +44,20 @@ export default function Main({setOrder}) {
             ]
         };
 
-
     //  get products 
     useEffect(() => {
-        axios.get('https://5jiek.uz/api/v1/product/get-products')
+        API.get('/product/get-products')
             .then(response => {
                 setData(response.data.data);
             })
             .catch(error => {
                 setError(error);
             });
-    }, []);
-
+    }, []);    
 
     //  get category
     useEffect(() => {
-        axios.get('https://5jiek.uz/api/v1/categorie/get-categories')
+        API.get('/categorie/get-categories')
             .then(response => {
                 setCategory(response.data.categories);
             })
@@ -94,7 +91,6 @@ export default function Main({setOrder}) {
             localStorage.setItem('cart', JSON.stringify(newCard))
         }
     }
-
 
     return (
         <div className="container">

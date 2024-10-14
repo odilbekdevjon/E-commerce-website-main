@@ -1,12 +1,17 @@
 
-/* #root {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-} */
-
-
-
+/* Light Mode */
+.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.5s, color 0.5s;
+}
+  
+  /* Dark Mode */
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+    transition: background-color 0.5s, color 0.5s;
+}
 
 html {
     overflow-x: hidden !important;
@@ -24,14 +29,8 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: inherit;
-    // background-image: url('../src/assets/background.jpg');
-    // background-position: center;
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // color: white;
     color: rgb(0, 0, 104);
 }
-
 
 .container {
     max-width: 1440px;

@@ -1,32 +1,24 @@
 import "./products.scss";
-
 import { useState , useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { API } from "../../utility/api";
 // components
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer"; 
 // images
 import cart from "../../assets/add-to-cart.png";
 
-
-
 export default function Products({setOrder}) {
-  const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-
+    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     const { t , i18n } = useTranslation();
-
     const [ products, setProducts ] = useState();
     const [category, setCategory] = useState([]);
-    const [error, setError] = useState(null);
-
+    const [, setError] = useState(null);
 
     // get products
     useEffect(() => {
-        axios.get('https://5jiek.uz/api/v1/product/get-products' , {
-            withCredentials: true
-        })
+        API.get('/product/get-products')
         .then(response => {
             setProducts(response.data.data); 
             })
@@ -37,7 +29,7 @@ export default function Products({setOrder}) {
 
     //  get category
     useEffect(() => {
-        axios.get('https://5jiek.uz/api/v1/categorie/get-categories')
+        API.get('/categorie/get-categories')
             .then(response => {
                 setCategory(response.data.categories);
             })
@@ -47,7 +39,6 @@ export default function Products({setOrder}) {
     }, []);
 
     const addToCard = (id) => {
-
         const oldCard = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
         const findOldCard = oldCard.some(item => item.id === id)
         
@@ -71,7 +62,6 @@ export default function Products({setOrder}) {
             localStorage.setItem('cart', JSON.stringify(newCard))
         }
     }
-
 
     return(
         <>

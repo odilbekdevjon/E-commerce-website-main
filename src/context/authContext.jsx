@@ -1,10 +1,9 @@
 import {createContext, useEffect, useState} from "react";
 
-const Context = createContext()
+const Context = createContext();
 
 function Provider({children}) {
-
-    const [user, setUser]  = useState(JSON.parse(window.localStorage.getItem("user")) || null)
+    const [user, setUser]  = useState(JSON.parse(window.localStorage.getItem("user")));
 
     useEffect(() => {
         window.localStorage.setItem("user", JSON.stringify(user))

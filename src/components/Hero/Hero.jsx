@@ -2,7 +2,6 @@ import "./Hero.scss";
 import { useTranslation } from "react-i18next";
 
 export default function Hero() {
-
     const { t } = useTranslation()
 
     return(

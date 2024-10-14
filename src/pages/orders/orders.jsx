@@ -1,30 +1,23 @@
 "use client";
-
 import "./orders.scss";
-
 import { useState , useEffect} from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
+import { API } from "../../utility/api"; 
 // components
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
 export default function Orders() {
-
-  const [order ] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-
+    const [order ] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     const [ singleData ,setSingleData ] = useState();
     const [ , setError ] = useState(null);
-    // const [  ]
+    const [count , setCount ] = useState(1)
     
     const { id } = useParams()
 
     // get products
     useEffect(() => {
-        axios.get(`https://5jiek.uz/api/v1/product/get-product/${id}` , {
-            withCredentials: true
-        })
+        API.get(`/product/get-product/${id}`)
         .then(response => {
             setSingleData(response.data.data); 
             })
@@ -33,10 +26,6 @@ export default function Orders() {
         });
     },[""]);
 
-
-    const [count , setCount ] = useState(1)
-
-    
     return(
         <>
         <Header order={order}/>
@@ -69,9 +58,9 @@ export default function Orders() {
                                    </div>
                                 </div>
                             </li>
-                }
-            </ul>
-        </div>
+                        }
+                    </ul>
+                </div>
             <Footer />
         </>
     )
