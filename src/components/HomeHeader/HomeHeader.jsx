@@ -43,7 +43,7 @@ export default function HomeHeader({order}) {
         } catch (error) {
             console.error(error);
         }
-        code.current.value = null;
+        // code.current.value = null;
         closeModal()
     }
 
@@ -59,7 +59,7 @@ export default function HomeHeader({order}) {
     const handleLogout = async () => {
         try {
             const response = await API.get(`/user/logout`)
-            console.log(response);
+            console.log(response.data);
             localStorage.removeItem("user");
             window.location.reload();
             window.location.href = 'http://localhost:3000/';

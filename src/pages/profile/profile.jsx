@@ -1,7 +1,8 @@
 import "./profile.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link , NavLink} from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { API } from "../../utility/api";
 import useAuth from "../../hooks/useAuth";
 // components
 import Header from "../../components/Header/Header";
@@ -11,10 +12,23 @@ import profileAvatar from "../../assets/profileavatar.png";
 
 export default function Profile() {
     const { t } = useTranslation();
-    const [ user ] = useAuth();    
+    const [ user, setUser ] = useAuth();    
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
     
 
+    //  get CONTRACTS
+    useEffect(() => {
+        API.get('/contract/get-contracts-list-by-user')
+            .then(response => {
+                console.log(response.data.contract[0].User);
+                setUser(response.data?.contract[0].User)
+            })
+            .catch(error => {
+                console.log(error);
+            }); 
+    }, []);
+    
+    
     return(
         <>
             <Header order={order}/>
@@ -29,7 +43,7 @@ export default function Profile() {
                         <div className="profile__right">
                             <div className="profile__right__user flex">
                                 <img className="" src={profileAvatar} width={60} height={60}  alt="" />
-                                <span className="mt-3 ml-5 font-bold text-[20px]">{`${user?.sur_name} ${user.first_name }` ? `${user?.sur_name} ${user.first_name }`  : "Odilbek Safarov"}</span>
+                                <span className="mt-3 ml-5 font-bold text-[20px]">{`${user?.sur_name} ${user?.first_name }` ? `${user?.sur_name} ${user?.first_name }`  : "Odilbek Safarov"}</span>
                             </div>
                             <hr className="profile__right--hr w-[300px] mt-2" />
                             <div className="profile__right__links mt-5">
@@ -61,22 +75,8 @@ export default function Profile() {
                                         <span className=" opacity-[0.6]">{t("profileTitle8")}</span>
                                         <h2 className="font-bold mt-2">{user?.phone_number}</h2>
                                     </div>
-                                    
                                 </div>
-                                {/* <div className="">
-                                    <h3 className="font-bold text-[23px] underline mt-10">Devices</h3>
-
-                                    {
-                                        user.Device.map((item, i) => {
-                                            return(
-                                                <div key={i} className="">
-                                                    <span className=" opacity-[0.6]">Komputer device</span>
-                                                    <h2 className="font-bold mt-2 mb-10">{} </h2>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div> */}
+                                {/* end */}
                             </div>
                         </div>
                     </div>

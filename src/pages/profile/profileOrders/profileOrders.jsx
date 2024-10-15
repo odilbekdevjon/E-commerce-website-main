@@ -4,6 +4,7 @@ import { Link , NavLink} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API } from "../../../utility/api";
 import useAuth from "../../../hooks/useAuth";
+import dayjs from 'dayjs';
 // components
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -15,17 +16,30 @@ export default function ProfileOrders() {
     const [ user  ] = useAuth();
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     const [ contracts, setContracts ] = useState([]);
+    const now = dayjs()
+    
 
     //  get CONTRACTS
     useEffect(() => {
         API.get('/contract/get-contracts-list-by-user')
             .then(response => {
                 console.log(response.data.contract);
+                setContracts(response.data.contract);
             })
             .catch(error => {
                 console.log(error);
             }); 
     }, []);
+
+    const getById = async (id) => {
+        console.log(id);
+        try {
+            const response = await API.get(`/contract/get-contract-by-user/${id}`)
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     
     return(
         <>
@@ -53,7 +67,42 @@ export default function ProfileOrders() {
                         </div>
                         <div className="user_left">
                             <div className="ml-10">
-                                <h1 className="font-bold text-[35px]">{t("profileTitle4")}</h1>
+                                <h1 className="font-bold text-[35px] mb-5">{t("profileTitle4")}</h1>
+                                <table className="w-[1100px] p-5 border-2 border-solid border-black">
+                                    <thead className="border-2 border-solid border-black">
+                                        <tr className="">
+                                            <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Shartnomaning tugash sanasi</td>
+                                            <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Shartnoma fayli</td>
+                                            <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Yetkazib berish manzili</td>
+                                            {/* <td className="mr-5">Yetkazib berish sanasi</td> */}
+                                            <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Yetkazib berish xizmati</td>
+                                            <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Umumiy narx</td>
+                                            {/* <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Tulov muddati</td> */}
+                                            <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Batafsil ma'lumot</td>
+                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            contracts?.map(item => {
+                                                return(
+                                                    <tr key={item?.id} className="">
+                                                        <td className="border-2 border-solid border-black p-2">{item?.contractEndDate}</td>
+                                                        <td className="border-2 border-solid border-black p-2">
+                                                            <a className="block text-blue-500" href={item?.contractFile.contractFileRu} target="_blank">name uz</a>
+                                                            <a className="block text-blue-500" href={item?.contractFile.contractFileUz} target="_blank">name ru</a>
+                                                        </td>
+                                                        <td className="border-2 border-solid border-black p-2"><p className="w-48">{item?.shippingAddress}</p></td>
+                                                        <td className="border-2 border-solid border-black p-2"><button className="">{item?.isDelivery === true ? "Mavjud" : "Mavjud emas"}</button></td>
+                                                        <td className="border-2 border-solid border-black p-2">{item?.totalPrice}</td>
+                                                        {/* <td className="">{now.format(item?.paymentEndDate)}</td> */}
+                                                        <td className="p-2 text-blue-500"><Link to={`/profile/order/${item?.id}`}>Batafsil</Link></td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

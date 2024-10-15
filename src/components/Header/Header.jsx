@@ -17,8 +17,8 @@ import userImage from "../../assets/user.png";
 import { IoEnterOutline } from "react-icons/io5";
 
 export default function Header({order}) {
-    
-    const { t } = useTranslation()
+
+    const { t } = useTranslation();
     const [ user, setUser ] = useAuth();
     const [modalIsOpen, setIsOpen] = useState(false);
     const { isDarkMode ,toggleDarkMode } = useContext(DarkModeContext);
@@ -30,8 +30,8 @@ export default function Header({order}) {
     // ref
     const menuRef = useRef();
     const code = useRef();
+
     const sendCode = async () => {
- 
         try {
             const response = await API.post(`/user/login`, {
                 code: code.current.value

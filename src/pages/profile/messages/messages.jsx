@@ -1,6 +1,6 @@
 import "./messages.scss";
 // import axios from "axios";
-import { useState , useEffect} from "react";
+import { useState , useEffect, useRef} from "react";
 import { Link , NavLink} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useAuth from "../../../hooks/useAuth";
@@ -14,6 +14,26 @@ export default function Messages() {
     const { t } = useTranslation()
     const [ user  ] = useAuth();
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+    const inputName = useRef()
+
+    const sendMessages = () => {
+        console.log('ok');
+        console.log(inputName.current.value);
+        
+            // const data = new FormData();
+            // data.append('name',  inputName.current.value);
+
+            // try {
+            //     await axios.post(`https://5jiek.uz/api/v1/contacts/create-contact-us`, data, {
+            //         headers : {
+            //             "Content-Type": "application/json",
+            //         },
+            //         withCredentials: true 
+            //     })
+            // } catch (error) {
+            // console.log(error)
+            // }
+    }
 
     return(
         <>
@@ -31,7 +51,7 @@ export default function Messages() {
                                 <img className="" src={profileAvatar} width={60} height={60}  alt="" />
                                 <span className="mt-3 ml-5 font-bold text-[20px]">{`${user?.sur_name} ${user.first_name }` ? `${user?.sur_name} ${user.first_name }`  : "Odilbek Safarov"}</span>
                             </div>
-                            <hr className="w-[300px] mt-2" />
+                            <hr className="w-[300px] mt-2"/>
                             <div className="mt-5">
                                 <Link to={'/profile'} className="w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</Link>
                                 <Link to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</Link>
@@ -39,9 +59,13 @@ export default function Messages() {
                                 <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
                             </div>
                         </div>
-                        <div className="user_left">
+                        <div className="user_left w-[1000px]">
                             <div className="ml-10">
                                 <h1 className="font-bold text-[35px]">Messages page</h1>
+                               <div className="w-[70%] absolute bottom-0 flex z-10">
+                                    <input ref={inputName} className="w-[100%] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message" />
+                                    <button className="p-2 bg-blue-900 rounded-lg text-white" onClick={sendMessages}>Send</button>
+                               </div>
                             </div>
                         </div>
                     </div>

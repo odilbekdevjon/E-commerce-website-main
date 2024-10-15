@@ -11,8 +11,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function Main({setOrder}) {
+
+    const { t } = useTranslation()
     const { i18n } = useTranslation();
     const [data, setData] = useState([]);
+    const [newdata, setNewData] = useState([]);
     const [category, setCategory] = useState([])
     const [, setError] = useState(null);
     
@@ -20,7 +23,7 @@ export default function Main({setOrder}) {
           dots: true,              
           infinite: true,          
           speed: 500,              
-          slidesToShow: 4,         
+          slidesToShow: 1,         
           slidesToScroll: 1,      
           autoplay: true,          
         //   autoplaySpeed: 2000, 
@@ -44,9 +47,9 @@ export default function Main({setOrder}) {
             ]
         };
 
-    //  get products 
+    //  get top products 
     useEffect(() => {
-        API.get('/product/get-products')
+        API.get('/product/get-top-products')
             .then(response => {
                 setData(response.data.data);
             })
@@ -54,6 +57,18 @@ export default function Main({setOrder}) {
                 setError(error);
             });
     }, []);    
+
+      //  get new products 
+      useEffect(() => {
+        API.get('/product/get-new-products')
+            .then(response => {
+                setNewData(response.data.data);
+            })
+            .catch(error => {
+                setError(error);
+            });
+    }, []);    
+
 
     //  get category
     useEffect(() => {
@@ -95,16 +110,16 @@ export default function Main({setOrder}) {
     return (
         <div className="container">
             <main className="main mt-10">
-                {category?.map((cat, i) => <div key={i} className="main__wrapper">
-                    <h1 className="font-bold text-[35px] text-center">
-                        {cat?.[`name_${i18n.language}`]}
+                    <h1 className="font-bold text-[30px] text-center">
+                        {t("mainTitle1")}
                     </h1>
                     <ul className="main__list  mb-10">
-                    <Slider {...settings}>
+                    {/* <Slider {...settings}> */}
                        {
-                            data?.filter(i => i.categoryId == cat.id).map(item => {
+                            data?.map(item => {
                                 return (
-                                    <li id="cars" key={item?.id} className="main__item w-[300px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg">
+                                    <li id="cars" key={item?.id} className="main__item w-[400px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg">
+                                        <span className="p-2 bg-red-600 absolute rounded-lg text-white font-bold">TOP</span>
                                         <img className="main__img mb-4 rounded-lg" src={item?.image[0]} width={250} height={250} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
                                         <p className="main__text text-ellipsis w-60 ">
@@ -123,9 +138,39 @@ export default function Main({setOrder}) {
                                 )
                             })
                         }
-                        </Slider>
+                        {/* </Slider> */}
                     </ul>
-                </div>)}
+              
+
+                <div className="">
+                    <h1 className="text-[30px] font-bold text-center">{t("mainTitle2")}</h1>
+                    <ul className="flex mb-20">
+                        {
+                            newdata?.map(item => {
+                                return (
+                                    <li id="cars" key={item?.id} className="main__item w-[400px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg mr-10">
+                                        <span className="p-2 bg-red-600 absolute rounded-lg text-white font-bold">{t("mainTitle3")}</span>
+                                        <img className="main__img mb-4 rounded-lg" src={item?.image[0]} width={250} height={250} alt="" />
+                                        <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
+                                        <p className="main__text text-ellipsis w-60 ">
+                                            {item?.description_uz}
+                                        </p>
+                                        <span className="block mt-4 mb-1">{item?.discount}</span>
+                                        <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item?.price}</span>
+                                        <div className="">(<b>qoldiq:</b> {item?.stock})</div>
+                                        <div className="main__wrapp flex items-center">
+                                            <a className="main__link" href=""><Link className=" w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link></a>
+                                            <button onClick={() => addToCard(`${item?.id}`)} className="main__cart-img ml-20 mt-4 border-2 border-solid border-black p-1 rounded-lg hover:cursor-pointer">
+                                                <img className="" src={cart} width={30} height={30} alt="cart" />
+                                            </button>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+
             </main>
         </div>
     )

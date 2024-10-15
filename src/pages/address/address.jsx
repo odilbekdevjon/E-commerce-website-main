@@ -1,16 +1,17 @@
 import "./address.scss";
 import { useState } from "react";
 import { API } from "../../utility/api";
-import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import axios from "axios";
 // data
 import regions from "../../utility/regions";
 import { useNavigation } from "react-router-dom";
 
 export default function Adress() {
-    const navigate = useNavigation()
+    // const navigate = useNavigation()
+
     const [ user ]  = useAuth()    
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     // input data
@@ -37,15 +38,12 @@ export default function Adress() {
             localStorage.removeItem("cart")
             localStorage.removeItem("data")
             window.location.reload()
-            navigate('/profile/orders')
         } catch (error) {
             console.error(error);
         }
     }
 
-
     const sendAdres = async () => {
-
         const address = `${regionSelect} ${distirictSelect} ${addressSelect}`;
         // console.log(`oked:${oked} , xr:${xr} , bank:${bank} , mfo:${mfo}`);
        
@@ -58,16 +56,24 @@ export default function Adress() {
         data.append('mfo', mfo);
 
         try {
-            const response = await API.patch(`/user/update-user-data`, data )
-            console.log(response.data);
-            localStorage.removeItem("cart")
-            localStorage.removeItem("data")
-            window.location.reload()
-            navigate('/profile/orders')
-            sendContract()
+            await axios.patch(`https://5jiek.uz/api/v1/user/update-user-data`, data, {
+                headers : {
+                    "Content-Type": "application/json",
+                },
+                withCredentials:true,
+            })
+            .then(response => {
+                console.log('Data updated successfully', response.data);
+                sendContract()
+                localStorage.removeItem("cart")
+                localStorage.removeItem("data")
+                window.location.reload()
+                // navigate('/profile/orders')
+            })
         } catch (error) {
-            console.error(error);
+            console.log(error)
         }
+        console.log('send data');
     }
 
     return(

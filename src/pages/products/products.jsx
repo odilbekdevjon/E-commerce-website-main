@@ -90,7 +90,7 @@ export default function Products({setOrder}) {
  
                             </div>
                             <div className="products__right">
-                                <h2 id="products" className="font-bold text-[30px] pt-10">Barcha maxsulotlar</h2>
+                                <h2 id="products" className="font-bold text-[30px] pt-10">{t("productTitle3")}</h2>
                                 <ul className="main__list flex flex-wrap mb-10">
                                     {
                                         products?.map(item => {

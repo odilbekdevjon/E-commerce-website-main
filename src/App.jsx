@@ -2,8 +2,7 @@ import './App.scss';
 import { useState, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DarkModeContext } from './context/themContext';
-
-// components
+// pages
 import Home from './pages/home';
 import About from './pages/about/about';
 import Contact from './pages/contact/contact';
@@ -15,6 +14,7 @@ import Profile from './pages/profile/profile';
 import ProfileOrders from './pages/profile/profileOrders/profileOrders';
 import Messages from './pages/profile/messages/messages';
 import Payments from './pages/profile/payments/payments';
+import OrderById from './pages/profile/orderById/orderById';
 
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
           <Route path='/carts' element={<Carts/>} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/profile/orders' element={<ProfileOrders/>}/>
+          <Route path='/profile/order/:id' element={<OrderById/>}/>
           <Route path='/profile/messages' element={<Messages/>}/>
           <Route path='/profile/payments' element={<Payments/>}/>
           <Route path='/order/:id' element={<Orders/>} />
