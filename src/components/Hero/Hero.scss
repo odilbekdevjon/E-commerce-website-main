@@ -1,4 +1,16 @@
-
+/* Light Mode */
+.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.5s, color 0.5s;
+}
+  
+  /* Dark Mode */
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+    transition: background-color 0.5s, color 0.5s;
+}
 @media only screen and (max-width:768px) {
 
     .hero__section {

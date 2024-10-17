@@ -15,6 +15,7 @@ import profile from "../../assets/icons8.png";
 import cart from "../../assets/cart-shopping.svg";
 import userImage from "../../assets/user.png";
 import { IoEnterOutline } from "react-icons/io5";
+import notificationIcon from "../../assets/notification-belL.svg";
 
 export default function Header({order}) {
 
@@ -116,9 +117,9 @@ export default function Header({order}) {
                             <button onClick={() => closeMenu()} className="p-2 border-2 border-solid border-white flex h-12 font-bold mr-2 mt-2">X</button>
                         </menu>
 
-                        <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                        {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                         One Id
-                        </a> 
+                        </a>  */}
 
                         <button className="text-white" onClick={toggleDarkMode}>{isDarkMode ? 'Light' : 'Dark'}</button>
 
@@ -134,13 +135,19 @@ export default function Header({order}) {
                             </select>
                             {
                                 user ? (
-                                <Link to={'/profile'} 
-                                onMouseEnter={handleMouseEnter} 
-                                onMouseLeave={handleMouseLeave} 
-                                className="mt-1">
-                                    <img className="ml-2" src={profile} width={25} height={25} alt="" />
-                                    <span className="text-white">Profile</span>
-                                </Link>
+                               <div className="flex items-center">
+                                    <Link to={'/profile/notification'} className="">
+                                        <img className="mr-4" src={notificationIcon} width={30} alt="" />
+                                    </Link>
+                                    <Link to={'/profile'} 
+                                            onMouseEnter={handleMouseEnter} 
+                                            onMouseLeave={handleMouseLeave} 
+                                            className="mt-1">
+                                        <img className="ml-2" src={profile} width={25} height={25} alt="" />
+                                        <span className="text-white">Profile</span>
+                                    </Link>
+                               </div>
+
                                 ) :(
                                 <button onClick={openModal}>
                                     {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g"> */}

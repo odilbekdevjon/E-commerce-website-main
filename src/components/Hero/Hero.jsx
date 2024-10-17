@@ -1,11 +1,15 @@
 import "./Hero.scss";
 import { useTranslation } from "react-i18next";
+import { DarkModeContext } from "../../context/themContext";
+import { useContext } from "react";
 
 export default function Hero() {
     const { t } = useTranslation()
+    const { isDarkMode } = useContext(DarkModeContext)
+    
 
     return(
-        <section className="hero__section bg-img2 bg-cover bg-no-repeat bg-center w-[100%] h-[640px] pt-1">
+        <section className={`hero__section bg-img2 bg-cover bg-no-repeat bg-center w-[100%] h-[640px] pt-1 ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
             <div className="container">
                 <div className="hero">
                         <div className="hero__wrapper">

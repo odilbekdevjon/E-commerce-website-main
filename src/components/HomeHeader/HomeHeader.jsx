@@ -15,6 +15,7 @@ import cart from "../../assets/cart-shopping.svg";
 import profile from "../../assets/icons8.png";
 import userImage from "../../assets/user.png"
 import { API } from "../../utility/api";
+import notificationIcon from "../../assets/notification-belL.svg";
 
 export default function HomeHeader({order}) {
 
@@ -86,7 +87,7 @@ export default function HomeHeader({order}) {
     // dark mode
     const { isDarkMode ,toggleDarkMode } = useContext(DarkModeContext);
 
-    return (
+    return ( 
         <>
             <header className="header py-4 w-[100%] absolute z-1 top-0">
                 <div className="container">
@@ -104,7 +105,7 @@ export default function HomeHeader({order}) {
                                 <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
                             </Link>
                         </ul>
-
+                        
                         <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                             One id
                         </a> 
@@ -137,13 +138,17 @@ export default function HomeHeader({order}) {
                             </select>
                             {
                                 user ? (
-                                <Link to={'/profile'} className="user__link mt-1" 
-                                onMouseEnter={handleMouseEnter} 
-                                onMouseLeave={handleMouseLeave}
-                                >
-                                    <img className="ml-2" src={profile} width={25} height={25} alt="" />
-                                    <span className="text-white">Profile</span>
-                                </Link> 
+                               <div className="flex items-center">
+                                    <Link to={'/profile/notification'} className="">
+                                        <img className="mr-4" src={notificationIcon} width={30} alt="" />
+                                    </Link>
+                                    <Link to={'/profile'} className="user__link mt-1" 
+                                        onMouseEnter={handleMouseEnter} 
+                                        onMouseLeave={handleMouseLeave}>
+                                        <img className="ml-2" src={profile} width={25} height={25} alt="" />
+                                        <span className="text-white">Profile</span>
+                                     </Link> 
+                               </div>
 
                                 ) :(
                                 <button onClick={openModal}>

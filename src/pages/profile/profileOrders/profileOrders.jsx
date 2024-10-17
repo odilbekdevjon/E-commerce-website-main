@@ -4,7 +4,6 @@ import { Link , NavLink} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { API } from "../../../utility/api";
 import useAuth from "../../../hooks/useAuth";
-import dayjs from 'dayjs';
 // components
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -15,31 +14,18 @@ export default function ProfileOrders() {
     const { t } = useTranslation()
     const [ user  ] = useAuth();
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-    const [ contracts, setContracts ] = useState([]);
-    const now = dayjs()
-    
+    const [ contracts, setContracts ] = useState([]);    
 
     //  get CONTRACTS
     useEffect(() => {
         API.get('/contract/get-contracts-list-by-user')
             .then(response => {
-                console.log(response.data.contract);
                 setContracts(response.data.contract);
             })
             .catch(error => {
                 console.log(error);
             }); 
     }, []);
-
-    const getById = async (id) => {
-        console.log(id);
-        try {
-            const response = await API.get(`/contract/get-contract-by-user/${id}`)
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
     
     return(
         <>
@@ -63,6 +49,7 @@ export default function ProfileOrders() {
                                 <NavLink to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
                                 <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
                                 <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
+                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">Notification</NavLink>
                             </div>
                         </div>
                         <div className="user_left">
@@ -79,7 +66,6 @@ export default function ProfileOrders() {
                                             <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Umumiy narx</td>
                                             {/* <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Tulov muddati</td> */}
                                             <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Batafsil ma'lumot</td>
-                            
                                         </tr>
                                     </thead>
                                     <tbody>

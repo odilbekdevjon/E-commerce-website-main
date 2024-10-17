@@ -15,20 +15,18 @@ export default function Profile() {
     const [ user, setUser ] = useAuth();    
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
     
-
     //  get CONTRACTS
     useEffect(() => {
         API.get('/contract/get-contracts-list-by-user')
             .then(response => {
-                console.log(response.data.contract[0].User);
-                setUser(response.data?.contract[0].User)
+                setUser(response.data.contract[0].User)
             })
             .catch(error => {
                 console.log(error);
             }); 
     }, []);
     
-    
+
     return(
         <>
             <Header order={order}/>
@@ -51,6 +49,7 @@ export default function Profile() {
                                 <NavLink to={'/profile/orders'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
                                 <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
                                 <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
+                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">Notification</NavLink>
                             </div>
                         </div>
                         <div className="profile__left">

@@ -31,6 +31,8 @@ export default function Carts() {
     const { t } = useTranslation()
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     const [cartData, setCartData] = useState(JSON.parse(window.localStorage.getItem("cart")) || []);
+    console.log(cartData);
+    
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
@@ -111,14 +113,14 @@ export default function Carts() {
             <Header order={order} />
             <section className="mt-28 mb-72">
                 <div className="container">
-                    <h1 className="text-[30px] font-bold">{t("cartTitle1")} {cartData.length}</h1>
+                    <h1 className="text-[30px] font-bold">{t("cartTitle1")} {cartData?.length}</h1>
                     <div className="carts flex">
                         <div className="carts__left mt-10">
                             {
                                 cartData?.map(item => {
                                     return (
-                                        <div key={item.id} className="carts__item flex border-2 border-solid rounded-lg mt-5 p-4">
-                                            <img className="carts__item--image" src={item.image[0]} width={250} height={250} alt="" />
+                                        <div key={item?.id} className="carts__item flex border-2 border-solid rounded-lg mt-5 p-4">
+                                            <img className="carts__item--image" src={item?.image[0]} width={250} height={250} alt="" />
 
                                             {/* <Slider {...settings}> */}
                                             {/* {
@@ -132,33 +134,33 @@ export default function Carts() {
 
                                             <div className="carts__item--wrapper ml-5">
                                                 <div className="">
-                                                    <h2 className="carts__item--heading text-[25px] font-bold mb-2"> {item.name_uz}</h2>
-                                                    <p className="carts__item--text w-[600px] text-[20px] mb-2"> {item.description_uz}</p>
-                                                    <span className="carts__item--span  block text-[20px] mb-2">{item.category.name_uz}</span>
-                                                    <div className="carts__item--div text-[15px]"><span className="underline font-bold">Sklad:</span> {item.stock} {item.unit_uz}</div>
+                                                    <h2 className="carts__item--heading text-[25px] font-bold mb-2"> {item?.name_uz}</h2>
+                                                    <p className="carts__item--text w-[600px] text-[20px] mb-2"> {item?.description_uz}</p>
+                                                    <span className="carts__item--span  block text-[20px] mb-2">{item.category?.name_uz}</span>
+                                                    <div className="carts__item--div text-[15px]"><span className="underline font-bold">Sklad:</span> {item.stock} {item?.unit_uz}</div>
                                                 </div>
 
                                                 <div className="carts__counts inline-block border-2 border-solid border-black p-2 min-w-32 rounded-lg relative left-[300px] bottom-8">
-                                                    <button className="text-[10px]" onClick={() => decreaseCount(item.id)}>
+                                                    <button className="text-[10px]" onClick={() => decreaseCount(item?.id)}>
                                                         <img src={minus} width={20} alt="minus" />
                                                     </button>
 
-                                                    <span className="inline-block ml-5 text-[20px]">{item.qty}</span>
+                                                    <span className="inline-block ml-5 text-[20px]">{item?.qty}</span>
 
-                                                    <button className="ml-5" onClick={() => increaseCount(item.id)}>
+                                                    <button className="ml-5" onClick={() => increaseCount(item?.id)}>
                                                         <img src={plus} width={18} alt="plus" />
                                                     </button>
                                                 </div>
                                             </div>
                                             <div className="carts__item--delete relative right-10">
-                                                <button className="relative " onClick={() => cartDelete(item.id)}>
+                                                <button className="relative " onClick={() => cartDelete(item?.id)}>
                                                     <div className="flex items-center">
                                                         <img src={deleteCart} width={30} alt="delete" /> <span className="text-black text-[20px] opacity-[0.6]">delete</span>
                                                     </div>
                                                 </button>
                                                 <div className="carts__item--price relative top-20">
-                                                    <div className="text-[30px]"> {item.discount * item.qty}</div>
-                                                    <div><span className="line-through opacity-[0.5] text-[20px]">{item.price * item.qty}</span></div>
+                                                    <div className="text-[30px]"> {item?.discount * item?.qty}</div>
+                                                    <div><span className="line-through opacity-[0.5] text-[20px]">{item?.price * item?.qty}</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +170,7 @@ export default function Carts() {
                         </div>
                         <div className="carts__right w-[400px] h-64 mt-14 ml-5 border-2 border-solid p-2 rounded-lg">
                             <h2 className="text-[20px] font-bold">{t("cartTitle2")}</h2>
-                            <p className="mt-3 opacity-[0.6] ">{t("cartTitle3")} ({cartData.length}) </p>
+                            <p className="mt-3 opacity-[0.6] ">{t("cartTitle3")} ({cartData?.length}) </p>
                             <div className="mt-3 text-center border-2 border-solid border-blue-600  text-blue-700 p-1">Yetkazib berish muddati: 10 kun ichida</div>
 
                             <div className="flex justify-between">

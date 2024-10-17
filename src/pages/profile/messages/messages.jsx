@@ -1,9 +1,9 @@
 import "./messages.scss";
-// import axios from "axios";
 import { useState , useEffect, useRef} from "react";
 import { Link , NavLink} from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useAuth from "../../../hooks/useAuth";
+import { API } from "../../../utility/api";
 // components
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -11,29 +11,55 @@ import Footer from "../../../components/Footer/Footer";
 import profileAvatar from "../../../assets/profileavatar.png";
 
 export default function Messages() {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const [ user  ] = useAuth();
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-    const inputName = useRef()
+    const [ contractId ,setContractId ] = useState();
+    const [messages, setMessages] = useState();
+    const [messageByAdmin, setMessageByAdmin] = useState([]);
+    const inputName = useRef();
+    
 
-    const sendMessages = () => {
-        console.log('ok');
-        console.log(inputName.current.value);
-        
-            // const data = new FormData();
-            // data.append('name',  inputName.current.value);
+   //  get CONTRACTS
+   useEffect(() => {
+        API.get('/contract/get-contracts-list-by-user')
+            .then(response => {
+                setContractId(response.data.contract);
+                // setContracts(response.data.contract);
+            })
+            .catch(error => {
+                console.log(error);
+            }); 
+    }, []);         
 
-            // try {
-            //     await axios.post(`https://5jiek.uz/api/v1/contacts/create-contact-us`, data, {
-            //         headers : {
-            //             "Content-Type": "application/json",
-            //         },
-            //         withCredentials: true 
-            //     })
-            // } catch (error) {
-            // console.log(error)
-            // }
-    }
+
+    //  get messeges come from admin 
+   useEffect(() => {
+        API.get('/messages/get-messages-user')
+            .then(response => {
+                setMessageByAdmin(response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            }); 
+    }, []);     
+    
+    const sendMessages = async () => {
+        const filteredContractId = contractId?.map(item => item.id)
+        const contractIdString = filteredContractId?.join(',');
+
+            try {
+                const response = await API.post(`/messages/send-message-user`, {
+                    contractId:contractIdString,
+                    message: inputName.current.value
+                })
+                setMessages(response.data.data);
+                // setMessages(response);
+            } catch (error) {
+                console.error(error);
+            }
+            inputName.current.value = null
+    }    
 
     return(
         <>
@@ -57,12 +83,27 @@ export default function Messages() {
                                 <Link to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</Link>
                                 <NavLink to={'/profile/messages'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
                                 <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
+                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">Notification</NavLink>
                             </div>
                         </div>
                         <div className="user_left w-[1000px]">
                             <div className="ml-10">
                                 <h1 className="font-bold text-[35px]">Messages page</h1>
-                               <div className="w-[70%] absolute bottom-0 flex z-10">
+                                <div className="">
+
+                                    {
+                                        messageByAdmin?.map((item ,index) => {
+                                            return(
+                                                <div key={index} className="w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white">
+                                                    {item.message}
+                                                </div>
+                                            )
+                                        })
+                                    }
+
+                                    <span className="block w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white relative left-[850px]">{messages?.message}</span>
+                                </div>
+                               <div className="w-[100%] relative top-[250px] flex z-10">
                                     <input ref={inputName} className="w-[100%] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message" />
                                     <button className="p-2 bg-blue-900 rounded-lg text-white" onClick={sendMessages}>Send</button>
                                </div>
