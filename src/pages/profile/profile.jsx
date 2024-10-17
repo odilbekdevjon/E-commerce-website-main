@@ -47,9 +47,9 @@ export default function Profile() {
                             <div className="profile__right__links mt-5">
                                 <NavLink to={'/profile'} className="profile__right__link w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</NavLink>
                                 <NavLink to={'/profile/orders'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
-                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
-                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
-                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">Notification</NavLink>
+                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
+                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
+                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
                         <div className="profile__left">

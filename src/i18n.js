@@ -37,6 +37,9 @@ i18n
                 profileTitle7:"Year of birth:",
                 profileTitle8:"Phone:",
                 profileMessages:"Messages",
+                profilePayments:"Payments",
+                profileNotification:"Notifications",
+  
                 cartTitle1:"Product in the cart:",
                 cartTitle2:"Your order",
                 cartTitle3:"Products",
@@ -75,6 +78,8 @@ i18n
                 profileTitle7:"Год рождения:",
                 profileTitle8:"Телефон:",
                 profileMessages:"Сообщения",
+                profilePayments:"Платежи",
+                profileNotification:"Уведомления",
                 cartTitle1:"Tовар в корзине:",
                 cartTitle2:"Ваш заказ",
                 cartTitle3:"Продукты",
@@ -113,6 +118,9 @@ i18n
                 profileTitle7:"Tug'ilgan yil:",
                 profileTitle8:"Telfon:",
                 profileMessages:"Xabarlar",
+                profilePayments:"To'lovlar",
+                profileNotification:"Bildirishnomalar",
+
                 cartTitle1:"Korzinkada maxsulot:",  
                 cartTitle2:"Buyurtmangiz",
                 cartTitle3:"Mahsulotlar",

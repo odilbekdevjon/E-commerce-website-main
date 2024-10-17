@@ -49,14 +49,14 @@ export default function Notification() {
                             <div className="mt-5">
                                 <Link to={'/profile'} className="w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</Link>
                                 <NavLink to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
-                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">Messages</NavLink>
-                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">Payments</NavLink>
-                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">Notification</NavLink>
+                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
+                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
+                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
                         <div className="user_left">
                             <div className="ml-10">
-                                <h1 className="font-bold text-[35px] mb-5">Notification messages</h1>
+                                <h1 className="font-bold text-[35px] mb-5">{t("profileNotification")}</h1>
 
                                 {
                                     notification?.map((item, index) => {
