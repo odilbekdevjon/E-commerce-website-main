@@ -18,7 +18,7 @@ export default function Notification() {
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     const [ notification, setNotification ] = useState();
 
-    // get products
+    // get notification
     useEffect(() => {
         API.get(`/messages/get-notification-user`)
         .then(response => {
@@ -54,14 +54,14 @@ export default function Notification() {
                                 <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
-                        <div className="user_left">
+                        <div className="notification_left">
                             <div className="ml-10">
                                 <h1 className="font-bold text-[35px] mb-5">{t("profileNotification")}</h1>
 
                                 {
                                     notification?.map((item, index) => {
                                         return(
-                                            <div key={index} className="w-60 p-2 rounded-lg bg-blue-950 ">
+                                            <div key={index} className="w-60 p-2 rounded-lg bg-blue-950 mt-5">
                                                 <h2 className="text-[25px] mt-3 text-white">{item?.message}</h2>
                                                 <time className="text-white relative left-36">{dayjs(item?.createdAt).format("DD.MM.YYYY")}</time>
                                             </div>

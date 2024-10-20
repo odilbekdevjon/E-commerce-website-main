@@ -14,7 +14,7 @@ import contract from "../../assets/contract.svg";
 export default function Contact() {
     const { t } = useTranslation()
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-
+    
     // values by ref
     const name = useRef();
     const email = useRef();

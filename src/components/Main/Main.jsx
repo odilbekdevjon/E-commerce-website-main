@@ -6,7 +6,6 @@ import { API } from "../../utility/api";
 // images
 import cart from "../../assets/add-to-cart.png";
 import cartSvg from "../../assets/cart-plus-svgrepo-com.svg";
-
 // slider
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -14,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function Main({setOrder}) {
 
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const { i18n } = useTranslation();
     const [, setError] = useState(null);
     const [data, setData] = useState([]);
@@ -40,6 +39,13 @@ export default function Main({setOrder}) {
                 }
             },
             {
+                breakpoint: 500,  // Ekran kengligi 600px dan kichik bo'lganda
+                settings: {
+                    slidesToShow: 1,  // 1 ta slayd ko'rsatiladi
+                    slidesToScroll: 1  // 1 ta slayd o'tadi
+                }
+            },
+            {
                 breakpoint: 400,  // Ekran kengligi 600px dan kichik bo'lganda
                 settings: {
                     slidesToShow: 1,  // 1 ta slayd ko'rsatiladi
@@ -54,7 +60,6 @@ export default function Main({setOrder}) {
         API.get('/product/get-top-products')
             .then(response => {
                 setData(response.data.data);
-                console.log(response.data.data);
             })
             .catch(error => {
                 setError(error);
@@ -164,23 +169,23 @@ export default function Main({setOrder}) {
                     <h1 className="font-bold text-[30px] text-center">
                         {t("mainTitle1")}
                     </h1>
-                    <ul className="main__list  mb-10">
+                    <ul className="main__list mb-10">
                     <Slider {...settings}>
                        {
                             data?.map(item => {                                
                                 return (
                                     <li id="cars" key={item?.id} className="main__item w-[350px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg bg-blue-700 text-white">
-                                        <span className="p-2 bg-red-600 absolute rounded-lg text-white font-bold">{t("mainTitle7")}</span>
-                                        <img className="main__img mb-4 rounded-lg" src={item?.image[0]} width={250} height={250} alt="" />
+                                        <span className="main__span p-2 bg-red-600 absolute rounded-lg text-white font-bold">{t("mainTitle7")}</span>
+                                        <img className=" mb-4 rounded-lg" src={item?.image[0]} width={300} height={250} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
-                                        <p className="main__text text-ellipsis w-60 ">
+                                        <p className="text-ellipsis w-60 ">
                                             {item?.[`description_${i18n.language}`]}
                                         </p>
                                         <span className="block mt-4 mb-1">{item?.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item?.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item?.stock})</div>
                                         <div className="main__wrapp flex items-center">
-                                            <a className="main__link" href=""><Link className=" w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link></a>
+                                            <Link className="main__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
                                             <button onClick={() => addToCardforTopProducts(item?.id)} className="main__cart-img ml-20 mt-4 border-2 border-solid border-white p-1 rounded-lg hover:cursor-pointer">
                                                 <img className="" src={cartSvg} width={30} height={30} alt="cart" />
                                             </button>
@@ -191,25 +196,25 @@ export default function Main({setOrder}) {
                         }
                         </Slider>
                     </ul>
-                <div className="">
-                    <h1 className="text-[30px] font-bold text-center">{t("mainTitle2")}</h1>
-                    <ul className="flex mb-20">
+                <div className="main__wrapper">
+                    <h2 className="text-[30px] font-bold text-center">{t("mainTitle2")}</h2>
+                    <ul className="main__wrapper__list flex mb-20">
                         {
                             newData?.map(item => {
                                 return (
-                                    <li id="cars" key={item?.id} className="main__item w-[400px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg mr-10">
-                                        <span className="p-2 bg-red-600 absolute rounded-lg text-white font-bold">{t("mainTitle3")}</span>
-                                        <img className="main__img mb-4 rounded-lg" src={item?.image[0]} width={250} height={250} alt="" />
+                                    <li id="cars" key={item?.id} className="main__wrapper__item w-[350px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg mr-10">
+                                        <span className="main__wrapper__span p-2 bg-red-600 absolute rounded-lg text-white font-bold">{t("mainTitle3")}</span>
+                                        <img className="main__wrapper__img mb-4 rounded-lg" src={item?.image[0]} width={300} height={200} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
-                                        <p className="main__text text-ellipsis w-60 ">
+                                        <p className="main__wrapper__text text-ellipsis w-60 ">
                                             {item?.[`description_${i18n.language}`]}
                                         </p>
                                         <span className="block mt-4 mb-1">{item?.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item?.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item?.stock})</div>
-                                        <div className="main__wrapp flex items-center">
-                                            <a className="main__link" href=""><Link className=" w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link></a>
-                                            <button onClick={() => addToCardForNewData(item?.id)} className="main__cart-img ml-20 mt-4 border-2 border-solid border-black p-1 rounded-lg hover:cursor-pointer">
+                                        <div className="main__wrapper__wrapp flex items-center">
+                                            <Link className="main__wrapper__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
+                                            <button onClick={() => addToCardForNewData(item?.id)} className="main__wrapper__cart-img ml-20 mt-4 border-2 border-solid border-black p-1 rounded-lg hover:cursor-pointer">
                                                 <img className="" src={cart} width={30} height={30} alt="cart" />
                                             </button>
                                         </div>
@@ -220,25 +225,25 @@ export default function Main({setOrder}) {
                     </ul>
                 </div>
 
-                <div className="">
-                    <h1 className="text-[30px] font-bold text-center">{t("mainTitle5")}</h1>
-                    <ul className="flex mb-20">
+                <div className="main__wrapp">
+                    <h2 className="text-[30px] font-bold text-center">{t("mainTitle5")}</h2>
+                    <ul className="main__wrapp__list flex mb-20">
                         {
                             discountProducts?.map(item => {
                                 return (
-                                    <li id="cars" key={item?.id} className="main__item w-[400px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg mr-10">
-                                        <span className="p-2 bg-red-600 absolute rounded-lg text-white font-bold">{t("mainTitle6")}</span>
-                                        <img className="main__img mb-4 rounded-lg" src={item?.image[0]} width={250} height={250} alt="" />
+                                    <li id="cars" key={item?.id} className="main__wrapp__item w-[350px] p-4 border-solid border-2 rounded mt-5 hover:shadow-lg mr-10">
+                                        <span className="main__wrapp__span p-2 bg-red-600 absolute  rounded-lg text-white font-bold">{t("mainTitle6")}</span>
+                                        <img className="main__wrapp__img mb-4 rounded-lg" src={item?.image[0]} width={300} height={200} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
-                                        <p className="main__text text-ellipsis w-60 ">
+                                        <p className="main__wrapp__text text-ellipsis w-60 ">
                                             {item?.[`description_${i18n.language}`]}
                                         </p>
                                         <span className="block mt-4 mb-1">{item?.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item?.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item?.stock})</div>
-                                        <div className="main__wrapp flex items-center">
-                                            <a className="main__link" href=""><Link className=" w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link></a>
-                                            <button onClick={() => addToCardforDiscountProducts(item?.id)} className="main__cart-img ml-20 mt-4 border-2 border-solid border-black p-1 rounded-lg hover:cursor-pointer">
+                                        <div className="main__wrapp__wrapp flex items-center">
+                                            <Link className="main__wrapp__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
+                                            <button onClick={() => addToCardforDiscountProducts(item?.id)} className="main__wrapp__cart-img ml-20 mt-4 border-2 border-solid border-black p-1 rounded-lg hover:cursor-pointer">
                                                 <img className="" src={cart} width={30} height={30} alt="cart" />
                                             </button>
                                         </div>

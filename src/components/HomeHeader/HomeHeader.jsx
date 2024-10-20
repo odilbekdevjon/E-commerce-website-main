@@ -1,29 +1,39 @@
+"use client";
 import "./HomeHeader.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IoEnterOutline } from "react-icons/io5";
-import { useState , useRef, useEffect, useContext} from "react";
+import { useState , useRef, useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
 import useAuth from "../../hooks/useAuth";
 import useLang from "../../hooks/useLang";
-import { DarkModeContext } from "../../context/themContext";
 // images
 import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
 import mobileLogo from "../../assets/mobile-logo.png";
 import cart from "../../assets/cart-shopping.svg";
 import profile from "../../assets/icons8.png";
-import userImage from "../../assets/user.png"
+import userImage from "../../assets/user.png";
 import { API } from "../../utility/api";
 import notificationIcon from "../../assets/notification-belL.svg";
 
 export default function HomeHeader({order}) {
-
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const [ user, setUser ] = useAuth();
     const [ lang, changeLang  ] = useLang();
     const [ modalIsOpen, setIsOpen ] = useState(false);
     const [ , setCardLength ] = useState(0);
+    const [ changeCheckBtn, setChangeCheckBtn ] = useState(true);
+    // captcha
+    function generateCaptcha(length) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let captcha = '';
+        for (let i = 0; i < length; i++) {
+            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return captcha;
+    }
+    const captcha = generateCaptcha(7);  // Masalan: 'svdQqw45'
 
     // carts
     useEffect(() => {
@@ -44,7 +54,6 @@ export default function HomeHeader({order}) {
         } catch (error) {
             console.error(error);
         }
-        // code.current.value = null;
         closeModal()
     }
 
@@ -84,8 +93,23 @@ export default function HomeHeader({order}) {
         setIsOpen(false);
     };
 
-    // dark mode
-    const { isDarkMode ,toggleDarkMode } = useContext(DarkModeContext);
+    const [ notification, setNotification ] = useState();
+    const location = useLocation();
+
+    // get notification
+    useEffect(() => {
+        API.get(`/messages/get-notification-user`)
+        .then(response => {
+            setNotification(response.data.data);
+            })
+        .catch(error => {
+            console.log(error);
+        });
+        if (location.pathname === "/profile/notification") {
+            setNotification(0);
+            notification.length = null;
+        }
+    },[window.location.pathname]);      
 
     return ( 
         <>
@@ -101,17 +125,15 @@ export default function HomeHeader({order}) {
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
                             <Link to={'/carts'} className="header__karzinka flex">
                                 <img src={cart} width={25} alt="" />
-                                <span className="text-white ml-2">Korzina</span>
+                                <span className="text-white ml-2">{t("headerTitle6")}</span>
                                 <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
                             </Link>
                         </ul>
                         
-                        <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                        {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                             One id
                         </a> 
-
-                        <button className="text-white" onClick={toggleDarkMode}>{isDarkMode ? 'Light' : 'Dark'}</button>
-
+                         */}
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
                                 <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold mb-4">{t("headerTitle1")}</Link></li>
@@ -120,7 +142,7 @@ export default function HomeHeader({order}) {
                                 <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link className="header__menu--item font-bold mb-4" to={"/contact"}>{t("headerTitle4")}</Link></li>
                                 <Link to={'/carts'} className="header__karzinka flex">
                                     <img src={cart} width={25} alt="" />
-                                    <span className="text-white ml-2">Korzina</span>
+                                    <span className="text-white ml-2">{t("headerTitle6")}</span>
                                     <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
                                 </Link>
                             </div>
@@ -139,14 +161,15 @@ export default function HomeHeader({order}) {
                             {
                                 user ? (
                                <div className="flex items-center">
-                                    <Link to={'/profile/notification'} className="">
+                                    <Link to={'/profile/notification'} className="flex">
+                                        <div className="text-white relative bottom-3 left-8">{notification?.length}</div>
                                         <img className="mr-4" src={notificationIcon} width={30} alt="" />
                                     </Link>
                                     <Link to={'/profile'} className="user__link mt-1" 
                                         onMouseEnter={handleMouseEnter} 
                                         onMouseLeave={handleMouseLeave}>
-                                        <img className="ml-2" src={profile} width={25} height={25} alt="" />
-                                        <span className="text-white">Profile</span>
+                                        <img className="ml-1" src={profile} width={25} height={25} alt="" />
+                                        <span className="text-white text-center ">{t("headerTitle7")}</span>
                                      </Link> 
                                </div>
 
@@ -165,10 +188,10 @@ export default function HomeHeader({order}) {
                                             onMouseEnter={handleMouseEnter} 
                                             onMouseLeave={handleMouseLeave}>
                                         <h2 className="text-[13px] capitalize flex">
-                                            <img src={userImage} width={18} height={15} alt="profile" /> 
+                                            <img className="" src={userImage} width={18} height={15} alt="profile" /> 
                                             {`${user.first_name } ${user.sur_name}`}</h2>
-                                        <hr className="h-[2px] bg-slate-400"/>
-                                            <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 " onClick={handleLogout}>{t("headerTitle5")}</div> 
+                                        <hr className="h-[2px] bg-slate-400 mt-2"/>
+                                            <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 mt-2" onClick={handleLogout}>{t("headerTitle5")}</div> 
                                        </div>
                                     ) }
                             <Modal
@@ -182,9 +205,9 @@ export default function HomeHeader({order}) {
                                     <button className="border-solid border-black border-2 px-1 rounded-lg ml-6 mb-4 " onClick={() => closeModal()} >X</button>
                                     </div>
                                     <hr />
-                                    <label className="text-black line-through" htmlFor="">{"IHHN5456WSDW"}</label>
+                                    <label className="text-black text-[25px] font-sans" htmlFor="">{captcha}</label>
                                     <input ref={code} className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" placeholder="code" />
-                                    <div className="text-blue-400 underline mt-3 mb-3 block" href=""><input className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</div>
+                                    <div className="text-blue-400 underline mt-3 mb-3 block" href=""><input onClick={setChangeCheckBtn} className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</div>
                                     <hr />
                                     <button onClick={sendCode} className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
                                     <button className="text-black mt-4 ml-32 border-solid border-2 border-gray-500 p-1">Kodni yangilash</button>

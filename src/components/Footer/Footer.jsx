@@ -1,4 +1,5 @@
 import "./Footer.scss";
+import { useTranslation } from "react-i18next";
 // images
 import Phone from "../../assets/phone.svg";
 import mail from "../../assets/email.svg";
@@ -6,7 +7,6 @@ import address from "../../assets/address.svg"
 import telegram from "../../assets/telegram.png";
 import instagram from "../../assets/instagram.png";
 import faceebook from "../../assets/facebook.png";
-import { useTranslation } from "react-i18next";
 
 export default function Footer() {
     const { t } = useTranslation()

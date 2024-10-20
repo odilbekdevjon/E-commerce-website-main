@@ -1,12 +1,11 @@
 import "./Header.scss";
 import { Link } from "react-router-dom";
-import { useState , useRef, useContext } from "react";
+import { useState , useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
 import i18n from "../../i18n";
 import useAuth from "../../hooks/useAuth";
 import { API } from "../../utility/api";
-import { DarkModeContext } from "../../context/themContext";
 // images
 import logo from "../../assets/saytLogo.svg";
 import menu from "../../assets/menu-bar.png";
@@ -22,7 +21,6 @@ export default function Header({order}) {
     const { t } = useTranslation();
     const [ user, setUser ] = useAuth();
     const [modalIsOpen, setIsOpen] = useState(false);
-    const { isDarkMode ,toggleDarkMode } = useContext(DarkModeContext);
 
     const changeLang = (evt) => {
         i18n.changeLanguage(evt)
@@ -31,7 +29,6 @@ export default function Header({order}) {
     // ref
     const menuRef = useRef();
     const code = useRef();
-
     const sendCode = async () => {
         try {
             const response = await API.post(`/user/login`, {
@@ -42,7 +39,6 @@ export default function Header({order}) {
             console.error(error);
         }
         code.current.value = null;
-        console.log('send code');
         closeModal()
     }
 
@@ -58,7 +54,6 @@ export default function Header({order}) {
     const handleLogout = async () => {
         try {
             const response = await API.get(`/user/logout`)
-            console.log(response);
             localStorage.removeItem("user");
             window.location.reload();
             window.location.href = 'http://localhost:3000/';
@@ -83,6 +78,19 @@ export default function Header({order}) {
         setIsOpen(false);
     };
 
+    const [ notification, setNotification ] = useState();
+
+    // get notification
+    useEffect(() => {
+        API.get(`/messages/get-notification-user`)
+        .then(response => {
+            setNotification(response.data.data);
+            })
+        .catch(error => {
+            console.log(error);
+        });
+    },[""]);
+
     return (
         <>
             <header className="header py-4 bg-blue-950 w-[100%] fixed z-1 top-0">
@@ -97,7 +105,7 @@ export default function Header({order}) {
                             <li className="mr-10 text-[18px] tracking-[1px]"><Link className="text-white font-bold" to={"/contact"}>{t("headerTitle4")}</Link></li>
                             <Link to={'/carts'} className="header__karzinka flex">
                                 <img src={cart} width={25} alt="" />
-                                <span className="text-white ml-2">Korzina</span>
+                                <span className="text-white ml-2">{t("headerTitle6")}</span>
                                 <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
                             </Link>
                         </ul>
@@ -110,7 +118,7 @@ export default function Header({order}) {
 
                                 <Link to={'/carts'} className="header__karzinka flex">
                                     <img src={cart} width={25} alt="" />
-                                    <span className="text-white ml-2">Korzina</span>
+                                    <span className="text-white ml-2">{t("headerTitle6")}</span>
                                     <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
                                 </Link>
                             </div>
@@ -120,8 +128,6 @@ export default function Header({order}) {
                         {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                         One Id
                         </a>  */}
-
-                        <button className="text-white" onClick={toggleDarkMode}>{isDarkMode ? 'Light' : 'Dark'}</button>
 
                         <div className=" flex items-center">
                             <button onClick={() => showMenu()}  className="header__burger mr-6">
@@ -136,15 +142,16 @@ export default function Header({order}) {
                             {
                                 user ? (
                                <div className="flex items-center">
-                                    <Link to={'/profile/notification'} className="">
+                                    <Link to={'/profile/notification'} className="flex">
+                                        <div className="text-white relative bottom-3 left-8">{notification?.length}</div>
                                         <img className="mr-4" src={notificationIcon} width={30} alt="" />
                                     </Link>
                                     <Link to={'/profile'} 
                                             onMouseEnter={handleMouseEnter} 
                                             onMouseLeave={handleMouseLeave} 
                                             className="mt-1">
-                                        <img className="ml-2" src={profile} width={25} height={25} alt="" />
-                                        <span className="text-white">Profile</span>
+                                        <img className="ml-1" src={profile} width={25} height={25} alt="" />
+                                        <span className="text-white text-center">{t("headerTitle7")}</span>
                                     </Link>
                                </div>
 
@@ -166,8 +173,8 @@ export default function Header({order}) {
                                             <img src={userImage} width={18} height={15} alt="profile" /> 
                                             {`${user.first_name } ${user.sur_name}`}
                                         </h2>
-                                        <hr className="h-[2px] bg-slate-400"/>
-                                            <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 " onClick={handleLogout}>{t("headerTitle5")}</div> 
+                                        <hr className="h-[2px] bg-slate-400 mt-2"/>
+                                            <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 mt-2" onClick={handleLogout}>{t("headerTitle5")}</div> 
                                        </div>
                                     ) }
 

@@ -1,0 +1,20 @@
+.payments__image {
+    width: 200px;
+    height: 300px;
+}
+
+@media only screen and (max-width:768px) {
+    .payments_left {
+        flex-direction: column;
+        margin-top: 50px;
+        margin-left: 0;
+    }
+
+    .payments__data {
+        margin-left: 0;
+    }
+
+    .payments__data--item {
+        flex-direction: column;
+    }
+}

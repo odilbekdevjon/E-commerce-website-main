@@ -12,7 +12,6 @@ export default function Orders() {
     const [ singleData ,setSingleData ] = useState();
     const [ , setError ] = useState(null);
     const [count , setCount ] = useState(1)
-    
     const { id } = useParams()
 
     // get products
@@ -42,7 +41,6 @@ export default function Orders() {
                                     <div className="order__wrapp">
                                            <div className=""> 
                                                 <span className="text-blue-600  text-[25px]">{singleData?.discount * count}</span> 
-                                                {/* <span className=" bg-cyan-700 text-white px-2 rounded-lg ml-4">{singleData.unit_uz}</span> */}
                                             </div>
                                             <span className="opacity-[0.5] text-[15px] block mb-1 line-through">{singleData?.price}</span>
                                             <input className="w-28 border-2 border-solid p-1" placeholder="son kiriting"  type="number" />
@@ -51,7 +49,6 @@ export default function Orders() {
                                             </div>
                                         </div>
                                         <div className="order__bottom ml-10 mt-10">
-                                            {/* <Link to={`/order/${singleData?.id}/adress`}> </Link> */}
                                             <button className="w-40 p-2 rounded-lg block mt-14 bg-cyan-700 text-white font-bold z-[100]">Sotib olish</button>
                                             <div className="mt-4"><input type="checkbox" /> Yetkazib berish xizmati bilan</div> 
                                         </div>                         

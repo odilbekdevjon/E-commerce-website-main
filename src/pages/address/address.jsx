@@ -1,19 +1,17 @@
 import "./address.scss";
 import { useState } from "react";
-import { API } from "../../utility/api";
 import useAuth from "../../hooks/useAuth";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 // data
 import regions from "../../utility/regions";
-import { useNavigation } from "react-router-dom";
+// import { Route, useNavigation } from "react-router-dom";
 
 export default function Adress() {
-    // const navigate = useNavigation()
-
     const [ user ]  = useAuth()    
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+    // const navigate = useNavigation();
     // input data
     const [ regionSelect, setRegionSelect ] = useState("");
     const [ distirictSelect, setDistirictSelect ] = useState("");
@@ -29,15 +27,18 @@ export default function Adress() {
         const findRegion = regions.find((item) => item.name === element)
         setSelectRegion(findRegion)
     }
+
     // send conract
     const sendContract = async () => {
-       const data = localStorage.getItem('data');
+        const data = JSON.parse(localStorage.getItem('data'));
         try {
-            const response = await API.post(`/contract/create-contract-by-user`, data )
+            const response = await axios.post(`https://5jiek.uz/api/v1/contract/create-contract-by-user`, data, {
+                withCredentials:true
+            })
             console.log(response.data);
-            localStorage.removeItem("cart")
-            localStorage.removeItem("data")
-            window.location.reload()
+            localStorage.removeItem("cart");
+            localStorage.removeItem("data");
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }
@@ -45,8 +46,7 @@ export default function Adress() {
 
     const sendAdres = async () => {
         const address = `${regionSelect} ${distirictSelect} ${addressSelect}`;
-        // console.log(`oked:${oked} , xr:${xr} , bank:${bank} , mfo:${mfo}`);
-       
+
         const data = new FormData();
         data.append('address', address );
         data.append('phone_number', phone );
@@ -64,16 +64,14 @@ export default function Adress() {
             })
             .then(response => {
                 console.log('Data updated successfully', response.data);
-                sendContract()
-                localStorage.removeItem("cart")
-                localStorage.removeItem("data")
-                window.location.reload()
-                // navigate('/profile/orders')
+                sendContract();
+                localStorage.removeItem("cart");
+                localStorage.removeItem("data");
+                window.location.reload();
             })
         } catch (error) {
             console.log(error)
         }
-        console.log('send data');
     }
 
     return(
@@ -170,7 +168,6 @@ export default function Adress() {
                                
                             )
                         }
-
                         </div>
                     </div>
                 </div>

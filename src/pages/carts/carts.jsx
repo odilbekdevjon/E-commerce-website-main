@@ -15,7 +15,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+
 export default function Carts() {
+    const [user] = useAuth()
+    const { t } = useTranslation();
+    const { i18n } = useTranslation();
+    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+    const [cartData, setCartData] = useState(JSON.parse(window.localStorage.getItem("cart")) || []);    
+    const [totalPrice, setTotalPrice] = useState(0)
 
     var settings = {
         dots: true,
@@ -27,13 +34,6 @@ export default function Carts() {
         autoplaySpeed: 5000,
     };
 
-    const [user] = useAuth()
-    const { t } = useTranslation()
-    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-    const [cartData, setCartData] = useState(JSON.parse(window.localStorage.getItem("cart")) || []);
-    console.log(cartData);
-    
-    const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
         const storedCart = localStorage.getItem('cart');
@@ -132,11 +132,13 @@ export default function Carts() {
                                                     } */}
                                             {/* </Slider> */}
 
+                                            {/* {item?.[`description_${i18n.language}`]} */}
+
                                             <div className="carts__item--wrapper ml-5">
-                                                <div className="">
-                                                    <h2 className="carts__item--heading text-[25px] font-bold mb-2"> {item?.name_uz}</h2>
-                                                    <p className="carts__item--text w-[600px] text-[20px] mb-2"> {item?.description_uz}</p>
-                                                    <span className="carts__item--span  block text-[20px] mb-2">{item.category?.name_uz}</span>
+                                                <div className="carts__item--text w-[600px]">
+                                                    <h2 className="carts__item--heading text-[25px] font-bold mb-2">{item?.[`name_${i18n.language}`]}</h2>
+                                                    <p className="carts__item--text w-[400px] text-[20px] mb-2"> {item?.[`description_${i18n.language}`]}</p>
+                                                    <span className="carts__item--span  block text-[20px] mb-2">{item.category?.[`name_${i18n.language}`]}</span>
                                                     <div className="carts__item--div text-[15px]"><span className="underline font-bold">Sklad:</span> {item.stock} {item?.unit_uz}</div>
                                                 </div>
 

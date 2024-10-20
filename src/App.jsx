@@ -1,5 +1,4 @@
 import './App.scss';
-import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 // pages
 import Home from './pages/home';
@@ -18,7 +17,6 @@ import Notification from './pages/profile/notification/notification';
 
 
 function App() {
-  const [setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
 
   return (
     <>
@@ -27,7 +25,7 @@ function App() {
           <Route path='/*' element={<Home/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/contact' element={<Contact/>} />
-          <Route setOrder={setOrder} path='/products' element={<Products/>} />
+          <Route path='/products' element={<Products/>}/>
           <Route path='/carts' element={<Carts/>} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/profile/orders' element={<ProfileOrders/>}/>

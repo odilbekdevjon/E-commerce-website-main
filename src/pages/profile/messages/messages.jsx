@@ -44,22 +44,27 @@ export default function Messages() {
             }); 
     }, []);     
     
+    
     const sendMessages = async () => {
-        const filteredContractId = contractId?.map(item => item.id)
-        const contractIdString = filteredContractId?.join(',');
+        
+        const filteredContractId = contractId?.map(item => item.id)        
+        const findFilterId = filteredContractId.find(item => item)
+        // const contractIdString = findFilterId?.join(',');
+        // console.log(contractIdString);
 
             try {
                 const response = await API.post(`/messages/send-message-user`, {
-                    contractId:contractIdString,
+                    contractId:findFilterId,
                     message: inputName.current.value
                 })
+                // console.log(response.data.data);
                 setMessages(response.data.data);
-                // setMessages(response);
             } catch (error) {
                 console.error(error);
             }
             inputName.current.value = null
-    }    
+    }
+
 
     return(
         <>
@@ -71,9 +76,9 @@ export default function Messages() {
                         <span className="font-bold mr-2 ml-2"> > </span>
                         <Link className="" to={'/profile'}>{t("profileTitle1")}</Link>
                     </div>
-                    <div className="profile flex mt-10">
-                        <div className="profile__right">
-                            <div className="profile__right__user flex">
+                    <div className="messages flex mt-10">
+                        <div className="messages__right">
+                            <div className="messages__right__user flex">
                                 <img className="" src={profileAvatar} width={60} height={60}  alt="" />
                                 <span className="mt-3 ml-5 font-bold text-[20px]">{`${user?.sur_name} ${user.first_name }` ? `${user?.sur_name} ${user.first_name }`  : "Odilbek Safarov"}</span>
                             </div>
@@ -86,26 +91,26 @@ export default function Messages() {
                                 <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
-                        <div className="user_left w-[1000px]">
-                            <div className="ml-10">
+                        <div className="messages_left ml-10">
+                            <div className="">
                                 <h1 className="font-bold text-[35px]">{t("profileMessages")}</h1>
                                 <div className="">
 
                                     {
                                         messageByAdmin?.map((item ,index) => {
                                             return(
-                                                <div key={index} className="w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white">
+                                                <div key={index} className=" w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white">
                                                     {item.message}
                                                 </div>
                                             )
                                         })
                                     }
 
-                                    <span className="block w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white relative left-[850px]">{messages?.message}</span>
+                                    <span className="messages__message block w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white relative left-[850px]">{messages?.message}</span>
                                 </div>
-                               <div className="w-[100%] relative top-[250px] flex z-10">
-                                    <input ref={inputName} className="w-[100%] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message" />
-                                    <button className="p-2 bg-blue-900 rounded-lg text-white" onClick={sendMessages}>Send</button>
+                               <div className="messages__form relative top-[250px] flex z-10">
+                                    <input ref={inputName} className="messages__input w-[1000px] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message" />
+                                    <button className="messages__buttton p-2 bg-blue-900 rounded-lg text-white" onClick={sendMessages}>Send</button>
                                </div>
                             </div>
                         </div>

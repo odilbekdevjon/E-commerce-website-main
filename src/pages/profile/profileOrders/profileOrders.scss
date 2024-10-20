@@ -1,27 +1,157 @@
+
 @media only screen and (max-width:768px) {
-    .profile {
+    .profileOrders {
         flex-direction: column;
 
-
-        &__right {
-            
-        }
-
-        &__right__user {
-        }
-
-        &__right__link {
-            width: 100%;
-            display: block;
-        }
-
         &__left {
-           
-        }
-
-        &__left__data {
-            width: 500px;
             flex-direction: column;
         }
+    }
+}
+
+@media only screen and (max-width:768px) {
+
+    .table-container {
+        width: 100%;
+        // overflow-x: scroll!important;   
+    }
+
+    .table {
+        width: 100%;
+        // overflow: auto;
+    }
+
+    .table__heading {
+        text-align: center;
+    }
+
+}
+
+
+/* Default Styling for large screens */
+.table-container {
+    width: 100%;
+    overflow-x: scroll; /* Scroll on small screens */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Prevent table shrinking */
+}
+
+th, td {
+    padding: 10px;
+    border: 2px solid black;
+    text-align: left;
+}
+
+/* Breakpoint for 768px screens */
+@media screen and (max-width: 768px) {
+    th, td {
+        font-size: 14px; /* Smaller font size */
+    }
+
+    td a, td p {
+        font-size: 12px; /* Make links and text smaller */
+    }
+
+    td {
+        padding: 8px; /* Reduce padding */
+    }
+
+    .table__text {
+        max-width: 200px;
+    }
+}
+
+/* Breakpoint for 500px screens */
+@media screen and (max-width: 500px) {
+
+    .table__heading {
+        text-align: center;
+    }
+
+    .table__headings {
+        display: none;
+    }
+
+    .table__text {
+        max-width: 200px;
+        width: 100%;
+        position: relative;
+        left: 150px;
+    }
+
+    tr {
+        display: block; /* Stack rows */
+        margin-bottom: 10px;
+    }
+
+    th, td {
+        display: block; /* Stack columns */
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    th::before, td::before {
+        content: attr(data-label); /* Add labels */
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+/* Breakpoint for 400px screens */
+@media screen and (max-width: 400px) {
+
+    .table__heading {
+        font-size: 20px;
+    }
+
+    .table__headings {
+        display: none;
+    }
+
+    th, td {
+        font-size: 12px;
+    }
+
+    td a {
+        font-size: 11px;
+    }
+
+    .table__text {
+        max-width: 100px;
+        width: 100%;
+        position: relative;
+        left: 150px;
+    }
+}
+
+/* Breakpoint for 370px screens */
+@media screen and (max-width: 370px) {
+    th, td {
+        font-size: 10px;
+    }
+
+
+
+    td a {
+        font-size: 10px;
+    }
+
+    .table__heading {
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .table__text {
+        max-width: 100px;
+        width: 100%;
+        position: relative;
+        left: 100px;
     }
 }
