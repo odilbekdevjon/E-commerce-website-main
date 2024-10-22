@@ -3,3 +3,14 @@
         margin-top: 50px;
     }
 }
+
+@media only screen and (max-width:320px) {
+    .profile__hr {
+        width: 250px;
+    }
+
+    .profile__right__link {
+        width: 250px;
+    }
+}
+

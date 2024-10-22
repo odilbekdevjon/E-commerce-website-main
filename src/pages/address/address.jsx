@@ -64,7 +64,7 @@ export default function Adress() {
             })
             .then(response => {
                 console.log('Data updated successfully', response.data);
-                sendContract();
+                // sendContract();
                 localStorage.removeItem("cart");
                 localStorage.removeItem("data");
                 window.location.reload();

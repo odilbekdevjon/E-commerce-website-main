@@ -6,11 +6,15 @@ import { API } from "../../../utility/api";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
+import Modal from 'react-modal';
 // components
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 // images
 import profileAvatar from "../../../assets/profileavatar.png";
+import deleteImage from "../../../assets/bin.png";
+import editImage from "../../../assets/edit.png";
 
 export default function OrderById() {
     const { t } = useTranslation();
@@ -19,6 +23,12 @@ export default function OrderById() {
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     const [ orderById, setOrderById ] = useState();
     const { id } = useParams();    
+    // payments
+    const [payAmount, setPayAmount] = useState("");
+    const [payDate, setPayDate] = useState("");     
+    const formattedDate = dayjs(payDate).format("YYYY-MM-DD"); 
+    const [ contractId , setContractId ] = useState();
+
 
     // get products
     useEffect(() => {
@@ -29,7 +39,44 @@ export default function OrderById() {
         .catch(error => {
             console.log(error);
         });
-    },[""]);  
+    },[""]);
+    
+    //  get CONTRACTS ID
+    useEffect(() => {
+        API.get('/contract/get-contracts-list-by-user')
+        .then(response => {
+            setContractId(response.data.contract);
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    }, []);  
+    
+    const [ file , setFile ] = useState();   
+    const handleFileChange = (e) => {
+       const newFile = e.target.files[0]
+       if(!newFile) return 
+       setFile(newFile);
+    }        
+
+    const postPayments = async () => {
+        const filteredContractId = contractId?.map(item => item.id);
+        const findFilterId = filteredContractId.find(item => item);
+
+        const data = new FormData();
+        data.append('amount', Number(payAmount));
+        data.append('paidDate', formattedDate);
+        data.append('receiptImage', file)
+        
+        try {
+            await  axios.post(`https://5jiek.uz/api/v1/payments/create-payment/${findFilterId}`, data, {
+                withCredentials: true 
+            })
+            window.location.reload();
+        } catch (error) {
+         console.log(error);
+        }
+    }
     
     return(
         <>
@@ -60,14 +107,15 @@ export default function OrderById() {
                             <div className="ml-10">
                                 <h1 className="order__heading font-bold text-[35px] mb-5">Batafsil ma'lumot</h1>
                                <div className="order__wrapp flex">
-                                    <div className="order__left mr-60">
+                                    <div className="order__left  mr-24">
                                         <h2 className="text-[25px] font-bold">Buyurtma №: {orderById?.contract_id} </h2>
-                                        <h3 className="text-[18px] mt-5">Buyurtma berilgan vaqt: {orderById?.contractEndDate}</h3>
+                                        <h3 className="text-[18px] mt-5">Shartnoma muddati: {orderById?.contractEndDate}</h3>
                                         <h3 className="text-[18px] mt-3">To'lov muddati: {dayjs(orderById?.paymentEndDate).format("DD.MM.YYYY")}</h3>
                                         <h3 className="text-[18px] mt-3">Kontrakt muddati: {dayjs(orderById?.createdAt).format("DD.MM.YYYY")}</h3>
                                         <h3 className="text-[18px] mt-3">Yetkazib berish muddati: {orderById?.deliveryDate}</h3>
                                         <h3 className="text-[18px] mt-3">Buyurtma holati: {orderById?.status === "rejected" ? "Tasdiqlanmagan" : "Tasdiqlangan"}</h3>
                                         <h3 className="text-[18px] mt-3">Yetkazib berish: {orderById?.isDelivery === true ? "Mavjud" : "Mavjud emas"}</h3>
+                                        <p className="text-[18px] mt-3 w-[350px] order__left__text">Yetkazib berish manzili: {orderById?.shippingAddress}</p>
                                     </div>
                                     <div className="order__right">
                                         <h2 className="text-[25px] font-bold">Buyurtma beruvchi ma'lumotlari:</h2>
@@ -77,6 +125,43 @@ export default function OrderById() {
                                         <h3 className="text-[18px] mt-5">Buyurtmachining telfon raqami: {orderById?.User?.phone_number}</h3>
                                         <h3 className="text-[18px] mt-5">Buyurtmachining manzili: <p className="order__left__text w-[350px]">{orderById?.User?.address}</p></h3>
                                     </div>
+                               </div>
+                               <div className="order__payments flex mt-5 mb-5">
+
+                               <div className="payments_left flex mr-80">
+                                            <div className="">
+                                                <h2 className="font-bold text-[25px] tracking-[1px]">To'lov qilish</h2>
+                                                <div className="mt-5">
+                                                    <label htmlFor="">To'lov miqdori</label>
+                                                    <input className="paymentts__left__input w-60 border-2 border-solid border-black p-3 rounded-lg block" required value={payAmount} onChange={(e) => setPayAmount(e.target.value)} type="number" placeholder="payment amount" />
+                                                </div>
+                                                <div className="mt-5">
+                                                    <label htmlFor="">To'lov sanasi</label>
+                                                    <input className="paymentts__left__input w-60 border-2 border-solid border-black p-3 rounded-lg block" required value={payDate} onChange={(e) => setPayDate(e.target.value)} type="date" placeholder="payment date"  />
+                                                </div>
+                                                <div className="mt-5">
+                                                    <label htmlFor="">To'lov cheki</label>
+                                                    <input className="paymentts__left__input w-60 border-2 border-solid border-black p-3 rounded-lg block" required onChange={handleFileChange} type="file" placeholder="payment image" />
+                                                </div>
+                                                <button className="payments__left__button p-3 bg-sky-800 text-white rounded-lg mt-3" onClick={postPayments}>Send payment</button>
+                                            </div>
+                                </div>
+
+                                    {
+                                        <div className="mt-5">
+                                            <div className="order__user__heading font-bold text-[25px]">Buyurtma tafsilotlari:</div> 
+                                            <p className="mt-3">Jami summa: {orderById?.totalPrice}</p>
+                                            <p className="mt-3">To'langan summa: {orderById?.paidAmount}</p>
+                                            <p className="mt-3">To'lov foizi: {orderById?.paidPercent}%</p>
+                                            <p className="mt-3">Yetkazib berish fayili: <a className="text-blue-500" href={orderById?.deliveryFile}>Fayilga o'tish</a></p>
+                                            <hr className="order__user__hr w-60 mt-5 mb-5 h-[2px] bg-black"/>
+
+                                            <div className="flex flex-col">
+                                                <label className="mb-2" htmlFor="">Yetkazib berish fayilini yuklash</label>
+                                                <input className="order__user__input w-60 p-2 border-2 border-solid border-black" type="file" placeholder="No file chosen"/>
+                                            </div>
+                                        </div>
+                                    }
                                </div>
                                <div className="order__box mt-10">
                                     <h4 className="order__heading font-bold text-[25px]">Buyurtmachining maxsulotlari</h4>

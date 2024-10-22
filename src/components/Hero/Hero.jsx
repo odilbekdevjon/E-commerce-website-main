@@ -12,7 +12,7 @@ export default function Hero() {
                             {/* <h1 className="hero__heading text-[100px] font-bold text- mt-52 text-white text-center">{t("heroTitle1")}</h1> */}
                             <h1 className="hero__heading w-[500px] text-[50px] font-bold text- mt-40 text-white">{t("heroTitle1")}</h1>
                             <p className="hero__text w-96 text-white">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut doloremque ipsam inventore ratione. Eligendi eum quia fugit, delectus quaerat expedita harum deleniti ad repellendus tempora magni libero quae esse. Eaque.</p>
-                            <button className="hero__button border-2 border-solid border-white p-3 rounded-lg mt-5 text-white">Buyurtma berish</button>
+                            <button className="hero__button border-2 border-solid border-white p-3 rounded-lg mt-5 text-white">{t("heroTitle2")}</button>
                         </div>
                     </div>
                 </div>

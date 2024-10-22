@@ -85,6 +85,7 @@ export default function HomeHeader({order}) {
     const closeMenu = () => {
         menuRef.current.classList.remove("header__menu");
     }
+    Modal.setAppElement('#root'); 
     // modal
     const openModal = () => {
         setIsOpen(true);
@@ -92,6 +93,7 @@ export default function HomeHeader({order}) {
     const closeModal = () => {
         setIsOpen(false);
     };
+
 
     const [ notification, setNotification ] = useState();
     const location = useLocation();
@@ -130,10 +132,10 @@ export default function HomeHeader({order}) {
                             </Link>
                         </ul>
                         
-                        {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                        <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                             One id
-                        </a> 
-                         */}
+                        </a>
+
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
                                 <li className="header__menu--list mr-10 text-[18px] tracking-[1px]"><Link to={'/'} className="header__menu--item font-bold mb-4">{t("headerTitle1")}</Link></li>

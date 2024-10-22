@@ -14,12 +14,12 @@ export default function Profile() {
     const { t } = useTranslation();
     const [ user, setUser ] = useAuth();    
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
-    
-    //  get CONTRACTS
+
+    //  get me user
     useEffect(() => {
-        API.get('/contract/get-contracts-list-by-user')
+        API.get('/user/get-me-user')
             .then(response => {
-                setUser(response.data.contract[0].User)
+                setUser(response.data.user)
             })
             .catch(error => {
                 console.log(error);
@@ -46,10 +46,10 @@ export default function Profile() {
                             <hr className="profile__right--hr w-[300px] mt-2" />
                             <div className="profile__right__links mt-5">
                                 <NavLink to={'/profile'} className="profile__right__link w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</NavLink>
-                                <NavLink to={'/profile/orders'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
-                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
-                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
-                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
+                                <NavLink to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
+                                <NavLink to={'/profile/messages'} className="profile__right__linkw-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
+                                <NavLink to={'/profile/payments'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
+                                <NavLink to={'/profile/notification'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
                         <div className="profile__left">
@@ -57,7 +57,7 @@ export default function Profile() {
                                 <h1 className="text-[35px] font-bold">{t("profileTitle2")}</h1>
                                 <img className="mt-10" src={profileAvatar} width={70} height={70}  alt="" />
 
-                                <div className="profile__left__data w-[750px] mt-5 flex justify-between ">
+                                <div className="profile__left__data mt-5 flex justify-between ">
 
                                     <div className="profile__left--right">
                                         <span className="opacity-[0.6]">{t("profileTitle5")}</span>
@@ -67,9 +67,9 @@ export default function Profile() {
                                         <h2 className="font-bold mt-2">{user?.birth_date}</h2>
                                     </div>
                                     
-                                    <div className="">
-                                        <span className=" opacity-[0.6]">{t("profileTitle6")}</span>
-                                        <h2 className="font-bold mt-2 mb-10">{user?.address} </h2>
+                                    <div className="profile__left__left ml-52">
+                                        <span className="opacity-[0.6] ">{t("profileTitle6")}</span>
+                                        <p className="profile__left__text w-96 font-bold mt-2 mb-10">{user?.address} </p>
 
                                         <span className=" opacity-[0.6]">{t("profileTitle8")}</span>
                                         <h2 className="font-bold mt-2">{user?.phone_number}</h2>

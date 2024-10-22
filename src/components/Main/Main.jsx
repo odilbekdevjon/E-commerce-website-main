@@ -13,6 +13,12 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function Main({setOrder}) {
 
+    function cleanHTML(input) {
+        let tempDiv = document.createElement("div");
+        tempDiv.innerHTML = input;
+        return tempDiv.textContent || tempDiv.innerText || "";
+    }
+
     const { t } = useTranslation();
     const { i18n } = useTranslation();
     const [, setError] = useState(null);
@@ -179,13 +185,13 @@ export default function Main({setOrder}) {
                                         <img className=" mb-4 rounded-lg" src={item?.image[0]} width={300} height={250} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
                                         <p className="text-ellipsis w-60 ">
-                                            {item?.[`description_${i18n.language}`]}
+                                            {cleanHTML(item?.[`description_${i18n.language}`])}
                                         </p>
                                         <span className="block mt-4 mb-1">{item?.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item?.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item?.stock})</div>
                                         <div className="main__wrapp flex items-center">
-                                            <Link className="main__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
+                                            <Link className="main__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>{t("mainTitle8")}</Link>
                                             <button onClick={() => addToCardforTopProducts(item?.id)} className="main__cart-img ml-20 mt-4 border-2 border-solid border-white p-1 rounded-lg hover:cursor-pointer">
                                                 <img className="" src={cartSvg} width={30} height={30} alt="cart" />
                                             </button>
@@ -207,13 +213,13 @@ export default function Main({setOrder}) {
                                         <img className="main__wrapper__img mb-4 rounded-lg" src={item?.image[0]} width={300} height={200} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
                                         <p className="main__wrapper__text text-ellipsis w-60 ">
-                                            {item?.[`description_${i18n.language}`]}
+                                            {cleanHTML(item?.[`description_${i18n.language}`])}
                                         </p>
                                         <span className="block mt-4 mb-1">{item?.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item?.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item?.stock})</div>
                                         <div className="main__wrapper__wrapp flex items-center">
-                                            <Link className="main__wrapper__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
+                                            <Link className="main__wrapper__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>{t("mainTitle8")}</Link>
                                             <button onClick={() => addToCardForNewData(item?.id)} className="main__wrapper__cart-img ml-20 mt-4 border-2 border-solid border-black p-1 rounded-lg hover:cursor-pointer">
                                                 <img className="" src={cart} width={30} height={30} alt="cart" />
                                             </button>
@@ -236,13 +242,13 @@ export default function Main({setOrder}) {
                                         <img className="main__wrapp__img mb-4 rounded-lg" src={item?.image[0]} width={300} height={200} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
                                         <p className="main__wrapp__text text-ellipsis w-60 ">
-                                            {item?.[`description_${i18n.language}`]}
+                                            {cleanHTML(item?.[`description_${i18n.language}`])}
                                         </p>
                                         <span className="block mt-4 mb-1">{item?.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item?.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item?.stock})</div>
                                         <div className="main__wrapp__wrapp flex items-center">
-                                            <Link className="main__wrapp__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item.id}`}>Batafsil ma'lumot</Link>
+                                            <Link className="main__wrapp__link w-40 p-2 rounded-lg  mt-4 bg-sky-900 text-white font-bold" to={`/order/${item?.id}`}>{t("mainTitle8")}</Link>
                                             <button onClick={() => addToCardforDiscountProducts(item?.id)} className="main__wrapp__cart-img ml-20 mt-4 border-2 border-solid border-black p-1 rounded-lg hover:cursor-pointer">
                                                 <img className="" src={cart} width={30} height={30} alt="cart" />
                                             </button>

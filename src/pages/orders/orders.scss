@@ -1,3 +1,14 @@
+
+.order {
+    .slick-next::before {
+        color: #000;
+    }
+        
+    .slick-prev::before {
+        color: #000;
+    }
+}
+
 // order tablet
 @media (max-width:768px) {
     .order {

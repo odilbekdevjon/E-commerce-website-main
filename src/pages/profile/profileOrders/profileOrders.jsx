@@ -76,7 +76,7 @@ export default function ProfileOrders() {
                                                             <a className="block text-blue-500" href={item?.contractFile.contractFileRu} target="_blank">uzbek tilida</a>
                                                             <a className="block text-blue-500" href={item?.contractFile.contractFileUz} target="_blank">rus tilida</a>
                                                         </td>
-                                                        <td data-label="Yetkazib berish manzili" className="border-2 border-solid border-black p-2"><p className="table__text w-48">{item?.shippingAddress}</p></td>
+                                                        <td data-label="Yetkazib berish manzili" className="border-2 border-solid border-black p-2"><p className="table__text w-44">{item?.shippingAddress}</p></td>
                                                         <td data-label="Yetkazib berish xizmati" className="border-2 border-solid border-black p-2">
                                                             <button>{item?.isDelivery ? "Mavjud" : "Mavjud emas"}</button>
                                                         </td>

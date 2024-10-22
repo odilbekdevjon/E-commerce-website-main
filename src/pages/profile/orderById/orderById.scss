@@ -41,10 +41,60 @@
         margin-left: 0;
     }
 
+    .order__payments {
+        flex-direction: column;
+    }
+
 }
 
 @media (max-width:400px) {
     .order__left__text {
         width: 250px;
     }
+
+    .order__user__hr {
+        width: 300px;
+    }
+
+    .order__user__input {
+        width: 300px;
+    }
+
+    .order__user__heading {
+        font-size: 20px;
+    }
+
+    .payments_left {
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+
+    .paymentts__left__input {
+        // width: 300px;
+    }
+
+    .payments__left__button {
+        display: block;
+        width: 300px;
+    }
+}
+
+@media (max-width:350px) {
+    .order__left__text {
+        width: 250px;
+    }
+
+    .order__user__hr {
+        width: 250px;
+    }
+
+    .order__user__input {
+        width: 250px;
+    }
+
+    .payments__left__button {
+        display: block;
+        width: 200px;
+    }
+
 }

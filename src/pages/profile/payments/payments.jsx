@@ -23,6 +23,10 @@ export default function Payments() {
     const [ payments, setPayments ] = useState([]);
     const [ modalIsOpen, setIsOpen ] = useState(false);
     const [ updateId, setUpdateId  ] = useState();
+    // value
+    const [payAmount, setPayAmount] = useState("");
+    const [payDate, setPayDate] = useState("");     
+    const formattedDate = dayjs(payDate).format("YYYY-MM-DD");   
 
     //  get CONTRACTS ID
     useEffect(() => {
@@ -34,14 +38,6 @@ export default function Payments() {
             console.log(error);
         }); 
     }, []);  
-
-    // const payAmount = useRef();
-    // const payDate = useRef();
-    // const payUpdateDate = useRef();
-
-    const [payAmount, setPayAmount] = useState("");
-    const [payDate, setPayDate] = useState("");     
-    const formattedDate = dayjs(payDate).format("YYYY-MM-DD");    
 
     const [ file , setFile ] = useState();   
     const handleFileChange = (e) => {
@@ -85,17 +81,13 @@ export default function Payments() {
     useEffect(() => {
         Modal.setAppElement('#root'); // 'root' sizning asosiy elementingiz bo'lishi kerak
     }, []);
-    // modal
-    // const openModal = () => {
-    //     setIsOpen(true);
-    // };
+
     const openModal = () => {
         setIsOpen(true);
     };
     const closeModal = () => {
         setIsOpen(false);
     };
-    
 
     // update payments
     const updatePayments = async () => {

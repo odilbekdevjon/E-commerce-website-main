@@ -15,12 +15,8 @@
     .profile {
         flex-direction: column;
 
-
-        &__right {
-            
-        }
-
-        &__right__user {
+        &__left__left {
+            margin-left: 0;
         }
 
         &__right__link {
@@ -55,6 +51,10 @@
 @media only screen and (max-width:440px) {
     .profile {
 
+        &__left__text {
+            width: 350px;
+        }
+
         &__left__data {
             max-width: 300px;
         }
@@ -65,8 +65,12 @@
     }
 }
 
-@media only screen and (max-width:340px) {
+@media only screen and (max-width:380px) {
     .profile {
+
+        &__left__text {
+            width: 250px;
+        }
 
         &__left__data {
             max-width: 250px;
@@ -74,6 +78,20 @@
 
         &__right--hr {
             max-width: 200px;
+        }
+
+    }
+}
+
+
+@media only screen and (max-width:340px) {
+    .profile {
+        &__right--hr {
+            width: 250px;
+        }
+
+        &__right__link {
+            width: 250px;
         }
 
     }

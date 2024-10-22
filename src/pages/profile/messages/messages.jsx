@@ -48,7 +48,7 @@ export default function Messages() {
     const sendMessages = async () => {
         
         const filteredContractId = contractId?.map(item => item.id)        
-        const findFilterId = filteredContractId.find(item => item)
+        const findFilterId = filteredContractId?.find(item => item)
         // const contractIdString = findFilterId?.join(',');
         // console.log(contractIdString);
 
@@ -106,9 +106,12 @@ export default function Messages() {
                                         })
                                     }
 
-                                    <span className="messages__message block w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white relative left-[850px]">{messages?.message}</span>
+                                    <span className="messages__message block w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white relative left-[850px]">
+                                        {messages?.message}
+                                        
+                                    </span>
                                 </div>
-                               <div className="messages__form relative top-[250px] flex z-10">
+                               <div className="messages__form relative top-[250px] flex ">
                                     <input ref={inputName} className="messages__input w-[1000px] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message" />
                                     <button className="messages__buttton p-2 bg-blue-900 rounded-lg text-white" onClick={sendMessages}>Send</button>
                                </div>

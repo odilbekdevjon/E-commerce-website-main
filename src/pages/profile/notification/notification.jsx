@@ -45,13 +45,13 @@ export default function Notification() {
                                 <img className="" src={profileAvatar} width={60} height={60}  alt="" />
                                 <span className="mt-3 ml-5 font-bold text-[20px]">{`${user?.sur_name} ${user.first_name }` ? `${user?.sur_name} ${user.first_name }`  : "Odilbek Safarov"}</span>
                             </div>
-                            <hr className="w-[300px] mt-2" />
+                            <hr className="profile__hr w-[300px] mt-2" />
                             <div className="mt-5">
-                                <Link to={'/profile'} className="w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</Link>
+                                <Link to={'/profile'} className="profile__right__link w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</Link>
                                 <NavLink to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
-                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
-                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
-                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
+                                <NavLink to={'/profile/messages'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
+                                <NavLink to={'/profile/payments'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
+                                <NavLink to={'/profile/notification'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
                         <div className="notification_left">

@@ -1,3 +1,16 @@
+.carts__item--image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.text-ellipsis {
+    width: 200px; /* kenglikni belgilang */
+    white-space: nowrap; /* Matnni bitta qatorda saqlash */
+    overflow: hidden; /* Kenglikdan oshgan qismini yashirish */
+    text-overflow: ellipsis; /* O'sha joyda "..." chiqarish */
+}
+
 @media (max-width:1200px) {
     .carts {
         flex-direction: column;
@@ -147,9 +160,11 @@
 @media (max-width:330px) {
     .carts {
         &__item--text {
-            width: 200px;
-            text-align: center;
-        }  
+            max-width: 200px;
+            // text-align: center;
+        }
+        
+        
         
     }
 }
