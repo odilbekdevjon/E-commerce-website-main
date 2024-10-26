@@ -18,6 +18,10 @@ export default function Messages() {
     const [messages, setMessages] = useState();
     const [messageByAdmin, setMessageByAdmin] = useState([]);
     const inputName = useRef();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+
+
     
 
    //  get CONTRACTS
@@ -46,23 +50,25 @@ export default function Messages() {
     
     
     const sendMessages = async () => {
-        
         const filteredContractId = contractId?.map(item => item.id)        
         const findFilterId = filteredContractId?.find(item => item)
-        // const contractIdString = findFilterId?.join(',');
-        // console.log(contractIdString);
-
+       
             try {
                 const response = await API.post(`/messages/send-message-user`, {
                     contractId:findFilterId,
                     message: inputName.current.value
                 })
-                // console.log(response.data.data);
                 setMessages(response.data.data);
+
+                // Show modal for successful message send
+                setIsModalVisible(true);
+                setTimeout(() => setIsModalVisible(false), 2000);
             } catch (error) {
                 console.error(error);
+                setErrorMessage("Failed to send the message. Please try again.");
+                setTimeout(() => setErrorMessage(null), 3000); 
             }
-            inputName.current.value = null
+            inputName.current.value = null;
     }
 
 
@@ -115,6 +121,21 @@ export default function Messages() {
                                     <input ref={inputName} className="messages__input w-[1000px] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message" />
                                     <button className="messages__buttton p-2 bg-blue-900 rounded-lg text-white" onClick={sendMessages}>Send</button>
                                </div>
+                               {isModalVisible && (
+                                    <div className="modal">
+                                        <div className="modal__content">
+                                            <p className="">Sent message</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {errorMessage && (
+                                    <div className="error-modal">
+                                        <div className="error-modal__content">
+                                            <p>{errorMessage}</p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

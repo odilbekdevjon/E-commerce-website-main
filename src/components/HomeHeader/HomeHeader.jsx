@@ -23,7 +23,8 @@ export default function HomeHeader({order}) {
     const [ lang, changeLang  ] = useLang();
     const [ modalIsOpen, setIsOpen ] = useState(false);
     const [ , setCardLength ] = useState(0);
-    const [ changeCheckBtn, setChangeCheckBtn ] = useState(true);
+    const [ changeCheckBtn, setChangeCheckBtn ] = useState(false);
+    
     // captcha
     function generateCaptcha(length) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -40,7 +41,7 @@ export default function HomeHeader({order}) {
         const cartData = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
         setCardLength(cartData);
     },[])
-    
+
     // ref
     const menuRef = useRef();
     const code = useRef();
@@ -55,6 +56,7 @@ export default function HomeHeader({order}) {
             console.error(error);
         }
         closeModal()
+        console.log('ok');
     }
 
     const [isLogoutVisible, setLogoutVisible] = useState(false);
@@ -97,21 +99,22 @@ export default function HomeHeader({order}) {
 
     const [ notification, setNotification ] = useState();
     const location = useLocation();
-
-    // get notification
+    
     useEffect(() => {
-        API.get(`/messages/get-notification-user`)
-        .then(response => {
-            setNotification(response.data.data);
-            })
-        .catch(error => {
-            console.log(error);
-        });
+        const fetchNotification = async () => {
+            try {
+                const response = await API.get(`/messages/get-notification-user`);
+                setNotification(response.data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchNotification();
+    
         if (location.pathname === "/profile/notification") {
-            setNotification(0);
-            notification.length = null;
+            setNotification(0); // Sahifaga kirganda notificationni 0 ga teng qilamiz
         }
-    },[window.location.pathname]);      
+    }, [location.pathname]);
 
     return ( 
         <>
@@ -132,9 +135,9 @@ export default function HomeHeader({order}) {
                             </Link>
                         </ul>
                         
-                        <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
-                            One id
-                        </a>
+                        {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
+                            <button>One id</button>
+                        </a> */}
 
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
@@ -164,7 +167,10 @@ export default function HomeHeader({order}) {
                                 user ? (
                                <div className="flex items-center">
                                     <Link to={'/profile/notification'} className="flex">
-                                        <div className="text-white relative bottom-3 left-8">{notification?.length}</div>
+                                        <div className={`notification-indicator ${notification && notification.length > 0 ? "bg-red-500" : null} 
+                                            relative left-7 text-center text-white rounded-full w-2 h-2 text-xs`}>
+                                            {/* {notification && notification.length > 0 ? notification.length : ""} */}
+                                        </div>
                                         <img className="mr-4" src={notificationIcon} width={30} alt="" />
                                     </Link>
                                     <Link to={'/profile'} className="user__link mt-1" 
@@ -177,13 +183,12 @@ export default function HomeHeader({order}) {
 
                                 ) :(
                                 <button onClick={openModal}>
-                                    {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g"> */}
                                         <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
                                             <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
                                         </div>           
                                     {/* </a>  */}
                                 </button>
-                            )}
+                                )}
 
                                     { isLogoutVisible && (
                                        <div className="logout cursor-pointer bg-sky-900" 
@@ -209,9 +214,9 @@ export default function HomeHeader({order}) {
                                     <hr />
                                     <label className="text-black text-[25px] font-sans" htmlFor="">{captcha}</label>
                                     <input ref={code} className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" placeholder="code" />
-                                    <div className="text-blue-400 underline mt-3 mb-3 block" href=""><input onClick={setChangeCheckBtn} className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</div>
+                                    <div className="text-blue-400 mt-3 mb-3 block"><input onClick={() => setChangeCheckBtn(!changeCheckBtn)} className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</div>
                                     <hr />
-                                    <button onClick={sendCode} className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
+                                    <button defaultValue={changeCheckBtn} disabled={changeCheckBtn} onClick={sendCode} className={`${changeCheckBtn ? 'opacity-50 cursor-not-allowed' : ''} mt-5 ml-12 p-2 bg-blue-400 text-white`}>Tasdiqlash codini yuboring</button>
                                     <button className="text-black mt-4 ml-32 border-solid border-2 border-gray-500 p-1">Kodni yangilash</button>
                                 </div>
                             </Modal>

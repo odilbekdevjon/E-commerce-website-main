@@ -2,6 +2,10 @@
     .notification_left {
         margin-top: 50px;
     }
+
+    .profile__left__title {
+        font-size: 25px;
+    }
 }
 
 @media only screen and (max-width:320px) {
@@ -11,6 +15,10 @@
 
     .profile__right__link {
         width: 250px;
+    }
+
+    .profile__left__title {
+        font-size: 20px;
     }
 }
 

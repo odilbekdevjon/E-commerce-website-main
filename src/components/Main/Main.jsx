@@ -25,6 +25,14 @@ export default function Main({setOrder}) {
     const [data, setData] = useState([]);
     const [newData, setNewData] = useState([]);
     const [ discountProducts, setDiscountProducts ] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+
+    const showAddToCartModal = () => {
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 2000); // Hides modal after 2 seconds
+    };
+
+
     
         var settings = {
           dots: true,              
@@ -117,6 +125,7 @@ export default function Main({setOrder}) {
             setOrder(newCard)
             localStorage.setItem('cart', JSON.stringify(newCard))
         }
+        showAddToCartModal();
     }
 
     // addToCardForNewData
@@ -142,6 +151,7 @@ export default function Main({setOrder}) {
             setOrder(newCard)
             localStorage.setItem('cart', JSON.stringify(newCard))
         }
+        showAddToCartModal();
     }
 
     // addToCardforTopProducts
@@ -167,6 +177,7 @@ export default function Main({setOrder}) {
                 setOrder(newCard)
                 localStorage.setItem('cart', JSON.stringify(newCard))
             }
+            showAddToCartModal();
     }
 
     return (
@@ -259,7 +270,13 @@ export default function Main({setOrder}) {
                         }
                     </ul>
                 </div>
-
+                {showModal && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <p>Product added to cart!</p>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     )

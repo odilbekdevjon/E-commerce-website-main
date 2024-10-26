@@ -1,5 +1,5 @@
 import "./Header.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState , useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from 'react-modal';
@@ -79,17 +79,23 @@ export default function Header({order}) {
     };
 
     const [ notification, setNotification ] = useState();
-
-    // get notification
+    const location = useLocation();
+    
     useEffect(() => {
-        API.get(`/messages/get-notification-user`)
-        .then(response => {
-            setNotification(response.data.data);
-            })
-        .catch(error => {
-            console.log(error);
-        });
-    },[""]);
+        const fetchNotification = async () => {
+            try {
+                const response = await API.get(`/messages/get-notification-user`);
+                setNotification(response.data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchNotification();
+    
+        if (location.pathname === "/profile/notification") {
+            setNotification(0); // Sahifaga kirganda notificationni 0 ga teng qilamiz
+        }
+    }, [location.pathname]);
 
     return (
         <>
@@ -143,7 +149,10 @@ export default function Header({order}) {
                                 user ? (
                                <div className="flex items-center">
                                     <Link to={'/profile/notification'} className="flex">
-                                        <div className="text-white relative bottom-3 left-8">{notification?.length}</div>
+                                        <div className={`notification-indicator ${notification && notification.length > 0 ? "bg-red-500" : null} 
+                                            relative left-7 text-center text-white rounded-full w-2 h-2 text-xs`}>
+                                            {/* {notification && notification.length > 0 ? notification.length : ""} */}
+                                        </div>
                                         <img className="mr-4" src={notificationIcon} width={30} alt="" />
                                     </Link>
                                     <Link to={'/profile'} 

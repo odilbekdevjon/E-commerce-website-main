@@ -7,16 +7,21 @@ import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
-import Modal from 'react-modal';
 // components
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 // images
 import profileAvatar from "../../../assets/profileavatar.png";
-import deleteImage from "../../../assets/bin.png";
-import editImage from "../../../assets/edit.png";
+
 
 export default function OrderById() {
+
+    function cleanHTML(input) {
+        let tempDiv = document.createElement("div");
+        tempDiv.innerHTML = input;
+        return tempDiv.textContent;
+    }
+
     const { t } = useTranslation();
     const { i18n } = useTranslation();
     const [ user  ] = useAuth();
@@ -27,8 +32,7 @@ export default function OrderById() {
     const [payAmount, setPayAmount] = useState("");
     const [payDate, setPayDate] = useState("");     
     const formattedDate = dayjs(payDate).format("YYYY-MM-DD"); 
-    const [ contractId , setContractId ] = useState();
-
+    const [ contractId , setContractId ] = useState();    
 
     // get products
     useEffect(() => {
@@ -76,6 +80,10 @@ export default function OrderById() {
         } catch (error) {
          console.log(error);
         }
+
+        payAmount = "";
+        payDate = "";
+        file = "";
     }
     
     return(
@@ -105,42 +113,42 @@ export default function OrderById() {
                         </div>
                         <div className="order">
                             <div className="ml-10">
-                                <h1 className="order__heading font-bold text-[35px] mb-5">Batafsil ma'lumot</h1>
+                                <h1 className="order__heading font-bold text-[35px] mb-5">{t("profileOrder6")}</h1>
                                <div className="order__wrapp flex">
-                                    <div className="order__left  mr-24">
-                                        <h2 className="text-[25px] font-bold">Buyurtma №: {orderById?.contract_id} </h2>
-                                        <h3 className="text-[18px] mt-5">Shartnoma muddati: {orderById?.contractEndDate}</h3>
-                                        <h3 className="text-[18px] mt-3">To'lov muddati: {dayjs(orderById?.paymentEndDate).format("DD.MM.YYYY")}</h3>
-                                        <h3 className="text-[18px] mt-3">Kontrakt muddati: {dayjs(orderById?.createdAt).format("DD.MM.YYYY")}</h3>
-                                        <h3 className="text-[18px] mt-3">Yetkazib berish muddati: {orderById?.deliveryDate}</h3>
-                                        <h3 className="text-[18px] mt-3">Buyurtma holati: {orderById?.status === "rejected" ? "Tasdiqlanmagan" : "Tasdiqlangan"}</h3>
-                                        <h3 className="text-[18px] mt-3">Yetkazib berish: {orderById?.isDelivery === true ? "Mavjud" : "Mavjud emas"}</h3>
-                                        <p className="text-[18px] mt-3 w-[350px] order__left__text">Yetkazib berish manzili: {orderById?.shippingAddress}</p>
+                                    <div className="order__left  mr-52">
+                                        <h2 className="text-[25px] font-bold">{t("cartTitle2")} №: {orderById?.contract_id} </h2>
+                                        <h3 className="text-[18px] mt-5">{t("orderId8")} {orderById?.contractEndDate}</h3>
+                                        <h3 className="text-[18px] mt-3">{t("orderId9")} {dayjs(orderById?.paymentEndDate).format("DD.MM.YYYY")}</h3>
+                                        <h3 className="text-[18px] mt-3">{t("orderId10")} {dayjs(orderById?.createdAt).format("DD.MM.YYYY")}</h3>
+                                        <h3 className="text-[18px] mt-3">{t("orderId11")} {orderById?.deliveryDate}</h3>
+                                        <h3 className="text-[18px] mt-3">{t("orderId12")}  {orderById?.status === "rejected" ? "Tasdiqlanmagan" : "Tasdiqlangan"}</h3>
+                                        <h3 className="text-[18px] mt-3">{t("orderId13")}  {orderById?.isDelivery === true ? "Mavjud" : "Mavjud emas"}</h3>
+                                        <p className="text-[18px] mt-3 w-[350px] order__left__text">{t("orderId14")}  {orderById?.shippingAddress}</p>
                                     </div>
                                     <div className="order__right">
-                                        <h2 className="text-[25px] font-bold">Buyurtma beruvchi ma'lumotlari:</h2>
-                                        <h3 className="text-[18px] mt-5">Buyurtmachining ID raqami: {orderById?.User?.user_id}</h3>
-                                        <h3 className="text-[18px] mt-5">Buyurtmachining ism familyasi: {`${orderById?.User?.sur_name}  ${orderById?.User?.first_name}`}</h3>
-                                        <h3 className="text-[18px] mt-5">Buyurtmachining tug'ulgan sanasi: {orderById?.User?.birth_date}</h3>
-                                        <h3 className="text-[18px] mt-5">Buyurtmachining telfon raqami: {orderById?.User?.phone_number}</h3>
-                                        <h3 className="text-[18px] mt-5">Buyurtmachining manzili: <p className="order__left__text w-[350px]">{orderById?.User?.address}</p></h3>
+                                        <h2 className="text-[25px] font-bold">{t("orderId4")}</h2>
+                                        <h3 className="text-[18px] mt-5">{t("orderId15")} {orderById?.User?.user_id}</h3>
+                                        <h3 className="text-[18px] mt-5">{t("orderId16")} {`${orderById?.User?.sur_name}  ${orderById?.User?.first_name}`}</h3>
+                                        <h3 className="text-[18px] mt-5">{t("orderId17")} {orderById?.User?.birth_date}</h3>
+                                        <h3 className="text-[18px] mt-5">{t("orderId18")}{orderById?.User?.phone_number}</h3>
+                                        <h3 className="text-[18px] mt-5">{t("orderId19")} <p className="order__left__text w-[350px]">{orderById?.User?.address}</p></h3>
                                     </div>
                                </div>
                                <div className="order__payments flex mt-5 mb-5">
 
-                               <div className="payments_left flex mr-80">
+                               <div className="payments_left flex mr-52">
                                             <div className="">
-                                                <h2 className="font-bold text-[25px] tracking-[1px]">To'lov qilish</h2>
+                                                <h2 className="font-bold text-[25px] tracking-[1px]">{t("orderId1")}</h2>
                                                 <div className="mt-5">
-                                                    <label htmlFor="">To'lov miqdori</label>
+                                                    <label htmlFor="">{t("orderId5")}</label>
                                                     <input className="paymentts__left__input w-60 border-2 border-solid border-black p-3 rounded-lg block" required value={payAmount} onChange={(e) => setPayAmount(e.target.value)} type="number" placeholder="payment amount" />
                                                 </div>
                                                 <div className="mt-5">
-                                                    <label htmlFor="">To'lov sanasi</label>
+                                                    <label htmlFor="">{t("orderId6")}</label>
                                                     <input className="paymentts__left__input w-60 border-2 border-solid border-black p-3 rounded-lg block" required value={payDate} onChange={(e) => setPayDate(e.target.value)} type="date" placeholder="payment date"  />
                                                 </div>
                                                 <div className="mt-5">
-                                                    <label htmlFor="">To'lov cheki</label>
+                                                    <label htmlFor="">{t("orderId7")}</label>
                                                     <input className="paymentts__left__input w-60 border-2 border-solid border-black p-3 rounded-lg block" required onChange={handleFileChange} type="file" placeholder="payment image" />
                                                 </div>
                                                 <button className="payments__left__button p-3 bg-sky-800 text-white rounded-lg mt-3" onClick={postPayments}>Send payment</button>
@@ -149,34 +157,39 @@ export default function OrderById() {
 
                                     {
                                         <div className="mt-5">
-                                            <div className="order__user__heading font-bold text-[25px]">Buyurtma tafsilotlari:</div> 
-                                            <p className="mt-3">Jami summa: {orderById?.totalPrice}</p>
-                                            <p className="mt-3">To'langan summa: {orderById?.paidAmount}</p>
-                                            <p className="mt-3">To'lov foizi: {orderById?.paidPercent}%</p>
-                                            <p className="mt-3">Yetkazib berish fayili: <a className="text-blue-500" href={orderById?.deliveryFile}>Fayilga o'tish</a></p>
-                                            <hr className="order__user__hr w-60 mt-5 mb-5 h-[2px] bg-black"/>
+                                            <div className="order__user__heading font-bold text-[25px]">{t("orderId2")}</div> 
+                                            <p className="mt-3">{t("orderId20")} {orderById?.totalPrice}</p>
+                                            <p className="mt-3">{t("orderId21")} {orderById?.paidAmount}</p>
+                                            <p className="mt-3">{t("orderId22")} {orderById?.paidPercent}%</p>
+                                            {/* <p className="mt-3">Yetkazib berish fayili: <a className={orderById?.deliveryFile === "" ? "text-red-500" : "text-blue-500"} href={""}>Fayilga o'tish</a></p> */}
 
-                                            <div className="flex flex-col">
-                                                <label className="mb-2" htmlFor="">Yetkazib berish fayilini yuklash</label>
-                                                <input className="order__user__input w-60 p-2 border-2 border-solid border-black" type="file" placeholder="No file chosen"/>
-                                            </div>
+                                            <p className="mt-3"> {t("orderId23")} 
+                                                {orderById ? (
+                                                    <a className={orderById.deliveryFile === "" ? "text-red-500" : "text-blue-500"} href={orderById.deliveryFile}>
+                                                        {t("orderId24")}
+                                                    </a>
+                                                ) : (
+                                                    <span className="text-gray-500">{t("orderId25")}</span>
+                                                )}
+                                            </p>
+                                            <hr className="order__user__hr w-60 mt-5 mb-5 h-[2px] bg-black"/>
                                         </div>
                                     }
                                </div>
                                <div className="order__box mt-10">
-                                    <h4 className="order__heading font-bold text-[25px]">Buyurtmachining maxsulotlari</h4>
+                                    <h4 className="order__heading font-bold text-[25px]">{t("orderId3")}</h4>
                                    {
                                         orderById?.products?.map((item , index) => {
                                             return(
                                             <div key={index} className="order__items flex mt-5">
                                                 <img className="order__items__image" src={item.image[0]} width={250} height={200} alt="" />
                                                 <div className="order__items__products ml-10">
-                                                    <span className="block"><b>Maxsulotning nomi:</b> {item?.[`name_${i18n.language}`]}</span>
-                                                    <span className="block"><b>Maxsulotning tavsifi:</b> {item?.[`description_${i18n.language}`]}</span>
-                                                    <span className="block"><b>Maxsulot narxi:</b> {item?.discount}</span>
-                                                    <span className="block"><b>Maxsulotni eski narxi:</b> <span className="line-through opacity-[0.5]">{item?.price}</span></span>
-                                                    <span className="block"><b>Omborxonada:</b> {`${item?.stock} ${item?.unit_uz} mavjud`}</span>
-                                                    <span className="block"><b>Yetkazib berish summasi:</b> {item?.delivery_price}</span>
+                                                    <span className="block"><b>{t("orderId26")}</b> {item?.[`name_${i18n.language}`]}</span>
+                                                    <p className="block w-[700px]"><b>{t("orderId27")}</b> {cleanHTML(item?.[`description_${i18n.language}`])}</p>
+                                                    <span className="block"><b>{t("orderId28")}</b> {item?.discount}</span>
+                                                    <span className="block"><b>{t("orderId29")}</b> <span className="line-through opacity-[0.5]">{item?.price}</span></span>
+                                                    <span className="block"><b>{t("orderId30")}</b> {`${item?.stock} ${item?.[`unit_${i18n.language}`]}`}</span>
+                                                    <span className="block"><b>{t("orderId31")}</b> {item?.delivery_price}</span>
                                                 </div>
                                             </div>
                                             )

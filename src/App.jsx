@@ -1,5 +1,7 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
+import { useState } from 'react';
 // pages
 import Home from './pages/home';
 import About from './pages/about/about';
@@ -17,6 +19,8 @@ import Notification from './pages/profile/notification/notification';
 
 
 function App() {
+  const [ user ] = useAuth();
+
 
   return (
     <>
@@ -26,8 +30,8 @@ function App() {
           <Route path='/about' element={<About/>} />
           <Route path='/contact' element={<Contact/>} />
           <Route path='/products' element={<Products/>}/>
-          <Route path='/carts' element={<Carts/>} />
-          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/carts' element={<Carts />} />
+          <Route path='/profile' element={user ? <Profile/> : <Home/>}/>
           <Route path='/profile/orders' element={<ProfileOrders/>}/>
           <Route path='/profile/order/:id' element={<OrderById/>}/>
           <Route path='/profile/messages' element={<Messages/>}/>

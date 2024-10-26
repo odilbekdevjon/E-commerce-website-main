@@ -26,6 +26,8 @@ export default function ProfileOrders() {
                 console.log(error);
             }); 
     }, []);
+
+    console.log(contracts);
     
     return(
         <>
@@ -59,12 +61,12 @@ export default function ProfileOrders() {
                                     <table className="table w-full p-5 border-2 border-solid border-black">
                                         <thead className="table__head border-2 border-solid border-black">
                                             <tr className="table__headings">
-                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Shartnomaning tugash sanasi</td>
-                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Shartnoma fayli</td>
-                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Yetkazib berish manzili</td>
-                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Yetkazib berish xizmati</td>
-                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Umumiy narx</td>
-                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">Batafsil ma'lumot</td>
+                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder1")}</td>
+                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder2")}</td>
+                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder3")}</td>
+                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder4")}</td>
+                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder5")}</td>
+                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder6")}</td>
                                             </tr>
                                         </thead>
                                         <tbody className="">
@@ -73,8 +75,8 @@ export default function ProfileOrders() {
                                                     <tr className="" key={item?.id}>
                                                         <td data-label="Shartnomaning tugash sanasi" className="border-2 border-solid border-black p-2">{item?.contractEndDate}</td>
                                                         <td data-label="Shartnoma fayli" className="border-2 border-solid border-black p-2">
-                                                            <a className="block text-blue-500" href={item?.contractFile.contractFileRu} target="_blank">uzbek tilida</a>
-                                                            <a className="block text-blue-500" href={item?.contractFile.contractFileUz} target="_blank">rus tilida</a>
+                                                            <a className="block text-blue-500" href={item?.contractFile.contractFileRu} target="_blank">rus tilida</a>
+                                                            <a className="block text-blue-500" href={item?.contractFile.contractFileUz} target="_blank">uzbek tilida</a>
                                                         </td>
                                                         <td data-label="Yetkazib berish manzili" className="border-2 border-solid border-black p-2"><p className="table__text w-44">{item?.shippingAddress}</p></td>
                                                         <td data-label="Yetkazib berish xizmati" className="border-2 border-solid border-black p-2">

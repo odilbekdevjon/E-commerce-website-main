@@ -13,7 +13,9 @@ import contract from "../../assets/contract.svg";
 
 export default function Contact() {
     const { t } = useTranslation()
-    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+    const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
+    const [notification, setNotification] = useState(null);
+
     
     // values by ref
     const name = useRef();
@@ -34,10 +36,14 @@ export default function Contact() {
                     "Content-Type": "application/json",
                 },
                 withCredentials: true 
-            })
+            });
+            setNotification({ message: "Send message successfully!", type: "success" });
         } catch (error) {
          console.log(error)
+         setNotification({ message: "Failed to send message. Please try again.", type: "error" });
+
         }
+        setTimeout(() => setNotification(null), 3000);
 
         name.current.value = null;
         email.current.value = null;
@@ -83,8 +89,13 @@ export default function Contact() {
                                         <textarea ref={message} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black w-80" type="text" placeholder="Message"></textarea>
                                     </div>
                                     <button onClick={() => sendMessage()} className="contact__form-button border-2 border-solid border-sky-950 py-3 px-10 font-bold rounded-lg mt-5 hover:bg-teal-900 hover:text-white">Submit</button>
-                            </div>
+                            </div>  
                         </div>
+                        {notification && (
+                        <div className={`notification ${notification.type}`}>
+                            {notification.message}
+                        </div>
+                        )}
                     </div>
                 </section>
             <Footer/>

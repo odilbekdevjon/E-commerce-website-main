@@ -26,7 +26,8 @@ export default function Payments() {
     // value
     const [payAmount, setPayAmount] = useState("");
     const [payDate, setPayDate] = useState("");     
-    const formattedDate = dayjs(payDate).format("YYYY-MM-DD");   
+    const [notification, setNotification] = useState(null);
+
 
     //  get CONTRACTS ID
     useEffect(() => {
@@ -48,24 +49,29 @@ export default function Payments() {
 
     const postPayments = async () => {
         const filteredContractId = contractId?.map(item => item.id);
-        const findFilterId = filteredContractId.find(item => item);
+        const findFilterId = filteredContractId?.find(item => item);
 
         const data = new FormData();
         data.append('amount', Number(payAmount));
-        data.append('paidDate', formattedDate);
+        data.append('paidDate', payDate);
         data.append('receiptImage', file)
         
         try {
             await  axios.post(`https://5jiek.uz/api/v1/payments/create-payment/${findFilterId}`, data, {
                 withCredentials: true 
             })
-            window.location.reload();
+            const response = await API.get('/payments/get-payments-by-user');
+            setPayments(response.data.payments);
+            // Muvaffaqiyatli xabar
+            setNotification({ message: "Payment sent successfully!", type: "success" });
         } catch (error) {
          console.log(error);
+         setNotification({ message: "Failed to send payment. Please try again.", type: "error" });
         }
+        setTimeout(() => setNotification(null), 3000); // 3 sekunddan keyin xabarni o'chirish
     }
 
-     //  get PAYMENTS
+    //  get PAYMENTS
     useEffect(() => {
         API.get('/payments/get-payments-by-user')
         .then(response => {
@@ -91,8 +97,6 @@ export default function Payments() {
 
     // update payments
     const updatePayments = async () => {
-        console.log(updateId);
-
         const data = new FormData();
         data.append('amount', Number(payAmount));
         data.append('paidDate', payDate );
@@ -102,23 +106,32 @@ export default function Payments() {
             await  axios.put(`https://5jiek.uz/api/v1/payments/update-payment-by-user/${updateId}`, data, {
                 withCredentials: true 
             })
-            window.location.reload();
+            const response = await API.get('/payments/get-payments-by-user');
+            setPayments(response.data.payments);
+
+            setNotification({ message: "Payment updated successfully!", type: "success" });
         } catch (error) {
          console.log(error);
+         setNotification({ message: "Failed to update payment. Please try again.", type: "error" });
         }
+        setTimeout(() => setNotification(null), 3000);
         closeModal();
     }
 
     const deletePayment = async (id) => {
-
         try {
             await  axios.delete(`https://5jiek.uz/api/v1/payments/delete-payment-by-user/${id}`, {
                 withCredentials: true 
             })
-            window.location.reload();
+            const response = await API.get('/payments/get-payments-by-user');
+            setPayments(response.data.payments);
+
+            setNotification({ message: "Payment deleted successfully!", type: "success" });
         } catch (error) {
          console.log(error);
+         setNotification({ message: "Failed to delete payment. Please try again.", type: "error" });
         }
+        setTimeout(() => setNotification(null), 3000);
     }
     
     return(
@@ -151,17 +164,17 @@ export default function Payments() {
                             <div className="">
                                 <h1 className="font-bold text-[35px]">{t("profilePayments")}</h1>
                                 <div className="mt-5">
-                                    <h2 className="font-bold text-[25px] tracking-[1px]">To'lov qilish</h2>
+                                    <h2 className="font-bold text-[25px] tracking-[1px]">{t("orderId1")}</h2>
                                     <div className="mt-5">
-                                        <label htmlFor="">To'lov miqdori</label>
+                                        <label htmlFor="">{t("orderId5")}</label>
                                         <input className=" w-60 border-2 border-solid border-black p-3 rounded-lg block" required value={payAmount} onChange={(e) => setPayAmount(e.target.value)} type="number" placeholder="payment amount" />
                                     </div>
                                     <div className="mt-5">
-                                        <label htmlFor="">To'lov sanasi</label>
+                                        <label htmlFor="">{t("orderId6")}</label>
                                         <input className=" w-60 border-2 border-solid border-black p-3 rounded-lg block" required value={payDate} onChange={(e) => setPayDate(e.target.value)} type="date" placeholder="payment date"  />
                                     </div>
                                     <div className="mt-5">
-                                        <label htmlFor="">To'lov cheki</label>
+                                        <label htmlFor="">{t("orderId7")}</label>
                                         <input className=" w-60 border-2 border-solid border-black p-3 rounded-lg block" required onChange={handleFileChange} type="file" placeholder="payment image" />
                                     </div>
                                     <button className="p-3 bg-sky-800 text-white rounded-lg mt-3" onClick={postPayments}>Send payment</button>
@@ -174,7 +187,7 @@ export default function Payments() {
                                     {
                                         payments?.map(item => {
                                             return(
-                                                <div key={item.id} className="w-[230px] border-2 border-solid border-black p-3 rounded-lg mb-4 mr-10">
+                                                <div key={item.id} className="w-[230px] border-2 border-solid border-black p-3 rounded-lg mb-4 mr-5">
                                                     <img className="payments__image" src={item?.receiptImage} width={200} height={100} alt="" />
                                                     <p className=""><b>To'lov summasi:</b> {item?.amount}</p>
                                                     <p className=""><b>To'lov sanasi:</b> {dayjs(item?.createdAt).format("MM.DD.YYYY")}</p>
@@ -202,15 +215,15 @@ export default function Payments() {
                                     </div>
                                     <hr />
                                     <div className="mt-5">
-                                        <label htmlFor="">To'lov miqdori</label>
+                                        <label htmlFor="">{t("orderId5")}</label>
                                         <input className=" w-60 border-2 border-solid border-black p-3 rounded-lg block" required  type="number" placeholder="payment amount" />
                                     </div>
                                     <div className="mt-5">
-                                        <label htmlFor="">To'lov sanasi</label>
+                                        <label htmlFor="">{t("orderId6")}</label>
                                         <input className=" w-60 border-2 border-solid border-black p-3 rounded-lg block" required  type="date" placeholder="payment date" />
                                     </div>
                                     <div className="mt-5">
-                                        <label htmlFor="">To'lov cheki</label>
+                                        <label htmlFor="">{t("orderId7")}</label>
                                         <input className=" w-60 border-2 border-solid border-black p-3 rounded-lg block" required onChange={handleFileChange} type="file" placeholder="payment image" />
                                     </div>
                                     <button className="p-3 bg-sky-800 text-white rounded-lg mt-3" onClick={updatePayments}>Update payment</button>
@@ -219,6 +232,11 @@ export default function Payments() {
                             </div>
                         </div>
                     </div>
+                    {notification && (
+                        <div className={`notification ${notification.type}`}>
+                            {notification.message}
+                        </div>
+                    )}
                 </div>
             </section>
             <Footer/>

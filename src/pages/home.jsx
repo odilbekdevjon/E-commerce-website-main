@@ -6,7 +6,7 @@ import Hero from '../components/Hero/Hero';
 import Main from '../components/Main/Main';
 
 export default function Home() {
-  const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
+  const [order,setOrder] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
 
     return(
         <>

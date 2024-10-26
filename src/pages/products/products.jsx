@@ -10,16 +10,27 @@ import Footer from "../../components/Footer/Footer";
 import cart from "../../assets/add-to-cart.png";
 
 export default function Products() {
+    function cleanHTML(input) {
+        let tempDiv = document.createElement("div");
+        tempDiv.innerHTML = input;
+        return tempDiv.textContent || tempDiv.innerText || "";
+    }
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
     const { t, i18n } = useTranslation();
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState([]);
     const [, setError] = useState(null);
     const [filteredProducts, setFilteredProducts] = useState([]);
-
     // Pagination states
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3; // Ekranda ko'rsatiladigan mahsulotlar soni
+    const [showModal, setShowModal] = useState(false);
+
+
+    const showAddToCartModal = () => {
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 2000); // Hides modal after 2 seconds
+    };
 
     // get products
     useEffect(() => {
@@ -61,6 +72,7 @@ export default function Products() {
             localStorage.setItem('cart', JSON.stringify(newCard));
         }
         // window.location.reload();
+        showAddToCartModal();
     }
 
     const changeProducts = (id) => {
@@ -112,7 +124,7 @@ export default function Products() {
                                     <li id="cars" key={item.id} className="products__item w-[320px] p-5 border-solid border-2 rounded mt-5 mr-4 hover:shadow-lg">
                                         <img className="products__item__img mb-4 rounded-lg" src={item.image[0]} width={280} height={250} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
-                                        <p className="main__text text-ellipsis w-60 ">{item?.[`description_${i18n.language}`]}</p>
+                                        <p className="main__text text-ellipsis w-60 ">{cleanHTML(item?.[`description_${i18n.language}`])}</p>
                                         <span className="block mt-4 mb-1">{item.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item.stock})</div>
@@ -126,6 +138,13 @@ export default function Products() {
                                 ))}
                             </ul>
                         </div>
+                        {showModal && (
+                            <div className="modal">
+                                <div className="modal-content">
+                                    <p>Product added to cart!</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className="text-center mb-10">
                         {pageNumbers.map(number => (

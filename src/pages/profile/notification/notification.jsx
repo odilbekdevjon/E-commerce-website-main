@@ -56,7 +56,7 @@ export default function Notification() {
                         </div>
                         <div className="notification_left">
                             <div className="ml-10">
-                                <h1 className="font-bold text-[35px] mb-5">{t("profileNotification")}</h1>
+                                <h1 className="profile__left__title font-bold text-[35px] mb-5">{t("profileNotification")}</h1>
 
                                 {
                                     notification?.map((item, index) => {

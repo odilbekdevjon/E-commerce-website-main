@@ -54,7 +54,7 @@ export default function Profile() {
                         </div>
                         <div className="profile__left">
                             <div className="ml-8">
-                                <h1 className="text-[35px] font-bold">{t("profileTitle2")}</h1>
+                                <h1 className="profile__left__title text-[35px] font-bold">{t("profileTitle2")}</h1>
                                 <img className="mt-10" src={profileAvatar} width={70} height={70}  alt="" />
 
                                 <div className="profile__left__data mt-5 flex justify-between ">

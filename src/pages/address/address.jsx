@@ -6,12 +6,10 @@ import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 // data
 import regions from "../../utility/regions";
-// import { Route, useNavigation } from "react-router-dom";
 
 export default function Adress() {
     const [ user ]  = useAuth()    
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
-    // const navigate = useNavigation();
     // input data
     const [ regionSelect, setRegionSelect ] = useState("");
     const [ distirictSelect, setDistirictSelect ] = useState("");
@@ -31,6 +29,8 @@ export default function Adress() {
     // send conract
     const sendContract = async () => {
         const data = JSON.parse(localStorage.getItem('data'));
+        console.log(data);
+        
         try {
             const response = await axios.post(`https://5jiek.uz/api/v1/contract/create-contract-by-user`, data, {
                 withCredentials:true
@@ -38,7 +38,6 @@ export default function Adress() {
             console.log(response.data);
             localStorage.removeItem("cart");
             localStorage.removeItem("data");
-            window.location.reload();
         } catch (error) {
             console.error(error);
         }
@@ -64,10 +63,10 @@ export default function Adress() {
             })
             .then(response => {
                 console.log('Data updated successfully', response.data);
-                // sendContract();
+                sendContract();
                 localStorage.removeItem("cart");
                 localStorage.removeItem("data");
-                window.location.reload();
+                window.location.href = "/";
             })
         } catch (error) {
             console.log(error)
@@ -165,7 +164,6 @@ export default function Adress() {
                                         <button onClick={sendAdres} className="mt-10 border-2 w-72 p-2 bg-slate-700 text-white font-bold rounded-lg">Shartnoma olish</button>
                                     </div>
                                </div>
-                               
                             )
                         }
                         </div>
