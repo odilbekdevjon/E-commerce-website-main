@@ -52,6 +52,23 @@ input[type="number"]::-webkit-inner-spin-button {
     .carts {
         flex-direction: column;
 
+        // .carts__item--wrapper {
+        //     display: flex;
+        //     flex-direction: column;
+        // }
+
+        .carts__item--text {
+            margin-top: 20px;
+        }
+
+        .carts__counts {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            top: 10px;
+            // z-index: -100;
+        }
+
         &__item {
             margin-top: 50px;
         }
@@ -74,18 +91,6 @@ input[type="number"]::-webkit-inner-spin-button {
             top: 0;
         }
 
-        &__item--heading {
-            text-align: center;
-        }
-
-        &__item--span  {
-            text-align: center;
-        }
-
-        &__item--div {
-            text-align: center;
-        }
-
         &__item--text {
             width: 500px;
         }
@@ -102,6 +107,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 }
 
+
 @media (max-width:560px) {
     .carts {
 
@@ -112,13 +118,18 @@ input[type="number"]::-webkit-inner-spin-button {
 
         &__item--text {
             width: 450px;
-            text-align: center;
+            // text-align: center;
         }
     }
 }
 
 @media (max-width:530px) {
     .carts {
+
+        .carts__counts {
+            width: 150px;
+            display: flex;
+        }
 
         &__item--image {
             width: 450px;
@@ -170,8 +181,6 @@ input[type="number"]::-webkit-inner-spin-button {
             max-width: 200px;
             // text-align: center;
         }
-        
-        
         
     }
 }

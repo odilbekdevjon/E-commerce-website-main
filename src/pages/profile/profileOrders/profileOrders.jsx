@@ -48,10 +48,10 @@ export default function ProfileOrders() {
                             <hr className="w-[300px] mt-2" />
                             <div className="mt-5">
                                 <Link to={'/profile'} className="w-[300px] block font-bold text-[15px] mb-2 p-4">{t("profileTitle2")}</Link>
-                                <NavLink to={'/profile/orders'} className="profileOrders__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
-                                <NavLink to={'/profile/messages'} className="w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
-                                <NavLink to={'/profile/payments'} className="w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
-                                <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
+                                <NavLink to={'/profile/orders'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileTitle3")}</NavLink>
+                                <NavLink to={'/profile/messages'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4 mb-2">{t("profileMessages")}</NavLink>
+                                <NavLink to={'/profile/payments'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">{t("profilePayments")}</NavLink>
+                                <NavLink to={'/profile/notification'} className="profile__right__link w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
                         <div className="profileOrders__left">

@@ -116,11 +116,11 @@ export default function Orders() {
                 <ul className="order mt-28 mb-10">
                     {singleData && (
                         <li className="order__item flex p-2 border-solid border-2 rounded mt-5 hover:shadow-lg w-[800px] min-h-[450px]">
-                            <div className="slider-container w-[350px] h-[350px] mb-4 rounded-lg border-2 mr-5 ml-4">
+                            <div className="slider-container w-[350px] h-[350px] mb-4  mr-5 ml-4">
                                 <Slider {...sliderSettings}>
                                     {singleData.image.map((imageSrc, index) => (
-                                        <div key={index} className="flex flex-col">
-                                            <img src={imageSrc} width={350} height={350} alt={`item image ${index}`} />
+                                        <div key={index} className="order__item__wrapp flex flex-col">
+                                            <img className="order__item__image" src={imageSrc} width={350} height={350} alt={`item image ${index}`} />
                                         </div>
                                     ))}
                                 </Slider>
@@ -140,7 +140,6 @@ export default function Orders() {
                                         <span className="opacity-[0.5] text-[15px] block mb-1 line-through">{singleData.price * count}</span>
 
                                         <div className="carts__counts inline-block border-2 border-solid border-black p-2 min-w-32 rounded-lg">
-                                        <div className="carts__counts min-w-34 rounded-lg">
                                             <button 
                                                 className="text-[10px]" 
                                                 onClick={decreaseCount} 
@@ -169,7 +168,6 @@ export default function Orders() {
                                             >
                                                 <img src={plus} width={18} alt="plus" />
                                             </button>
-                                        </div>
 
                                         </div>
                                         <div className="mt-3 text-center border-2 border-solid border-blue-600  text-blue-700 p-1">{t("cartTitle5")} <input onChange={() => setChange(!change)} type="checkbox" /></div>

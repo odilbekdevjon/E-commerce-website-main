@@ -1,5 +1,6 @@
 {
   "name": "savdo5jiek",
+  "homepage": "https://savdo5jiek.uz",
   "version": "0.1.0",
   "proxy": "http://localhost:3000",
   "private": true,

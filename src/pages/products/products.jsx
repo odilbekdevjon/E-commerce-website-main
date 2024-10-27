@@ -141,7 +141,7 @@ export default function Products() {
                         {showModal && (
                             <div className="modal">
                                 <div className="modal-content">
-                                    <p>Product added to cart!</p>
+                                    <p className="modal__text">Product added to cart!</p>
                                 </div>
                             </div>
                         )}

@@ -21,7 +21,6 @@ import Notification from './pages/profile/notification/notification';
 function App() {
   const [ user ] = useAuth();
 
-
   return (
     <>
         <Routes>

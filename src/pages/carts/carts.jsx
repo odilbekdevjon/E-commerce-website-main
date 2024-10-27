@@ -201,7 +201,7 @@ export default function Carts() {
                                             </div>
                                         </div>
                                         <div className="carts__item--delete relative right-10">
-                                            <button className="relative " onClick={() => cartDelete(item?.id)}>
+                                            <button className="" onClick={() => cartDelete(item?.id)}>
                                                 <div className="flex items-center">
                                                     <img src={deleteCart} width={30} alt="delete" /> <span className="text-black text-[20px] opacity-[0.6]">{t("cartTitle7")}</span>
                                                 </div>
