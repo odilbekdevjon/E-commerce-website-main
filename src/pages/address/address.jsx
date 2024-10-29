@@ -1,5 +1,6 @@
 import "./address.scss";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -8,6 +9,7 @@ import axios from "axios";
 import regions from "../../utility/regions";
 
 export default function Adress() {
+    const { t } = useTranslation();
     const [ user ]  = useAuth()    
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     // input data
@@ -28,9 +30,7 @@ export default function Adress() {
 
     // send conract
     const sendContract = async () => {
-        const data = JSON.parse(localStorage.getItem('data'));
-        console.log(data);
-        
+        const data = JSON.parse(localStorage.getItem('data'));        
         try {
             const response = await axios.post(`https://5jiek.uz/api/v1/contract/create-contract-by-user`, data, {
                 withCredentials:true
@@ -80,11 +80,10 @@ export default function Adress() {
                 <div className="container">
                     <div className="address flex justify-between">
                         <div className="left">
-                            <h1 className="address__title text-[25px] font-bold w-96">Buyurtma yetkaziladigan manzil </h1>
-                            <p>(Iltimos manzilni batafsil va to'g'ri kiriting)</p>
+                            <h1 className="address__title text-[25px] font-bold w-96">{t("addressTitle1")}</h1>
+                            <p>({t("addressTitle2")})</p>
                         </div>
                         <div className="">
-
                         {
                                 user.is_LLC === false ? (
                                     <div className="select mt-10">

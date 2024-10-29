@@ -56,7 +56,6 @@ export default function HomeHeader({order}) {
             console.error(error);
         }
         closeModal()
-        console.log('ok');
     }
 
     const [isLogoutVisible, setLogoutVisible] = useState(false);
@@ -136,7 +135,7 @@ export default function HomeHeader({order}) {
                         </ul>
                         
                         {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
-                            <button>One id</button>
+                            One id
                         </a> */}
 
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">

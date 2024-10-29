@@ -66,7 +66,7 @@ export default function ProfileOrders() {
                                                 <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder3")}</td>
                                                 <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder4")}</td>
                                                 <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder5")}</td>
-                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("profileOrder6")}</td>
+                                                <td className="mr-5 border-2 border-solid border-black p-2 font-bold">{t("mainTitle8")}</td>
                                             </tr>
                                         </thead>
                                         <tbody className="">
