@@ -2,7 +2,6 @@ import "./Header.scss";
 import { Link, useLocation } from "react-router-dom";
 import { useState , useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Modal from 'react-modal';
 import i18n from "../../i18n";
 import useAuth from "../../hooks/useAuth";
 import { API } from "../../utility/api";
@@ -15,31 +14,29 @@ import cart from "../../assets/cart-shopping.svg";
 import userImage from "../../assets/user.png";
 import { IoEnterOutline } from "react-icons/io5";
 import notificationIcon from "../../assets/notification-belL.svg";
+import { useQuery } from "../../hooks/useQuery";
 
 export default function Header({order}) {
 
     const { t } = useTranslation();
     const [ user, setUser ] = useAuth();
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const query = useQuery();    
 
     const changeLang = (evt) => {
         i18n.changeLanguage(evt)
     }
-
     // ref
     const menuRef = useRef();
-    const code = useRef();
+
     const sendCode = async () => {
         try {
             const response = await API.post(`/user/login`, {
-                code: code.current.value
+                code: query('code')
             })
             setUser(response.data.user);
         } catch (error) {
             console.error(error);
         }
-        code.current.value = null;
-        closeModal()
     }
 
     // LOG OUT
@@ -70,14 +67,6 @@ export default function Header({order}) {
         menuRef.current.classList.remove("header__menu");
     }
 
-    // modal
-    const openModal = () => {
-        setIsOpen(true);
-    };
-    const closeModal = () => {
-        setIsOpen(false);
-    };
-
     const [ notification, setNotification ] = useState();
     const location = useLocation();
     
@@ -96,6 +85,12 @@ export default function Header({order}) {
             setNotification(0); // Sahifaga kirganda notificationni 0 ga teng qilamiz
         }
     }, [location.pathname]);
+
+    useEffect(()=>{
+        if(query.get('code')){
+            sendCode()
+        }
+    },[query.get('code')])
 
     return (
         <>
@@ -131,10 +126,6 @@ export default function Header({order}) {
                             <button onClick={() => closeMenu()} className="p-2 border-2 border-solid border-white flex h-12 font-bold mr-2 mt-2">X</button>
                         </menu>
 
-                        {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
-                        One Id
-                        </a>  */}
-
                         <div className=" flex items-center">
                             <button onClick={() => showMenu()}  className="header__burger mr-6">
                                 <img className="bg-white rounded-lg" src={menu} width={35} height={35} alt="" />
@@ -151,7 +142,6 @@ export default function Header({order}) {
                                     <Link to={'/profile/notification'} className="flex">
                                         <div className={`notification-indicator ${notification && notification.length > 0 ? "bg-red-500" : null} 
                                             relative left-7 text-center text-white rounded-full w-2 h-2 text-xs`}>
-                                            {/* {notification && notification.length > 0 ? notification.length : ""} */}
                                         </div>
                                         <img className="mr-4" src={notificationIcon} width={30} alt="" />
                                     </Link>
@@ -165,13 +155,11 @@ export default function Header({order}) {
                                </div>
 
                                 ) :(
-                                <button onClick={openModal}>
-                                    {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g"> */}
+                                    <a target="_blank" className="text-white block" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                                         <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
                                             <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
                                         </div>           
-                                    {/* </a>  */}
-                                 </button>
+                                    </a> 
                             )}
 
                                     { isLogoutVisible && (
@@ -187,25 +175,6 @@ export default function Header({order}) {
                                        </div>
                                     ) }
 
-                            <Modal
-                                isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal"
-                                style={{
-                                    content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)', },
-                                }}>
-                                <div className="w-64">
-                                    <div className="flex">
-                                    <h1 className="font-bold text-center mb-2 text-lg">Tasdiqlash codini kiriting</h1> 
-                                    <button className="border-solid border-black border-2 px-1 rounded-lg ml-6 mb-4 " onClick={() => closeModal()} >X</button>
-                                    </div>
-                                    <hr />
-                                    <label className="text-black line-through" htmlFor="">{"IHHN5456WSDW"}</label>
-                                    <input className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" />
-                                    <a className="text-blue-400 underline mt-3 mb-3 block" href=""><input className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</a>
-                                    <hr />
-                                    <button onClick={sendCode} className="mt-5 ml-12 p-2 bg-blue-400 text-white">Tasdiqlash codini yuboring</button>
-                                    <button className="text-black mt-4 ml-32 border-solid border-2 border-gray-500 p-1">Kodni yangilash</button>
-                                </div>
-                            </Modal>
                         </div>
                     </div>
                 </div>

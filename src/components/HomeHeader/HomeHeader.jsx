@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { IoEnterOutline } from "react-icons/io5";
 import { useState , useRef, useEffect} from "react";
 import { useTranslation } from "react-i18next";
-import Modal from 'react-modal';
 import useAuth from "../../hooks/useAuth";
 import useLang from "../../hooks/useLang";
 // images
@@ -16,14 +15,16 @@ import profile from "../../assets/icons8.png";
 import userImage from "../../assets/user.png";
 import { API } from "../../utility/api";
 import notificationIcon from "../../assets/notification-belL.svg";
+import { useQuery } from "../../hooks/useQuery";
 
 export default function HomeHeader({order}) {
     const { t } = useTranslation();
     const [ user, setUser ] = useAuth();
     const [ lang, changeLang  ] = useLang();
-    const [ modalIsOpen, setIsOpen ] = useState(false);
     const [ , setCardLength ] = useState(0);
     const [ changeCheckBtn, setChangeCheckBtn ] = useState(false);
+
+    const query = useQuery();
     
     // captcha
     function generateCaptcha(length) {
@@ -44,18 +45,16 @@ export default function HomeHeader({order}) {
 
     // ref
     const menuRef = useRef();
-    const code = useRef();
 
     const sendCode = async () => {
         try {
             const response = await API.post(`/user/login`, {
-                code: code.current.value
+                code: query('code')
             })
             setUser(response.data.user);
         } catch (error) {
             console.error(error);
         }
-        closeModal()
     }
 
     const [isLogoutVisible, setLogoutVisible] = useState(false);
@@ -70,7 +69,6 @@ export default function HomeHeader({order}) {
     const handleLogout = async () => {
         try {
             const response = await API.get(`/user/logout`)
-            console.log(response.data);
             localStorage.removeItem("user");
             window.location.reload();
             window.location.href = 'http://localhost:3000/';
@@ -86,16 +84,6 @@ export default function HomeHeader({order}) {
     const closeMenu = () => {
         menuRef.current.classList.remove("header__menu");
     }
-    Modal.setAppElement('#root'); 
-    // modal
-    const openModal = () => {
-        setIsOpen(true);
-    };
-    const closeModal = () => {
-        setIsOpen(false);
-    };
-
-
     const [ notification, setNotification ] = useState();
     const location = useLocation();
     
@@ -115,6 +103,12 @@ export default function HomeHeader({order}) {
         }
     }, [location.pathname]);
 
+    useEffect(()=>{
+        if(query.get('code')){
+            sendCode()
+        }
+    },[query.get('code')])
+
     return ( 
         <>
             <header className="header py-4 w-[100%] absolute z-1 top-0">
@@ -133,10 +127,6 @@ export default function HomeHeader({order}) {
                                 <span className="text-white border-2 border-solid w-5 text-center rounded-lg ml-2 bg-slate-900">{order.length}</span>
                             </Link>
                         </ul>
-                        
-                        {/* <a target="_blank" className="text-white" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
-                            One id
-                        </a> */}
 
                         <menu ref={menuRef}  className="hidden bg-slate-700 w-[600px] h-auto z-[10]">
                             <div className="header__menu--wrapper mt-16 ml-10">
@@ -168,7 +158,6 @@ export default function HomeHeader({order}) {
                                     <Link to={'/profile/notification'} className="flex">
                                         <div className={`notification-indicator ${notification && notification.length > 0 ? "bg-red-500" : null} 
                                             relative left-7 text-center text-white rounded-full w-2 h-2 text-xs`}>
-                                            {/* {notification && notification.length > 0 ? notification.length : ""} */}
                                         </div>
                                         <img className="mr-4" src={notificationIcon} width={30} alt="" />
                                     </Link>
@@ -181,12 +170,11 @@ export default function HomeHeader({order}) {
                                </div>
 
                                 ) :(
-                                <button onClick={openModal}>
-                                        <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
+                                    <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
+                                        <a target="_blank" className="text-white flex" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
                                             <IoEnterOutline className="w-5 h-5 mr-2 mt-1" width={20} height={20} /><span>Kirish</span>
-                                        </div>           
-                                    {/* </a>  */}
-                                </button>
+                                        </a>
+                                    </div>           
                                 )}
 
                                     { isLogoutVisible && (
@@ -200,25 +188,7 @@ export default function HomeHeader({order}) {
                                             <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 mt-2" onClick={handleLogout}>{t("headerTitle5")}</div> 
                                        </div>
                                     ) }
-                            <Modal
-                                isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal"
-                                style={{
-                                    content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)', },
-                                }}>
-                                <div className="w-64">
-                                    <div className="flex">
-                                    <h1 className="font-bold text-center mb-2 text-lg">Tasdiqlash codini kiriting</h1> 
-                                    <button className="border-solid border-black border-2 px-1 rounded-lg ml-6 mb-4 " onClick={() => closeModal()} >X</button>
-                                    </div>
-                                    <hr />
-                                    <label className="text-black text-[25px] font-sans" htmlFor="">{captcha}</label>
-                                    <input ref={code} className="w-64 text-black bg-white p-2 border-solid border-2 border-slate-900" type="text" placeholder="code" />
-                                    <div className="text-blue-400 mt-3 mb-3 block"><input onClick={() => setChangeCheckBtn(!changeCheckBtn)} className="mr-2" type="checkbox" />Men shaxsiy ma'lumotlarimni uzatishga roziman</div>
-                                    <hr />
-                                    <button defaultValue={changeCheckBtn} disabled={changeCheckBtn} onClick={sendCode} className={`${changeCheckBtn ? 'opacity-50 cursor-not-allowed' : ''} mt-5 ml-12 p-2 bg-blue-400 text-white`}>Tasdiqlash codini yuboring</button>
-                                    <button className="text-black mt-4 ml-32 border-solid border-2 border-gray-500 p-1">Kodni yangilash</button>
-                                </div>
-                            </Modal>
+                          
                         </div>
                     </div>
                 </div>
