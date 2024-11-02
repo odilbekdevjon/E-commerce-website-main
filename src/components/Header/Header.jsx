@@ -31,7 +31,7 @@ export default function Header({order}) {
     const sendCode = async () => {
         try {
             const response = await API.post(`/user/login`, {
-                code: query('code')
+                code: query.get('code')
             })
             setUser(response.data.user);
         } catch (error) {
@@ -88,7 +88,7 @@ export default function Header({order}) {
 
     useEffect(()=>{
         if(query.get('code')){
-            sendCode()
+            sendCode();
         }
     },[query.get('code')])
 
@@ -166,10 +166,10 @@ export default function Header({order}) {
                                        <div className="logout cursor-pointer bg-sky-900" 
                                             onMouseEnter={handleMouseEnter} 
                                             onMouseLeave={handleMouseLeave}>
-                                        <h2 className="text-[13px] capitalize flex">
+                                        <Link to={'/profile'} className="text-[13px] capitalize flex font-bold">
                                             <img src={userImage} width={18} height={15} alt="profile" /> 
                                             {`${user.first_name } ${user.sur_name}`}
-                                        </h2>
+                                        </Link>
                                         <hr className="h-[2px] bg-slate-400 mt-2"/>
                                             <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 mt-2" onClick={handleLogout}>{t("headerTitle5")}</div> 
                                        </div>

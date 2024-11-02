@@ -41,10 +41,11 @@
     .products__list {
         flex-direction: column;
     }
-}
 
-@media (max-width:768px) {
-
+    .main__text {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 @media (max-width:475px) {
@@ -56,7 +57,6 @@
             margin-bottom: 50px;
         }
     }
-
 
     .products__item {
         width: 320px;

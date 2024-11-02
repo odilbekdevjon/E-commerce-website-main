@@ -98,7 +98,7 @@ export default function Products() {
     return (
         <>
             <Header order={order} />
-            <section className="mt-20">
+            <section className="mt-20 min-h-[100vh]">
                 <div className="container">
                     <div className="products flex">
                         <div className="products__left w-[400px]">
@@ -124,7 +124,7 @@ export default function Products() {
                                     <li id="cars" key={item.id} className="products__item w-[320px] p-5 border-solid border-2 rounded mt-5 mr-4 hover:shadow-lg">
                                         <img className="products__item__img mb-4 rounded-lg" src={item.image[0]} width={280} height={250} alt="" />
                                         <h2 className="mb-2 font-bold text-[25px]">{item?.[`name_${i18n.language}`]}</h2>
-                                        <p className="main__text text-ellipsis w-60 ">{cleanHTML(item?.[`description_${i18n.language}`])}</p>
+                                        <p className="main__text text-ellipsis w-60">{cleanHTML(item?.[`description_${i18n.language}`])}</p>
                                         <span className="block mt-4 mb-1">{item.discount}</span>
                                         <span className="opacity-[0.5] block mb-1 line-through text-[12px]">{item.price}</span>
                                         <div className="">(<b>{t("mainTitle4")}:</b> {item.stock})</div>

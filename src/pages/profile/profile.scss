@@ -1,16 +1,3 @@
-@media only screen and (max-width:1220px) {
-    .profile {
-     
-        &__left__data {
-            flex-direction: column;
-        }
-
-        &__left--right {
-            margin-bottom: 30px;
-        }
-    }
-
-}
 @media only screen and (max-width:768px) {
     .profile {
         flex-direction: column;

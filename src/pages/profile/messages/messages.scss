@@ -1,3 +1,13 @@
+.messages__form {
+    width: 100%;
+    max-width: 100%;
+}
+
+.messages__input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box; /* Padding va borderlarni kenglikka qo'shadi */
+}
 
 // error modal message
 .error-modal {

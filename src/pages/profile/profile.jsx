@@ -25,12 +25,12 @@ export default function Profile() {
                 console.log(error);
             }); 
     }, []);
-    
+
 
     return(
         <>
             <Header order={order}/>
-            <section className="mt-24 mb-96">
+            <section className="mt-24 mb-20 min-h-[100vh]">
                 <div className="container">
                     <div className="flex pt-3">
                         <Link className="opacity-[0.5]" to={'/'}>{t("headerTitle1")}</Link>
@@ -69,7 +69,7 @@ export default function Profile() {
                                     
                                     <div className="profile__left__left ml-52">
                                         <span className="opacity-[0.6] ">{t("profileTitle6")}</span>
-                                        <p className="profile__left__text w-96 font-bold mt-2 mb-10">{user?.address} </p>
+                                        <p className="profile__left__text max-w-96 font-bold mt-2 mb-10">{user?.address} </p>
 
                                         <span className=" opacity-[0.6]">{t("profileTitle8")}</span>
                                         <h2 className="font-bold mt-2">{user?.phone_number}</h2>

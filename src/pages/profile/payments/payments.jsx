@@ -137,7 +137,7 @@ export default function Payments() {
     return(
         <>
             <Header order={order}/>
-            <section className="mt-24 mb-96">
+            <section className="mt-24 mb-20 min-h-[100vh]">
                 <div className="container">
                     <div className="flex pt-3">
                         <Link className="opacity-[0.5]" to={'/'}>{t("headerTitle1")}</Link>

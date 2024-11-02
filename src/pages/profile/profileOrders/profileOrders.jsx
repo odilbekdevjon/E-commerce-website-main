@@ -32,7 +32,7 @@ export default function ProfileOrders() {
     return(
         <>
             <Header order={order}/>
-            <section className="mt-24 mb-96">
+            <section className="mt-24 mb-20 min-h-[100vh]">
                 <div className="container">
                     <div className="flex pt-3">
                         <Link className="opacity-[0.5]" to={'/'}>{t("headerTitle1")}</Link>
@@ -78,7 +78,7 @@ export default function ProfileOrders() {
                                                             <a className="block text-blue-500" href={item?.contractFile.contractFileRu} target="_blank">rus tilida</a>
                                                             <a className="block text-blue-500" href={item?.contractFile.contractFileUz} target="_blank">uzbek tilida</a>
                                                         </td>
-                                                        <td data-label="Yetkazib berish manzili" className="border-2 border-solid border-black p-2"><p className="table__text w-44">{item?.shippingAddress}</p></td>
+                                                        <td data-label="Yetkazib berish manzili" className="border-2 border-solid border-black p-2"><p className="table__text max-w-44">{item?.shippingAddress}</p></td>
                                                         <td data-label="Yetkazib berish xizmati" className="border-2 border-solid border-black p-2">
                                                             <button>{item?.isDelivery ? "Mavjud" : "Mavjud emas"}</button>
                                                         </td>

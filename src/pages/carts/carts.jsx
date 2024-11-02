@@ -152,7 +152,7 @@ export default function Carts() {
     return (
         <>
             <Header order={order} />
-            <section className="mt-28 mb-72">
+            <section className="mt-28 mb-72 min-h-[100vh]">
                 <div className="container">
                     <h1 className="text-[30px] font-bold">{t("cartTitle1")} {cartData?.length}</h1>
                     <div className="carts flex">
@@ -161,17 +161,17 @@ export default function Carts() {
                                 return (
                                     <div key={item?.id} className="carts__item flex border-2 border-solid rounded-lg mt-5 p-4">
                                         {/* Slider for item images */}
-                                        <div className="w-[250px] h-[250px] relative z-[-10]">
+                                        <div className="slider__image__wrapper max-w-[250px] max-h-[250px] relative z-[-10]">
                                             <Slider {...sliderSettings}>
                                                 {item.image.map((imageSrc, index) => (
-                                                    <div key={index} className="flex flex-col">
-                                                        <img className="" src={imageSrc} width={250} height={250} alt="item image" />
+                                                    <div key={index} className=" relative z-[-10]">
+                                                        <img className="slider__image" src={imageSrc} width={250} height={250} alt="item image" />
                                                     </div>
                                                 ))}
                                             </Slider>
                                         </div>
 
-                                        <div className="carts__item--wrapper ml-5">
+                                        <div className="carts__item--wrapper mt-5 ml-5">
                                             <div className="carts__item--text w-[600px]">
                                                 <h2 className="carts__item--heading text-[25px] font-bold mb-2">{item?.[`name_${i18n.language}`]}</h2>
                                                 <p className="carts__item--text w-[400px] text-[20px] mb-2"> {cleanHTML(item?.[`description_${i18n.language}`])}</p>
@@ -218,7 +218,10 @@ export default function Carts() {
                         <div className="carts__right w-[400px] h-64 mt-14 ml-5 border-2 border-solid p-2 rounded-lg">
                             <h2 className="text-[20px] font-bold">{t("cartTitle2")}</h2>
                             <p className="mt-3 opacity-[0.6] ">{t("cartTitle3")} ({cartData?.length}) </p>
-                            <div className="mt-3 text-center border-2 border-solid border-blue-600  text-blue-700 p-1">{t("cartTitle5")} <input onChange={() => setChange(!change)} type="checkbox" /></div>
+                            <div className="flex justify-center mt-3 text-center border-2 border-solid border-blue-600  text-blue-700 p-1">
+                                <span>{t("cartTitle5")}</span>
+                                <input className="p-3 inline-block ml-2 mt-1" onChange={() => setChange(!change)} type="checkbox" />
+                            </div>
 
                             <div className="flex justify-between">
                                 <span className="inline-block mt-3 opacity-[0.6]">{t("cartTitle4")}</span>

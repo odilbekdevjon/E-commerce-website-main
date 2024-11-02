@@ -1,7 +1,6 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import useAuth from './hooks/useAuth';
-import { useState } from 'react';
 // pages
 import Home from './pages/home';
 import About from './pages/about/about';

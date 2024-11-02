@@ -1,4 +1,9 @@
 /* about responsive */
+@media (max-width:1025px) {
+    .about__wrapp {
+        flex-direction: column;
+    }
+}
 
 @media (max-width:768px) {
     .about__wrapp {
@@ -7,7 +12,6 @@
     }
 
     .about__map {
-        // width: 700px;
         width: 70%;
     }
 }

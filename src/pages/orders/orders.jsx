@@ -116,76 +116,80 @@ export default function Orders() {
             <div className="container">
                 <ul className="order mt-28 mb-10">
                     {singleData && (
-                        <li className="order__item flex p-2 border-solid border-2 rounded mt-5 hover:shadow-lg w-[800px] min-h-[450px]">
-                            <div className="slider-container w-[350px] h-[350px] mb-4  mr-5 ml-4">
+                        <li className="order__item flex p-2 border-solid border-2 rounded mt-5 max-w-[80%] min-h-[300px]">
+                            <div className="slider-container w-[450px] min-h-[350px] mb-4  mr-5 ml-4 z-[-100]">
                                 <Slider {...sliderSettings}>
                                     {singleData.image.map((imageSrc, index) => (
                                         <div key={index} className="order__item__wrapp flex flex-col">
-                                            <img className="order__item__image" src={imageSrc} width={350} height={350} alt={`item image ${index}`} />
+                                            <img className="order__item__image" src={imageSrc} width={450} height={450} alt={`item image ${index}`} />
                                         </div>
                                     ))}
                                 </Slider>
                             </div>
                             <div className="ml-5">
                                 <h2 className="order__name mb-2 font-bold text-[30px]">{singleData?.[`name_${i18n.language}`]}</h2>
-                                <p className="order__text w-96">{cleanHTML(singleData?.[`description_${i18n.language}`])}</p>
+                                <p className="order__text max-w-[600px]">{cleanHTML(singleData?.[`description_${i18n.language}`])}</p>
                                 <div className="my-2">
                                     <b>{singleData.massa} </b> ({t("mainTitle4")}: {singleData.stock} {singleData.unit_uz})
                                 </div>
                                 <div className="order__wrapper flex">
-                                    <div className="order__wrapp">
-                                        <div>
+                                    <div className="order__wrapp mt-5 flex ">
+                                        <div className="">
                                             <span className="text-blue-600 text-[25px]">{totalPrice}</span>
+                                            <span className="opacity-[0.5] text-[15px] block mb-1 line-through">{singleData.price * count}</span>
+
+                                            <div className="carts__counts inline-block border-2 border-solid border-black p-2 min-w-32 rounded-lg">
+                                                <button 
+                                                    className="text-[10px]" 
+                                                    onClick={decreaseCount} 
+                                                    disabled={count <= 1} 
+                                                >
+                                                    <img src={minus} width={20} alt="minus" />
+                                                </button>
+
+                                                <input
+                                                    type="number"
+                                                    className="ml-5 text-[20px] w-16 text-center"
+                                                    value={count}
+                                                    min="1"
+                                                    max={singleData.stock} // Stokdagi maksimal qiymatni o'rnatamiz
+                                                    onChange={(e) => {
+                                                        const newCount = Math.max(1, Math.min(parseInt(e.target.value), singleData.stock)); // Qiymatni 1 va stok oralig'ida ushlab turish
+                                                        setCount(newCount);
+                                                    }}
+                                                    disabled={count === singleData.stock} 
+                                                />
+
+                                                <button 
+                                                    className="ml-5"
+                                                    onClick={increaseCount}
+                                                    disabled={count >= singleData.stock}
+                                                >
+                                                    <img src={plus} width={18} alt="plus" />
+                                                </button>
+
+                                            </div>
                                         </div>
+                                        <div className="order__wrapp__right ml-40">
+                                            <div className="mt-3 text-center border-2 border-solid border-blue-600  text-blue-700 flex justify-center p-2">
+                                                <span>{t("cartTitle5")} </span>
+                                                <input className="ml-2 mt-1" onChange={() => setChange(!change)} type="checkbox" />
+                                            </div>
 
-                                        <span className="opacity-[0.5] text-[15px] block mb-1 line-through">{singleData.price * count}</span>
-
-                                        <div className="carts__counts inline-block border-2 border-solid border-black p-2 min-w-32 rounded-lg">
-                                            <button 
-                                                className="text-[10px]" 
-                                                onClick={decreaseCount} 
-                                                disabled={count <= 1} 
-                                            >
-                                                <img src={minus} width={20} alt="minus" />
-                                            </button>
-
-                                            <input
-                                                type="number"
-                                                className="ml-5 text-[20px] w-16 text-center"
-                                                value={count}
-                                                min="1"
-                                                max={singleData.stock} // Stokdagi maksimal qiymatni o'rnatamiz
-                                                onChange={(e) => {
-                                                    const newCount = Math.max(1, Math.min(parseInt(e.target.value), singleData.stock)); // Qiymatni 1 va stok oralig'ida ushlab turish
-                                                    setCount(newCount);
-                                                }}
-                                                disabled={count === singleData.stock} 
-                                            />
-
-                                            <button 
-                                                className="ml-5"
-                                                onClick={increaseCount}
-                                                disabled={count >= singleData.stock}
-                                            >
-                                                <img src={plus} width={18} alt="plus" />
-                                            </button>
-
-                                        </div>
-                                        <div className="mt-3 text-center border-2 border-solid border-blue-600  text-blue-700 p-1">{t("cartTitle5")} <input onChange={() => setChange(!change)} type="checkbox" /></div>
-
-                                        <Link className="block" to={change && user ? `/adress` : `/`}>
-                                            <button 
-                                                onClick={() => {
-                                                    if (change) {
-                                                        addStorage(); // change true bo'lsa, ma'lumotlarni saqlash
-                                                    } else {
-                                                        sendContract(); // Aks holda kontraktni yuborish
-                                                    }
-                                                }} 
-                                                className="p-3 bg-blue-800 text-white rounded-lg mt-4 w-[100%]">
-                                                {t("cartTitle6")}
-                                            </button>
-                                        </Link>
+                                            <Link className="block" to={change && user ? `/adress` : `/`}>
+                                                <button 
+                                                    onClick={() => {
+                                                        if (change) {
+                                                            addStorage(); // change true bo'lsa, ma'lumotlarni saqlash
+                                                        } else {
+                                                            sendContract(); // Aks holda kontraktni yuborish
+                                                        }
+                                                    }} 
+                                                    className="p-3 bg-blue-800 text-white rounded-lg mt-4 w-[100%]">
+                                                    {t("cartTitle6")}
+                                                </button>
+                                            </Link>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

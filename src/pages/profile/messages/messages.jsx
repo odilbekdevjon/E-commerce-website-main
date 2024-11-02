@@ -20,10 +20,7 @@ export default function Messages() {
     const inputName = useRef();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-
-
     
-
    //  get CONTRACTS
    useEffect(() => {
         API.get('/contract/get-contracts-list-by-user')
@@ -75,7 +72,7 @@ export default function Messages() {
     return(
         <>
             <Header order={order}/>
-            <section className="mt-24 mb-96">
+            <section className="mt-24 mb-20 min-h-[100vh]">
                 <div className="container">
                     <div className="flex pt-3">
                         <Link className="opacity-[0.5]" to={'/'}>{t("headerTitle1")}</Link>
@@ -97,7 +94,7 @@ export default function Messages() {
                                 <NavLink to={'/profile/notification'} className="w-[300px] block font-bold text-[15px] p-4">{t("profileNotification")}</NavLink>
                             </div>
                         </div>
-                        <div className="messages_left ml-10">
+                        <div className="messages_left ml-10 w-[80%]">
                             <div className="">
                                 <h1 className="font-bold text-[35px]">{t("profileMessages")}</h1>
                                 <div className="">
@@ -112,13 +109,18 @@ export default function Messages() {
                                         })
                                     }
 
-                                    <span className="messages__message block w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white relative left-[850px]">
+                                <div className="flex justify-end">
+                                    <span className="messages__message block w-60 p-3 rounded-lg bg-blue-950 text-[25px] mt-3 text-white">
                                         {messages?.message}
-                                        
                                     </span>
                                 </div>
-                               <div className="messages__form relative top-[250px] flex ">
-                                    <input ref={inputName} className="messages__input w-[1000px] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message" />
+                                </div>
+                               <div className="messages__form relative top-[250px] flex w-[80%]">
+                                    <input ref={inputName} className="messages__input w-[80%] border-2 border-solid border-black p-2 rounded-lg " type="text" placeholder="send message"         onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            sendMessages();
+                                        }
+                                    }} />
                                     <button className="messages__buttton p-2 bg-blue-900 rounded-lg text-white" onClick={sendMessages}>Send</button>
                                </div>
                                {isModalVisible && (
@@ -128,7 +130,6 @@ export default function Messages() {
                                         </div>
                                     </div>
                                 )}
-
                                 {errorMessage && (
                                     <div className="error-modal">
                                         <div className="error-modal__content">

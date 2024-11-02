@@ -12,10 +12,9 @@ import contract from "../../assets/contract.svg";
 
 
 export default function Contact() {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const [order] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
     const [notification, setNotification] = useState(null);
-
     
     // values by ref
     const name = useRef();
@@ -54,41 +53,41 @@ export default function Contact() {
 
     return(
         <>
-            <Header order={order} />
-                <section className="mt-20 mb-52">
+            <Header order={order}/>
+                <section className="mt-20 mb-52 min-h-[100vh]">
                     <div className="container">
                         <div className="contact mt-40 flex">
                             <div className="contact__left  ml-36 mr-80">
                                 <h1 className="contact__title font-bold text-[45px] tracking-[1px]">{t("pageContact")}</h1>
-                                <span className="contact__span block mt-5 mb-10 text-[20px] text-orange-600 font-bold">Ask us about</span>
+                                <span className="contact__span block mt-5 mb-10 text-[20px] text-orange-600 font-bold">{t("contactTitle1")}</span>
 
                                 <div className="contact__wrapp flex items-center mb-5">
                                     <img className="mr-5" src={product} width={"45"} height={"40"} alt="product" />
-                                    <p className="contact__text">Different quality products</p>
+                                    <p className="contact__text">{t("contactTitle2")}</p>
                                 </div>
                                 <div className="contact__wrapp flex items-center mb-5">
                                     <img className="mr-5" src={deleveriy} width={"45"} height={"40"} alt="product" />
-                                    <p className="contact__text">Home delivery services</p>
+                                    <p className="contact__text">{t("contactTitle3")}</p>
                                 </div>
                                 <div className="contact__wrapp flex items-center mb-5">
                                     <img className="mr-5" src={contract} width={"45"} height={"40"} alt="product" />
-                                    <p className="contact__text">Long term contract</p>
+                                    <p className="contact__text">{t("contactTitle4")}</p>
                                 </div>
                             </div>
                             <div className="contact__right">
                                     <div className="">
-                                        <input ref={name} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black mb-5 w-80" type="text" placeholder="Name" />
+                                        <input ref={name} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black mb-5 w-80" type="text" placeholder={t("contactTitle5")} />
                                     </div>
                                     <div className="">
-                                        <input ref={email} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black mb-5 w-80" type="text" placeholder="Email" />
+                                        <input ref={email} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black mb-5 w-80" type="text" placeholder={t("contactTitle6")} />
                                     </div>
                                     <div className="">
-                                        <input ref={phone} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black mb-5 w-80" type="text" placeholder="Phone" />
+                                        <input ref={phone} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black mb-5 w-80" type="text" placeholder={t("contactTitle7")} />
                                     </div>
                                     <div className="">
-                                        <textarea ref={message} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black w-80" type="text" placeholder="Message"></textarea>
+                                        <textarea ref={message} className="contact__form-input p-5 rounded-lg border-b-2 border-solid border-black w-80" type="text" placeholder={t("contactTitle8")}></textarea>
                                     </div>
-                                    <button onClick={() => sendMessage()} className="contact__form-button border-2 border-solid border-sky-950 py-3 px-10 font-bold rounded-lg mt-5 hover:bg-teal-900 hover:text-white">Submit</button>
+                                    <button onClick={() => sendMessage()} className="contact__form-button border-2 border-solid border-sky-950 py-3 px-10 font-bold rounded-lg mt-5 hover:bg-teal-900 hover:text-white">{t("contactTitle9")}</button>
                             </div>  
                         </div>
                         {notification && (

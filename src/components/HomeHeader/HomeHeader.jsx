@@ -20,22 +20,9 @@ import { useQuery } from "../../hooks/useQuery";
 export default function HomeHeader({order}) {
     const { t } = useTranslation();
     const [ user, setUser ] = useAuth();
-    const [ lang, changeLang  ] = useLang();
+    const [ lang, changeLang ] = useLang();
     const [ , setCardLength ] = useState(0);
-    const [ changeCheckBtn, setChangeCheckBtn ] = useState(false);
-
     const query = useQuery();
-    
-    // captcha
-    function generateCaptcha(length) {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let captcha = '';
-        for (let i = 0; i < length; i++) {
-            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return captcha;
-    }
-    const captcha = generateCaptcha(7);  // Masalan: 'svdQqw45'
 
     // carts
     useEffect(() => {
@@ -49,7 +36,7 @@ export default function HomeHeader({order}) {
     const sendCode = async () => {
         try {
             const response = await API.post(`/user/login`, {
-                code: query('code')
+                code: query.get('code')
             })
             setUser(response.data.user);
         } catch (error) {
@@ -102,16 +89,16 @@ export default function HomeHeader({order}) {
             setNotification(0); // Sahifaga kirganda notificationni 0 ga teng qilamiz
         }
     }, [location.pathname]);
-
+    
     useEffect(()=>{
         if(query.get('code')){
-            sendCode()
+            sendCode();
         }
     },[query.get('code')])
 
     return ( 
         <>
-            <header className="header py-4 w-[100%] absolute z-1 top-0">
+            <header className="header py-4 w-[100%] absolute z-10 top-0">
                 <div className="container">
                     <div className=" flex justify-between items-center">
                         <Link to={'/'}><img className="header__image rounded-lg bg-transparent" src={logo} width={200} alt="logo" /></Link>
@@ -161,14 +148,29 @@ export default function HomeHeader({order}) {
                                         </div>
                                         <img className="mr-4" src={notificationIcon} width={30} alt="" />
                                     </Link>
-                                    <Link to={'/profile'} className="user__link mt-1" 
-                                        onMouseEnter={handleMouseEnter} 
-                                        onMouseLeave={handleMouseLeave}>
-                                        <img className="ml-1" src={profile} width={25} height={25} alt="" />
-                                        <span className="text-white text-center ">{t("headerTitle7")}</span>
-                                     </Link> 
+                                   <div className="flex flex-col">
+                                        <Link to={'/profile'} className="user__link mt-1" 
+                                            onMouseEnter={handleMouseEnter} 
+                                            onMouseLeave={handleMouseLeave}>
+                                            <img className="ml-1" src={profile} width={25} height={25} alt="" />
+                                            <span className="text-white text-center ">{t("headerTitle7")}</span>
+                                        </Link> 
+                                    <div className="">
+                                        { isLogoutVisible && (
+                                            <div  className="logout cursor-pointer bg-sky-900" 
+                                                onMouseEnter={handleMouseEnter} 
+                                                onMouseLeave={handleMouseLeave}>
+                                                    <Link to={'/profile'} className="text-[13px] capitalize flex font-bold">
+                                                <img className="" src={userImage} width={18} height={15} alt="profile" /> 
+                                                {`${user.first_name } ${user.sur_name}`}
+                                            </Link>
+                                            <hr className="h-[2px] bg-slate-400 mt-2"/>
+                                                <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 mt-2" onClick={handleLogout}>{t("headerTitle5")}</div> 
+                                        </div>
+                                        ) }
+                                    </div>
+                                   </div>
                                </div>
-
                                 ) :(
                                     <div className="flex border-solid border-2 border-white-600 p-2 rounded-lg bg-transparent font-bold text-white cursor-pointer">
                                         <a target="_blank" className="text-white flex" href="https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=savdo5jiek_uz&redirect_uri=https://savdo5jiek.uz&scope=savdo5jiek_uz&state=wf34gk35gbo5high034g">
@@ -176,19 +178,6 @@ export default function HomeHeader({order}) {
                                         </a>
                                     </div>           
                                 )}
-
-                                    { isLogoutVisible && (
-                                       <div className="logout cursor-pointer bg-sky-900" 
-                                            onMouseEnter={handleMouseEnter} 
-                                            onMouseLeave={handleMouseLeave}>
-                                        <h2 className="text-[13px] capitalize flex">
-                                            <img className="" src={userImage} width={18} height={15} alt="profile" /> 
-                                            {`${user.first_name } ${user.sur_name}`}</h2>
-                                        <hr className="h-[2px] bg-slate-400 mt-2"/>
-                                            <div className="text-center text-[13px] font-bold bg-sky-900 text-white tracking-[2px] p-1 mt-2" onClick={handleLogout}>{t("headerTitle5")}</div> 
-                                       </div>
-                                    ) }
-                          
                         </div>
                     </div>
                 </div>
