@@ -29,7 +29,7 @@ function App() {
           <Route path='/contact' element={<Contact/>} />
           <Route path='/products' element={<Products/>}/>
           <Route path='/carts' element={<Carts />} />
-          <Route path='/profile' element={user ? <Profile/> : <Home/>}/>
+          <Route path='/profile' element={user ? <Profile/> : <Home/> }/>
           <Route path='/profile/orders' element={<ProfileOrders/>}/>
           <Route path='/profile/order/:id' element={<OrderById/>}/>
           <Route path='/profile/messages' element={<Messages/>}/>

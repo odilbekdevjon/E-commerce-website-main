@@ -34,6 +34,7 @@ export default function Header({order}) {
                 code: query.get('code')
             })
             setUser(response.data.user);
+            window.history.replaceState({}, document.title, window.location.pathname);
         } catch (error) {
             console.error(error);
         }

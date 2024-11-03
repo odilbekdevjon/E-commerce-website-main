@@ -31,7 +31,7 @@ export default function Footer() {
                                 <p className="ml-2 text-white max-w-[300px] text-center">{t("footerTitle2")}</p>
                             </address>
                             <div className="mx-auto flex mb-8">
-                                <a className="block" href="https:/t.me/savdo5jiek" target="_blank"><img className="mr-4 flex text-white" src={telegram} width={25} height={25} alt="telegram" /></a>
+                                <a className="block" href="https://t.me/savdo5jiek" target="_blank"><img className="mr-4 flex text-white" src={telegram} width={25} height={25} alt="telegram" /></a>
                                 <a className="block" href="https://www.instagram.com/5jiek" target="_blank"><img className="mr-4" src={instagram} width={25} height={25} alt="instagram" /></a>
                                 <a className="block" href="https://www.facebook.com/profile.php?id=61567811620524" target="_blank"><img className="" src={faceebook} width={25} height={25} alt="faceebook" /></a>
                             </div>

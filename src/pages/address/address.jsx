@@ -91,14 +91,14 @@ export default function Adress() {
                                             RegionSelect(e.target.value);
                                             setRegionSelect(e.target.value);
                                         }} className="border-2 border-solid p-2 rounded-lg block w-72" name="" >
-                                            <option defaultChecked>Select</option>
+                                            <option defaultChecked>{t("addressTitle3")}</option>
                                         { regions.map((item, i) => (
                                             <option key={i} value={`${item.name}`}>{item.name}</option>
                                         )) }
                                     </select>
     
                                         <select onChange={(e) => setDistirictSelect(e.target.value)}  id="selected" className="select border-2 border-solid p-2 rounded-lg mt-10 w-72" name="" >
-                                            <option defaultChecked>Select</option>
+                                            <option defaultChecked>{t("addressTitle4")}</option>
                                             {
                                                 selectRegion?.district?.map((item,i) => (
                                                     <option key={i} value={`${item.name} shaxar`}>{item.name}</option>
@@ -107,13 +107,13 @@ export default function Adress() {
                                         </select>
     
                                         <div className="mt-10">
-                                            <input onChange={(e) => setAddressSelect(e.target.value)} className="w-72 border-2 border-solid border-black p-2 rounded-lg" type="text" placeholder="uy manzilingizni kiriting" />
+                                            <input onChange={(e) => setAddressSelect(e.target.value)} className="w-72 border-2 border-solid border-black p-2 rounded-lg" type="text" placeholder={t("addressTitle4")} />
                                         </div>
     
                                         <div className="mt-10">
-                                            <input onChange={(e) => setPhone(e.target.value)} className="w-72 border-2 border-solid border-black p-2 rounded-lg" type="tel" placeholder="Telfon raqaminingzni kriting" />
+                                            <input onChange={(e) => setPhone(e.target.value)} className="w-72 border-2 border-solid border-black p-2 rounded-lg" type="tel" placeholder={t("addressTitle5")} />
                                         </div>
-                                    <button onClick={sendAdres} className="mt-10 border-2 w-72 p-2 bg-slate-700 text-white font-bold rounded-lg">Shartnoma olish</button>
+                                    <button onClick={sendAdres} className="mt-10 border-2 w-72 p-2 bg-slate-700 text-white font-bold rounded-lg">{t("addressTitle6")}</button>
                                </div>
                                     
                                 ) : (
